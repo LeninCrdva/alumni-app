@@ -1,0 +1,146 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-sm-12">
+      <div class="row">
+        <h1>Crear Encuesta</h1>
+        <p>Ingresa los datos para crear una nueva encuesta.</p>
+      </div>
+
+      <form [formGroup]="form" (submit)="create()">
+        <div class="row mt-4">
+          <div class="col-12">
+            <label for="form-title" class="form-label">Título de la Encuesta*</label>
+            <input id="form-title" type="text" class="form-control" formControlName="title">
+
+            <ng-container *ngIf="form.get('title').touched && form.get('title').errors">
+              <div class="form-text text-danger" *ngIf="form.get('title').errors.required">
+                Ingresa el Título de la Encuesta
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-12">
+            <label for="form-description" class="form-label">Descripción de la Encuesta*</label>
+            <textarea id="form-description" class="form-control" formControlName="description"></textarea>
+
+            <ng-container *ngIf="form.get('description').touched && form.get('description').errors">
+              <div class="form-text text-danger" *ngIf="form.get('description').errors.required">
+                Ingresa el Descripción de la Encuesta
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="row my-4 align-items-center">
+          <div class="col">
+            <h3>Preguntas</h3>
+          </div>
+
+          <div class="col-auto">
+            <button class="btn btn-label-primary" (click)="addQuestion()" type="button"
+              [disabled]="form.invalid">Agregar Pregunta <i class="fa-solid fa-circle-plus"></i></button>
+          </div>
+        </div>
+
+        <ng-container formArrayName="questions">
+          <ng-container *ngFor="let question of form.get('questions').controls; let qI = index" [formGroupName]="qI">
+            <div class="card mb-4 p-3">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6>Pregunta #{{ qI + 1 }}</h6>
+                </div>
+
+                <div class="col-auto">
+                  <button type="button" class="btn btn-danger text-white" (click)="removeQuestion(qI)">Eliminar
+                    Pregunta <i class="fa-solid fa-delete-left"></i></button>
+
+                </div>
+              </div>
+
+              <div class="row mt-4">
+                <div class="col-sm-8">
+                  <label [for]="'form-title-' + qI" class="form-label">Título de la Pregunta</label>
+                  <input type="text" [id]="'form-title-' + qI" class="form-control" formControlName="title">
+
+                  <ng-container
+                    *ngIf="form.get('questions').controls[qI].get('title').touched && form.get('questions').controls[qI].get('title').errors">
+                    <div class="form-text text-danger"
+                      *ngIf="form.get('questions').controls[qI].get('title').errors.required">
+                      Ingresa el Título de la Prgeunta
+                    </div>
+                  </ng-container>
+                </div>
+
+                <div class="col-sm-4">
+                  <label [for]="'form-type-' + qI" class="form-label">Tipo de Pregunta</label>
+                  <select [id]="'form-type-' + qI" class="form-select" formControlName="type">
+                    <option [value]="1">Pregunta Abierta</option>
+                    <option [value]="2">Opción Múltiple</option>
+                    <option [value]="3">Calificación 1/10</option>
+                    <option [value]="4">Calificación 1/5</option>
+                    <option [value]="5">Si / No</option>
+                    <option [value]="6">Opción Múltiple Unico</option>
+                  </select>
+
+                  <ng-container
+                    *ngIf="form.get('questions').controls[qI].get('type').touched && form.get('questions').controls[qI].get('type').errors">
+                    <div class="form-text text-danger"
+                      *ngIf="form.get('questions').controls[qI].get('type').errors.required">
+                      Ingresa el Elige el Tipo de Pregunta
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+
+              <ng-container formArrayName="options"
+                *ngIf="form.get('questions').controls[qI].get('type').value === '2' || form.get('questions').controls[qI].get('type').value === '6'">
+                <div class="row mt-4">
+                  <div class="col">
+                    <h6>Opciones</h6>
+                  </div>
+
+                  <div class="col-auto">
+                    <button class="btn btn-sm btn-success text-white" (click)="addOption(qI)" type="button"
+                      [disabled]="form.invalid">Agregar Opción +</button>
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <ng-container
+                    *ngFor="let option of form.get('questions').controls[qI].get('options').controls; let oI = index"
+                    [formGroupName]="oI">
+                    <div class="col-sm-4 mb-4">
+                      <label [for]="'form-option-' + qI + '-' + oI" class="form-label">Opción #{{ oI + 1 }}</label>
+                      <div class="input-group">
+                        <input [id]="'form-option-' + qI + '-' + oI" class="form-control" formControlName="title"
+                          name="title">
+                        <button type="button" class="btn btn-danger text-white" *ngIf="oI !== 0"
+                          (click)="removeOption(qI, oI)">x</button>
+                      </div>
+
+                      <ng-container
+                        *ngIf="form.get('questions').controls[qI].get('options').controls[oI].get('title').touched && form.get('questions').controls[qI].get('options').controls[oI].get('title').errors">
+                        <div class="form-text text-danger"
+                          *ngIf="form.get('questions').controls[qI].get('options').controls[oI].get('title').errors.required">
+                          Ingresa el Título de la Opción
+                        </div>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <div class="row mt-4">
+          <div class="col-12 text-end">
+            <button class="btn btn-primary" type="submit">Crear Encuesta</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

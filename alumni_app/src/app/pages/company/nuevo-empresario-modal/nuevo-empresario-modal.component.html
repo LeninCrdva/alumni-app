@@ -1,0 +1,34 @@
+<div class="modal-header bg-primary">
+    <h4 class="modal-title" style="color: var(--white-color)">Complete informacion De Empresario</h4>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="formularioEmpresario" (ngSubmit)="guardarEmpresario()" >
+       
+
+        <div class="form-group">
+            <label for="puesto" style="color: var(--alumni-color)">Puesto:</label>
+            <input type="text" class="form-control" id="puesto" formControlName="puesto" required>
+        </div>
+
+        <div class="form-group">
+            <label for="anios" style="color: var(--alumni-color)">Años:</label>
+            <input type="number" class="form-control" id="anios" formControlName="anios" value="{{calcularEdad()}}" [readOnly]="true">
+          
+        </div>
+
+        <div class="form-group">
+            <label for="usuario" style="color: var(--alumni-color)">Usuario:</label>
+            <input type="text" class="form-control" id="usuario" formControlName="usuario" required readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="email" style="color: var(--alumni-color)">Email:</label>
+            <input type="text" class="form-control" id="email" formControlName="email" required>
+            
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+

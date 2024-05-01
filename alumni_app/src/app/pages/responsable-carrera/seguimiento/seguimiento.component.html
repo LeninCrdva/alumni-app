@@ -1,0 +1,93 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/headers/Referencias.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Respuestas por Graduado</h1>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row mb-4 mt-4">
+        <div class="col-12">
+            <label for="filterBy" class="mb-1">Filtrar por:</label>
+            <select id="filterBy" class="form-control" [(ngModel)]="selectedFilter" (ngModelChange)="onFilterChange()">
+                <option value="with-answers">
+                    <h2 class="my-4">Listado de Encuestas Respondidas</h2>
+                </option>
+                <option value="no-answers">
+                    <h2 class="my-4">Listado de Encuestas No Respondidas</h2>
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="selectedFilter === 'with-answers'">
+        <div class="col-12">
+            <div *ngIf="answerList.length === 0" class="text-center">
+                <p>No hay encuestas disponibles.</p>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Título Encuesta Respondida</th>
+                        <th scope="col">Correos de Graduados que han Respondido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let answer of answerList">
+                        <tr>
+                            <td>
+                                <p class="text-capitalize">{{answer.tituloEncuesta}}</p>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li *ngFor="let correo of answer.correosGraduados">{{correo}}</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="selectedFilter === 'no-answers'">
+        <div class="col-12">
+            <div *ngIf="unanswerList.length === 0" class="text-center">
+                <p>No hay encuestas disponibles.</p>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Título Encuesta no Respondida</th>
+                        <th scope="col">Datos de los Graduados que no han Respondido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let unanswer of unanswerList">
+                        <tr>
+                            <td>
+                                <ol>
+                                    <li *ngFor="let title of unanswer.encuestasNoContestadas">{{title}}</li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ul>
+                                    <h6>Datos</h6>
+                                    <ul>
+                                        <li>Nombres: {{unanswer.nombres}}</li>
+                                        <li>Apellidos: {{unanswer.apellidos}}</li>
+                                        <li>Cédula: {{unanswer.cedula}}</li>
+                                        <li>Correo: {{unanswer.email}}</li>
+                                    </ul>
+                                </ul>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Java Techie Mail</title>
+    <style>
+
+        .space-icon img {
+            padding: 15px;
+        }
+
+        .space-icon a {
+            text-decoration: none;
+            color: black;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+    </style>
+</head>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td align="center" valign="top" style="background-color: white;"><br> <br>
+            <table width="600" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center" valign="top"
+                        style="background-color: white; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000000; padding: 0px 15px 10px 15px;">
+
+                        <body>
+                        <div class="center-icon">
+                            <img th:if="${usuario.estado}" src='https://i.postimg.cc/wxX383CS/informacion.png'
+                                 alt='approved-icon' width="100px"/>
+                            <img th:if="${!usuario.estado}" src='https://i.postimg.cc/HkthHpZb/marca-x.png'
+                                 alt='rejected-icon' width="100px"/>
+                        </div>
+                        <div class="center-text">
+                            <h2 th:if="${usuario.estado}"><strong>¡Felicidades, su cuenta ha sido activada!</strong>
+                            </h2>
+                            <h2 th:if="${!usuario.estado}"><strong>¡Lamentablemente, su cuenta ha sido
+                                desactivada!</strong></h2>
+                            <br>
+                            <div th:if="${#lists.size(empresas) > 1}">
+                                <p>Estimado <strong th:text="${fullName}"></strong>, representante de:
+                                <ul>
+                                    <li th:each="empresa: ${empresas}">
+                                        <span th:text="${empresa.nombre}"></span>
+                                    </li>
+                                </ul>
+                                </p>
+                            </div>
+                            <div th:if="${#lists.size(empresas) == 1}">
+                                <p>Estimado <strong th:text="${fullName}"></strong>, representante de:
+                                <ul>
+                                    <li th:each="empresa: ${empresas}">
+                                        <span th:text="${empresa.nombre}"></span>
+                                    </li>
+                                </ul>
+                                </p>
+                            </div>
+                            <div th:if="${#lists.size(empresas) < 1}">
+                                <p>Estimado <strong th:text="${fullName}"></strong>:
+                                    </ul>
+                                </p>
+                            </div>
+                            <br>
+                            <div th:if="${usuario.estado}">
+                                <p>Se ha llevado a cabo la revisión y activación de su cuenta en la plataforma.</p>
+                                <p th:if="${#lists.size(empresas) >= 1 }">Sin embargo, le informamos que para acceder a
+                                    la funcionalidad de creación de ofertas
+                                    laborales, la empresa registrada debe ser aprobada previamente por nuestro equipo.
+                                    Le
+                                    notificaremos tan pronto como su empresa sea aprobada y obtenga acceso completo a
+                                    todas
+                                    las características de nuestra plataforma.</p>
+                            </div>
+                            <div th:if="${!usuario.estado}">
+                                <p>Su cuenta ha sido desactivada en la plataforma.</p>
+                                <p>Lamentamos informarle que su cuenta ha sido desactivada y ya no tendrá acceso a las
+                                    funcionalidades de nuestra plataforma. Para obtener más información o solicitar la
+                                    reactivación de su cuenta, por favor contáctenos.</p>
+                            </div>
+                            <br>
+                            <p>Gracias por su atención. Para cualquier consulta o asistencia adicional, no dude en
+                                ponerse en contacto con nosotros.</p>
+                            <br>
+                            <p>¡Gracias por confiar en nosotros!</p>
+                            <p>El equipo de la ISTA.</p>
+                            <br>
+                        </div>
+                        <div class="center-icon">
+                            <img src="https://i.postimg.cc/7G2S7n52/logo-ista.png" alt="logo-ista">
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="center-icon space-icon">
+                            <a href="https://www.facebook.com/TecAzuay"><img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png"
+                                    alt="face-ico" width="30px"></a>
+                            <a href="https://www.instagram.com/tecdelazuay/?hl=es-la"><img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Instagram-Icon.png/1200px-Instagram-Icon.png"
+                                    alt="insta-ico" width="30px"></a>
+                        </div>
+                        </body>
+                        <footer>
+                            <small class="center-text">
+                                <p>Copyright (C) 2024 <strong>Instituto Tecnológico del Azuay</strong>. All rights
+                                    reserved.</p>
+                                <p>Octavio Chacón Moscoso 1-98 y Primera Transversal (Parque industrial)</p>
+                                <p>Cuenca, Ecuador</p>
+                                <p>Teléfono: 07 2809 551 - 0995363076</p>
+                                <p>O contáctanos a nuestro correo: info.alumni.est@gmail.com</p>
+                            </small>
+                        </footer>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br> <br>
+        </td>
+    </tr>
+</table>
+</body>
+
+</html>

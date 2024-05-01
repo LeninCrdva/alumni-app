@@ -1,0 +1,340 @@
+<app-whats-app-btn></app-whats-app-btn>
+
+<!-- SIDEBAR -->
+<div class="content-slide">
+    <section id="sidebar">
+        <a href="#" class="brand animate__animated animate__bounceInDown animate__faster">
+            <img class="icon" src="../../../assets/imgs/Alumni_logo_mini.png" alt="">
+            {{rolType}}
+        </a>
+
+        <!-- NOTE: ALUMNI -->
+        <ul class="side-menu animate__animated animate__bounceInLeft animate__faster"
+            [class.hidden]="!showAlumniOptions">
+
+            <li>
+                <a [class.active]="activeMenuItem === 'Inicio'" [routerLink]="['/system/alumni']"
+                    (click)="setActiveMenuItem('Inicio')">
+                    <i class='bx bxs-dashboard icon'></i> Inicio
+                </a>
+            </li>
+
+            <li class="divider" data-text="Perfil Alumni">Perfil Alumni</li>
+
+            <li>
+                <a href="javascript:void(0)"><i class='fa-solid fa-user-tie icon'></i>Mi Perfil<i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a (click)="setActiveMenuItem('Mi Perfil')" [routerLink]="['/system/alumni/perfil']"
+                            routerLinkActive="router-link-active">
+                            Mi Perfil</a>
+                    <li><a (click)="setActiveMenuItem('Actualizar Perfil')"
+                            [routerLink]="['/system/alumni/update-perfil']" routerLinkActive="router-link-active">
+                            Actualizar Perfil</a>
+                    </li>
+                    <li><a (click)="setActiveMenuItem('Mi Experiencia')" [routerLink]="['/system/alumni/experiencia']"
+                            routerLinkActive="router-link-active">
+                            Mis Experiencias Laborales</a>
+                    </li>
+                    <li><a (click)="setActiveMenuItem('Mis Capacitaciones')"
+                            [routerLink]="['/system/alumni/capacitaciones']" routerLinkActive="router-link-active">
+                            Mis Capacitaciones</a>
+                    </li>
+                    <li><a (click)="setActiveMenuItem('Mis Títulos')" [routerLink]="['/system/alumni/titulos']"
+                            routerLinkActive="router-link-active">
+                            Mis Título</a>
+                    </li>
+                    <li><a (click)="setActiveMenuItem('Referencias Personales')"
+                            [routerLink]="['/system/alumni/referencias-personales']"
+                            routerLinkActive="router-link-active">
+                            Referencias Personales</a>
+                    </li>
+                    <li><a (click)="setActiveMenuItem('Referencias Laborales')"
+                            [routerLink]="['/system/alumni/referencias-laborales']"
+                            routerLinkActive="router-link-active">
+                            Referencias Laborales</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="divider" data-text="Ofertas De Trabajo">Ofertas De Trabajo</li>
+            <li>
+                <a href="javascript:void(0)"><i class='fa-solid fa-briefcase icon'></i> Postulaciones <i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a (click)="setActiveMenuItem('Mis Postulaciones')"
+                            [routerLink]="['/system/alumni/postulaciones']" routerLinkActive="router-link-active">
+                            Mis Postulaciones</a>
+                    </li>
+                    <li><a (click)="setActiveMenuItem('Ofertas de Trabajo')"
+                            [routerLink]="['/system/alumni/ofertas-trabajo']" routerLinkActive="router-link-active">
+                            Ofertas de Trabajo</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="divider" data-text="Comunidad Tecazuay">Comunidad Tecazuay</li>
+            <li>
+                <a [class.active]="activeMenuItem === 'Comunidad De Graduados'"
+                    [routerLink]="['/system/alumni/comunidad']" routerLinkActive="router-link-active"
+                    (click)="setActiveMenuItem('Comunidad De Graduados')" href="javascript:void(0)"><i
+                        class='fa-solid fa-graduation-cap icon'></i>Comunidad
+                </a>
+            </li>
+            <li class="divider" data-text="Encuestas Tecazuay">Encuestas Tecazuay</li>
+            <li>
+                <a [class.active]="activeMenuItem === 'Encuestas'" [routerLink]="['/system/alumni/encuestas']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Encuestas')"
+                    href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i>Encuestas
+                </a>
+            </li>
+        </ul>
+
+
+
+        <!-- NOTE: ADMINISTRADOR -->
+        <ul class="side-menu" [class.hidden]="!showAdminOptions">
+
+            <li>
+                <a [class.active]="activeMenuItem === 'Inicio'" [routerLink]="['/system/admin']"
+                    (click)="setActiveMenuItem('Inicio')">
+                    <i class='bx bxs-dashboard icon'></i> Inicio
+                </a>
+            </li>
+
+            <li class="divider" data-text="Perfil">Perfil</li>
+
+            <li>
+                <a href="javascript:void(0)"><i class='fa-solid fa-user-tie icon'></i>Mi Perfil<i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a [routerLink]="['admin/perfil-admin']" routerLinkActive="router-link-active">Mi
+                            Perfil</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="divider" data-text="Gestión">Gestión</li>
+
+            <li>
+                <a [class.active]="activeMenuItem === 'Gestión usuarios'" [routerLink]="['admin/usuarios-list']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Gestión usuarios')"
+                    href="javascript:void(0)"><i class='fa-solid fa-users icon'></i>Gestión usuarios
+                </a>
+                <a [class.active]="activeMenuItem === 'Gestión Carreras'" [routerLink]="['admin/carrera']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Gestión Carreras')"
+                    href="javascript:void(0)"><i class='fa-solid fa-medal icon'></i>Gestión Carreras
+                </a>
+                <a [class.active]="activeMenuItem === 'Gestión Periodos'" [routerLink]="['admin/periodo']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Gestión Periodos')"
+                    href="javascript:void(0)"><i class='fa-regular fa-clock icon'></i>Gestión Periodos
+                </a>
+                <a [class.active]="activeMenuItem === 'Ciudades y Provincia'" [routerLink]="['admin/provincia']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Ciudades y Provincia')"
+                    href="javascript:void(0)"><i class='fa-solid fa-tree-city icon'></i>Ciudades y Provincia
+                </a>
+               
+                <a [class.active]="activeMenuItem === 'Empresas'" [routerLink]="['admin/empresas']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Empresas')"
+                    href="javascript:void(0)"><i class='fa-solid fas fa-building icon'></i>Empresas
+                </a>
+                <a [class.active]="activeMenuItem === 'OfertasLaborales'" [routerLink]="['admin/ofertas-laborales']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('OfertasLaborales')"
+                    href="javascript:void(0)"><i class='fa-solid fas fa-briefcase icon'></i>Ofertas Laborales
+                </a>
+               
+            </li>
+
+            <li class="divider" data-text="Analitica y Reportes">Analítica y Reportes</li>
+
+            <li>
+                <a href="javascript:void(0)"><i class='fa-solid fa-database icon'></i>Reportes<i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a [routerLink]="['/system/admin/reportes']" routerLinkActive="router-link-active">Mis reportes
+                            visuales</a>
+                    </li>
+                    <li><a [routerLink]="['/system/admin/documentos']" routerLinkActive="router-link-active">Informes
+                            Graduado</a>
+                    </li>
+                    <li><a [routerLink]="['/system/admin/graduado-carrera-document']" routerLinkActive="router-link-active">Informes
+                            Graduado por Carrera</a>
+                    </li>
+                    <li><a [routerLink]="['/system/admin/empresa-document']"
+                            routerLinkActive="router-link-active">Informe Empresa</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="divider" data-text="Eventos">Eventos</li>
+
+            <li>
+                <a href="javascript:void(0)"><i class='fa-solid fas fa-calendar-alt icon'></i>Eventos<i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a [routerLink]="['/system/admin/gestion-web-builder']"
+                            routerLinkActive="router-link-active">Constructor Evento
+                        </a>
+                    </li>
+                    <li><a [routerLink]="['/system/admin/gestion-programas']"
+                            routerLinkActive="router-link-active">Programa</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="divider" data-text="Encuestas">Encuestas</li>
+
+            <li>
+                
+                <a href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i>Encuestas<i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                   
+                
+                    <li> 
+                        <a [class.active]="activeMenuItem === 'Encuestas'" [routerLink]="['admin/encuestas']"
+                        routerLinkActive="router-link-active" (click)="setActiveMenuItem('Encuestas')"
+                        href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i>Encuestas
+                    </a>
+                    </li>
+                    <li><a [class.active]="activeMenuItem === 'Ver Encuestas creadas'" [routerLink]="['admin/encuestascard']"
+                        routerLinkActive="router-link-active" (click)="setActiveMenuItem('Ver Encuestas creadas')"
+                        href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i> Ver Encuestas Creadas
+                    </a>
+                    </li>
+
+                    <li> <a [class.active]="activeMenuItem === 'Respuestas de Encuestas'" [routerLink]="['admin/respuestas']"
+                        routerLinkActive="router-link-active" (click)="setActiveMenuItem('Respuestas de Encuestas')"
+                        href="javascript:void(0)"> <i class='fa-solid fas fa-chart-pie icon'></i> Respuestas de Encuestas
+                    </a>
+                </li>
+
+                <li> <a [class.active]="activeMenuItem === 'Seguimiento a Graduados'" [routerLink]="['admin/seguimiento']"
+                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Seguimiento a Graduados')"
+                    href="javascript:void(0)"> <i class='fa-solid fas fa-user-graduate icon'></i> Seguimiento
+                </a>
+            </li>
+                
+            <li> <a [class.active]="activeMenuItem === 'Respuestas Encuestas Carrera'" [routerLink]="['admin/respuestas-carrera']"
+                routerLinkActive="router-link-active" (click)="setActiveMenuItem('Respuestas Encuestas Carrera')"
+                href="javascript:void(0)"> <i class='fas fa-comment-alt icon'></i> Respuestas Encuestas Carrera
+            </a>
+        </li>
+
+                </ul>
+            </li>
+        </ul>
+
+
+
+
+        <!-- NOTE: EMPRESARIO -->
+        <ul class="side-menu" [class.hidden]="!showEmpresarioOptions">
+
+            <li>
+                <a [class.active]="activeMenuItem === 'Inicio'" [routerLink]="['/system/company']" (click)="setActiveMenuItem('Inicio')">
+                    <i class='bx bxs-dashboard icon'></i> Inicio
+                </a>
+            </li>
+
+            <li class="divider" data-text="Perfil Alumni">Perfil Empresario</li>
+
+            <li>
+                <a href="javascript:void(0)"><i class='fa-solid fa-user-tie icon'></i>Mi Perfil<i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a [routerLink]="['/system/company/perfil']" routerLinkActive="router-link-active">Mi
+                            Perfil</a>
+                    </li>
+                    <li><a [routerLink]="['/system/company/update-perfil']"
+                            routerLinkActive="router-link-active">Actualizar
+                            Perfil</a>
+                    </li>
+                    <li><a [routerLink]="['/system/company/crud']" routerLinkActive="router-link-active">Mis
+                            Empresas</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="divider" data-text="Ofertas De Trabajo">Ofertas De Trabajo</li>
+            <li>
+                <a href="javascript:void(0)"><i class='fa-solid fa-briefcase icon'></i> Postulaciones <i
+                        class='bx bx-chevron-right icon-right'></i></a>
+                <ul class="side-dropdown">
+                    <li><a [routerLink]="['/system/company/postulaciones_form']">Ofertar Trabajo</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <!-- NOTE: RESPONSABLE CARRERA -->
+        <ul class="side-menu" [class.hidden]="!showResponsableCarreraOptions">
+
+            <li [class.active]="activeMenuItem === 'inicio'">
+                <a [routerLink]="['/system/career-manager']" (click)="setActiveMenuItem('inicio')">
+                    <i class='bx bxs-dashboard icon'></i> Inicio
+                </a>
+            </li>
+
+            <li class="divider" data-text="Gestión">Gestión</li>
+
+            <li>
+                <a [class.active]="activeMenuItem === 'Ver Encuestas creadas'"
+                    [routerLink]="['career-manager/encuestas']" routerLinkActive="router-link-active"
+                    (click)="setActiveMenuItem('Ver Encuestas creadas')" href="javascript:void(0)"><i
+                        class='fa-solid fas fa-poll icon'></i> Ver Encuestas Creadas
+                </a>
+                <a [class.active]="activeMenuItem === 'Respuestas de Encuestas'"
+                    [routerLink]="['career-manager/respuestas']" routerLinkActive="router-link-active"
+                    (click)="setActiveMenuItem('Respuestas de Encuestas')" href="javascript:void(0)"> <i
+                        class='fa-solid fas fa-chart-pie icon'></i> Respuestas de Encuestas
+                </a>
+            </li>
+            <li> <a [class.active]="activeMenuItem === 'Seguimiento a Graduados'" [routerLink]="['career-manager/seguimiento']"
+                routerLinkActive="router-link-active" (click)="setActiveMenuItem('Seguimiento a Graduados')"
+                href="javascript:void(0)"> <i class='fa-solid fas fa-user-graduate icon'></i> Seguimiento
+            </a>
+        </li>
+            
+        <li> <a [class.active]="activeMenuItem === 'Respuestas Encuestas Carrera'" [routerLink]="['career-manager/respuestas-carrera']"
+            routerLinkActive="router-link-active" (click)="setActiveMenuItem('Respuestas Encuestas Carrera')"
+            href="javascript:void(0)"> <i class='fas fa-comment-alt icon'></i> Respuestas Encuestas Carrera
+        </a>
+    </li>
+
+        </ul>
+
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- NAVBAR -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu toggle-sidebar'></i>
+            <form action="#">
+                <a style="font-weight: 700; font-size: 22px;">{{activeMenuItem}}</a>
+            </form>
+            <div class="profile dropdown-toggle">
+                <a>Bienvenido "{{ name }}"</a>
+                <img [src]="urlImage ? urlImage : '../../../assets/imgs/Alumni_logo_mini.png'" alt="Imagen de usuario"
+                    alt="Foto Alumni">
+                <ul class="profile-link">
+                    <li><a (click)="redirectToProfile()">
+                            <i class='bx bxs-user-circle icon'></i> Perfil</a></li>
+                    <li><a (click)="redirectToUpdateProfile()">
+                            <i class='bx bx-user-pin icon'></i> Actualizar Perfil</a></li>
+                    <li><a [routerLink]="['/inicio']" routerLinkActive="router-link-active"
+                            (click)="cerrarSesionconclick()"><i class='bx bx-exit icon'></i> Cerrar Sesion</a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- NAVBAR -->
+</div>

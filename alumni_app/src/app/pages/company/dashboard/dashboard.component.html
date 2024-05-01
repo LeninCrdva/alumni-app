@@ -1,0 +1,72 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/bg/FondoDesc.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Bienvenido Empresario</h1>
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="fa-solid fa-house"></i>
+                    <a href="javascript:void(0)">Inicio</a>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+                        fill="currentColor">
+                        <path
+                            d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z">
+                        </path>
+                    </svg>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<div class="title-cards">
+    <h2><b>Gráficas</b></h2>
+</div>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <app-bar-chart></app-bar-chart>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <app-pie-chart></app-pie-chart>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--   Tarjetas-->
+<div class="title-cards">
+    <h2><b>Servicios De Alumni</b></h2>
+</div>
+<div class="container-card">
+
+    <div class="card">
+        <figure>
+            <img src="../../../../assets/imgs/headers/empresas.jpg">
+        </figure>
+        <div class="contenido-card">
+            <h3>Habilita tu Empresa</h3>
+            <p>"Pon en marcha tu empresa en nuestra plataforma. Completa tu perfil empresarial para acceder a todas las
+                funciones y
+                beneficios que ofrecemos."</p>
+            <a (click)="setActiveMenuItem('Mis Empresas', 'crud')">Descubrir Función</a>
+        </div>
+    </div>
+    <div class="card">
+        <figure>
+            <img src="../../../../assets/imgs/headers/Postulaciones.jpg">
+        </figure>
+        <div class="contenido-card">
+            <h3>Oferta Trabajo</h3>
+            <p>"Anuncia oportunidades laborales en tu empresa. Crea y gestiona tus ofertas de trabajo para encontrar al
+                candidato perfecto que impulse el crecimiento de tu equipo."</p>
+            <a (click)="setActiveMenuItem('Ofertas Laborales', 'postulaciones_form')">Descubrir Función</a>
+        </div>
+    </div>
+</div>
+<!--Fin   Tarjetas-->

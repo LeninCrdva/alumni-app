@@ -1,0 +1,133 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Empresas</h1>
+        </div>
+    </div>
+</section>
+
+<div class="col-md-12 col-lg-12">
+    <div class="card">
+        <div class="card-body collapse show" id="collapse1">
+            <div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+                aria-hidden="true">
+
+                <div class="modal-dialog" role="document" data-bs-backdrop="static">
+
+                    <div class="modal-content">
+                        <div [class.bg-primary]="true" class="modal-header text-white">
+                            <h5>Datos de la Empresa:</h5>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-layout form-layout-1">
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-10 mx-auto">
+
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <div class="form-group">
+                                                        <h6 class="form-control-label active">Nombre:</h6>
+                                                        <p>{{company.nombre}}</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h6 class="form-control-label active">RUC:</h6>
+                                                        <p>{{company.ruc}}</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h6 class="form-control-label active">Razón Social:</h6>
+                                                        <p>{{company.razonSocial}}</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h6 class="form-control-label active">Área:</h6>
+                                                        <p>{{company.area}}</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h6 class="form-control-label active">Sector Empresarial:</h6>
+                                                        <p>{{company.sectorEmpresarial?.nombre}}</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h6 class="form-control-label active">Sitio Web:</h6>
+                                                        <a [href]="company.sitioWeb" target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            class="text-lowercase">{{company.sitioWeb}}</a>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <h6 class="form-control-label active">Tipo de Empresa:</h6>
+                                                        <p>{{company.tipoEmpresa}}</p>
+                                                    </div>
+                                                    <div class="mt-2">
+                                                        <h6 class="form-control-label active">RUC:</h6>
+                                                        <a [href]="companyUrl">
+                                                            <iframe [src]="companyUrl" width="100%" height="250px"></iframe>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button data-bs-dismiss="modal" id="close-button"
+                                class="btn btn-oblong btn-primary btn-block">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <div class="d-flex">
+                    <div class="input-group">
+                        <input type="text" class="form-control" #searchInput id="searchInput" placeholder="Buscar...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body pd-0 collapse show" id="collapse1">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="table-light ">
+                            <tr>
+                                <th>#</th>
+                                <th>NOMBRE</th>
+                                <th>RUC</th>
+                                <th>TIPO</th>
+                                <th class="text-center w-100px">Ver</th>
+                                <th class="text-center w-100px">Activo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let company of filterCompanyList;">
+                                <td>{{ company.id }}</td>
+                                <td>
+                                    {{ company.nombre }}
+                                </td>
+                                <td>{{ company.ruc }}</td>
+                                <td>{{ company.tipoEmpresa }}</td>
+                                <td class="text-center">
+                                    <a data-bs-toggle="modal" data-bs-target="#m_modal_5" class="table-action mg-r-10"
+                                        (click)="showCompanyDetails(company.id)">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center justify-content-center">
+                                    <label class="switch">
+                                        <input type="checkbox" [checked]="company.estado" id="switch{{company.id}}"
+                                            (change)="toggleSwitch(company)">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

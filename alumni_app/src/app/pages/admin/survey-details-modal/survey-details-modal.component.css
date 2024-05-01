@@ -1,0 +1,17 @@
+.modal-body {
+    max-width: 100%;
+    overflow-x: auto; /* Permitir desplazamiento horizontal si es necesario */
+    max-height: 80vh; /* Altura máxima del cuerpo del modal */
+    overflow-y: auto;
+  }
+  
+  .form-check-label {
+    margin-right: 10px; /* Espacio entre etiquetas de opciones */
+  }
+  #elementToCapture {
+    width: 100%; /* Ajusta el ancho al 100% del contenedor padre */
+    padding: 20px; /* Añade relleno al contenido para espacio */
+    box-sizing: border-box; /* Incluye el relleno en el ancho total */
+    height: auto;  
+}
+  

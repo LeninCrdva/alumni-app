@@ -1,0 +1,129 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Comunidad De Graduados</h1>
+        </div>
+    </div>
+</section>
+
+<!-- Nuevo Modal -->
+<div class="modal animate__animated animate__fadeInDown animate__faster" id="m_modal_4" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel_4" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white bg-primary">
+                <h5 class="modal-title">Perfil del Graduado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-layout form-layout-1">
+                        <!-- Contenido del formulario -->
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="nombres">Cédula:</label>
+                                    <input class="form-control" type="text" id="nombres"
+                                        [value]="selectedGraduado?.usuario?.persona?.cedula" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="apellidos">Correo:</label>
+                                    <input class="form-control" type="text" id="apellidos"
+                                        [value]="selectedGraduado?.emailPersonal" disabled>
+                                </div>
+                                <div class="text-center mt-auto">
+                                    <label class="form-label">Título:</label>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <a href="{{ selectedGraduado?.urlPdf }}" target="_blank"
+                                            class="btn btn-primary btn-sm">
+                                            <i class="fas fa-file-pdf mr-1"></i> Ver Título
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="text-center">
+                                    <div class="mb-3">
+                                        <ng-container *ngIf="selectedGraduado && selectedGraduado.usuario">
+                                            <img [src]="selectedGraduado.usuario.urlImagen" alt="Foto"
+                                                style="max-width: 100%; max-height: 250px;">
+                                        </ng-container>
+                                        <ng-container *ngIf="!selectedGraduado || !selectedGraduado.usuario">
+                                            <span>No tiene foto</span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body collapse show">
+
+        <div class="card-body pd-0 collapse show animate__animated animate__bounceInUp animate__fast">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered custom-table table-hover">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>#</th>
+                            <th>NOMBRES</th>
+                            <th>APELLIDOS</th>
+                            <th>TELEFONO</th>
+                            <th>FECHA DE GRADUACIÓN</th>
+                            <th>CIUDAD</th>
+                            <th>ESTADO CIVIL</th>
+                            <th class="text-center w-100px">Acciones</th>
+                            <th class="text-center w-100px">Contactar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let graduadoItem of graduadosList;">
+                            <th scope="row">{{ graduadoItem.id }}</th>
+                            <!-- <td>{{ graduadoItem.usuario.persona.primer_nombre + graduadoItem.usuario.persona.segundo_nombre }}</td> -->
+                            <td>{{ graduadoItem.usuario.persona.primerNombre }} {{
+                                graduadoItem.usuario.persona.segundoNombre}}</td>
+                            <td>{{ graduadoItem.usuario.persona.apellidoPaterno }} {{
+                                graduadoItem.usuario.persona.apellidoMaterno}}</td>
+                            <td>{{ graduadoItem.usuario.persona.telefono }}</td>
+                            <td>{{ graduadoItem['anioGraduacion'] }} </td>
+                            <td>{{ graduadoItem.ciudad.nombre }} - {{graduadoItem.ciudad.provincia.nombre}} -
+                                {{graduadoItem.ciudad.provincia.pais}}</td>
+                            <td>{{ graduadoItem.estadoCivil }}</td>
+                            <td class="text-center table-actions align-middle justify-content-center">
+                                <button (click)="showGraduadoDetails(graduadoItem)" data-bs-toggle="modal"
+                                    data-bs-target="#m_modal_4" type="button"
+                                    class="btn btn-oblong btn-outline-primary btn-block">
+                                    Ver Perfil
+                                </button>
+                            </td>
+                            <td class="text-center table-actions align-middle justify-content-center">
+                                <button data-bs-toggle="modal"
+                                    (click)="contactarPorWhatsapp(graduadoItem.usuario.persona.telefono)" type="button"
+                                    class="btn btn-oblong btn-outline-primary btn-block">
+                                    Contactar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

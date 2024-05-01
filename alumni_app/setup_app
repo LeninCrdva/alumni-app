@@ -1,0 +1,22 @@
+#  #!/bin/bash
+echo "#####################__Levantando contenedores__######################"
+
+# # If you want to use the IP of the host machine, you can use the following command
+# #export IP=$(ifconfig eth0 | awk '/inet /{print $2}' | cut -f2 -d':')
+# IP=$(curl -s https://api.ipify.org)
+# # If the previous command does not work, you can use the following command
+# # export IP=$(hostname -I | awk '{print $1}')
+# # or
+# # export IP=$(hostname -I | cut -f1 -d' ')
+# docker-compose up
+
+#!/bin/bash
+
+# Obtener la dirección IP de la máquina host
+IP=$(hostname -I | awk '{print $1}')
+
+# Reemplazar la variable $IP en el archivo docker-compose.yml
+sed -i "s/IP/$IP/g" docker-compose.yml
+
+# Ejecutar docker-compose up
+docker-compose up

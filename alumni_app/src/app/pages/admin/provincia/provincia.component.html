@@ -1,0 +1,197 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/bg/Isuta_bg.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Provincias y ciudades</h1>
+        </div>
+    </div>
+</section>
+
+<div class="card">
+    <div class="card-body collapse show" id="collapse1">
+        <!-- Modal -->
+        <div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+            aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <!--- <div [class.bg-success]="!editModeProvince" [class.bg-primary]="editModeProvince"
+                        class="modal-header text-white">
+                        <h5 [innerText]="editModeProvince ? 'Modificar Provincia' : 'Crear nueva Provincia'"></h5>
+                    </div>-->
+                    <div [class.bg-primary]="true" class="modal-header text-white">
+                        <h5 [innerText]="editModeProvince ? 'Modificar Provincia' : 'Registrar nueva Provincia'"></h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <form [formGroup]="registerProvinceForm">
+                            <div class="form-layout form-layout-1">
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-10 mx-auto">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Nombre: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input type="text" placeholder="Azuay" formControlName="nombre">
+                                            <div class="text-danger"
+                                                *ngIf="registerProvinceForm.get('nombre')?.hasError('required') && registerProvinceForm.get('nombre')?.touched">
+                                                El nombre de la provincia es obligatorio.
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label class="form-control-label active">País: <span
+                                                    class="tx-danger">*</span></label>
+                                                    <input type="text" placeholder="Ecuador" formControlName="pais" style="text-transform: uppercase;">
+                                            <div class="text-danger"
+                                                *ngIf="registerProvinceForm.get('pais')?.hasError('required') && registerProvinceForm.get('pais')?.touched">
+                                                El nombre del país es obligatorio.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button (click)="editModeProvince ? UpdateProv(): createProvince()" type="submit"
+                            data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong btn-primary">
+                            {{!editModeProvince ? 'Registrar Provincia' : 'Editar Provincia'}}
+                        </button>
+                        <button data-bs-dismiss="modal" id="close-button"
+                            class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--/ Modal -->
+
+        <div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+            aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <!--- <div [class.bg-success]="!editarClicked" class="modal-header text-white bg-primary">
+                        <h5 [innerText]="editModeCity ? 'Modificar Ciudad' : 'Crear nueva Ciudad'"></h5>
+                    </div>-->
+                    <div [class.bg-primary]="true" class="modal-header text-white">
+                        <h5 [innerText]="editModeCity ? 'Modificar Ciudad' : 'Registrar nueva Ciudad'"></h5>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <form [formGroup]="registerCityForm">
+                            <div class="form-layout form-layout-1">
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-10 mx-auto">
+
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Provincia: <span
+                                                    class="tx-danger">*</span></label>
+                                            <select formControlName="provinciaNombre" [ariaPlaceholder]="'Seleccione'">
+                                                <option *ngFor="let province of provincesList"
+                                                    value="{{province.nombre}}">{{province.nombre}}</option>
+                                            </select>
+                                            <div class="text-danger"
+                                                *ngIf="registerCityForm.get('provinciaNombre')?.hasError('required') && registerCityForm.get('provinciaNombre')?.touched">
+                                                Elija la provincia.
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mt-2">
+                                            <label class="form-control-label active">Ciudad: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input type="text" placeholder="Cuenca" formControlName="nombreCiudad">
+                                            <div class="text-danger"
+                                                *ngIf="registerProvinceForm.get('nombreCiudad')?.hasError('required') && registerProvinceForm.get('nombreCiudad')?.touched">
+                                                El nombre de la cuidad es obligatorio.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button (click)="!editModeCity ? createCity() : UpdateCity()" type="submit"
+                            data-bs-toggle="modal" data-bs-target="#m_modal_5" class="btn btn-oblong btn-primary">
+                            {{editModeCity ? "Editar Ciudad" : "Registrar Ciudad"}}
+                        </button>
+                        <button data-bs-dismiss="modal" id="close-button"
+                            class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12">
+            <div class="d-flex">
+                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
+                    class="btn btn-oblong btn-primary mg-b-10 mt-2"
+                    style="margin-right:10px; width: 17rem; height: 2.5rem;">
+                    Registrar Provincia</button>
+
+                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_5" type="button"
+                    class="btn btn-oblong btn-primary mg-b-10 mt-2"
+                    style="margin-right:10px; width: 17rem; height: 2.5rem;">
+                    Registrar Ciudad</button>
+                <div class="input-group">
+
+                    <input type="text" class="form-control me-3" id="searchInput" placeholder="Buscar..."
+                        style="border-color: blue;" (input)="onSearch($event)">
+
+                    <select class="form-control" style="border-radius: 1rem;" id="selectInput">
+                        <option value="1">Ciudad</option>
+                        <option value="2">Provincia</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body pd-0 collapse show" id="collapse1">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>CIUDAD</th>
+                            <th>PROVINCIA</th>
+                            <th>PAÍS</th>
+                            <th class="text-center w-100px">Editar Provincia</th>
+                            <th class="text-center w-100px">Editar Ciudad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let city of citiesListDTO">
+                            <th scope="row">{{city?.id}}</th>
+                            <td>{{ city?.nombre }}</td>
+                            <td>{{ city?.provincia }}</td>
+
+                            <ng-container *ngFor="let province of provincesList">
+                                <ng-container *ngIf="city.provincia === province.nombre">
+                                    <td>
+                                        {{ province.pais }}
+                                    </td>
+                                    <td class="text-center">
+                                        <a (click)="catchProvince(province)" data-bs-toggle="modal"
+                                            data-bs-target="#m_modal_4" class="table-action mg-r-10"
+                                            [class.text-primary]="!editarClicked" [class.text-danger]="editarClicked"
+                                            href="#">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a (click)="catchCity(city)" data-bs-toggle="modal" data-bs-target="#m_modal_5"
+                                            class="table-action mg-r-10" [class.text-primary]="!editarClicked"
+                                            [class.text-danger]="editarClicked" href="#">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </a>
+                                    </td>
+                                </ng-container>
+                            </ng-container>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

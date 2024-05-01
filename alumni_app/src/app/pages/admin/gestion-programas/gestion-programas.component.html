@@ -1,0 +1,212 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/headers/Comunidad.jpg); padding: 120px 0;">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Creación de Programas </h1>
+        </div>
+    </div>
+</section>
+<!-- Modal -->
+<div class="modal fade" id="modalData" tabindex="-1" aria-labelledby="modalDataLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white" [class.bg-navy]="!editarClicked" [class.bg-primary]="editarClicked">
+                <h5 [innerText]="editarClicked ? 'Modificar Programa' : 'Agregar Programa'"></h5>
+            </div>            
+            
+            <div class="modal-body">
+                <form class="needs-validation" [formGroup]="validateForm">
+                    <div class="row mb-3" data-parsley-validate>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="titulo" class="form-label">TÍTULO:</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-heading"></i>
+                                    </span>
+                                    <input type="text" class="form-control" id="titulo" name="titulo"
+                                        placeholder="Ingrese el Título" formControlName="titulo" required>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - El Titulo es obligatoriosssss.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3" data-parsley-validate>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="subTitulo" class="form-label">SUBTITULO:</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-marker"></i>
+                                    </span>
+                                    <textarea class="form-control" style="height: 65px;" id="subTitulo" name="subTitulo"
+                                        placeholder="Ingrese el subtítulo del Programa"
+                                        formControlName="subTitulo" required></textarea>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - El subtítulo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3" data-parsley-validate>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="resumen" class="form-label">RESUMEN:</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-book-medical"></i>
+                                    </span>
+                                    <textarea class="form-control" style="height: 90px;" id="resumen" name="resumen"
+                                        placeholder="Ingrese el resumen del Programa" formControlName="resumen"
+                                        required></textarea>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - El resumen es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3" data-parsley-validate>
+                        <div class="col-lg-6">
+                            <div class="form-group"
+                                [class.has-error]="validateForm.get('tipoxml')?.invalid && validateForm.get('tipoxml')?.touched">
+                                <label for="tipoxml" class="form-label">Seleccione una Plantilla</label>
+                                <select class="form-select" id="tipoxml" name="tipoxml" [(ngModel)]="selectedTipo"
+                                    formControlName="tipoxml" required>
+                                    <option value="" disabled selected>-- Seleccione una opción --</option>
+                                    <option *ngFor="let component of xmlcomponents" [value]="component.tipo">{{
+                                        component.tipo }}</option>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - Seleccione una plantilla.
+                                    </div>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="colorFondo" class="form-label">COLOR DE FONDO:</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-eye-dropper"></i>
+                                    </span>
+                                    <input type="color" class="form-control" id="colorFondo" name="colorFondo"
+                                        formControlName="colorFondo" required>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - El color de fondo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3" data-parsley-validate>
+                        <div class="col-lg-12">
+                            <label class="form-label">Subir Foto De La Portada</label>
+
+                            <div class="card mg-b-20">
+                                <div class="card-header">
+                                    <h4 class="card-header-title">
+                                        <div class="preview-img" *ngIf="imageHandlerService.previsualizacion">
+                                            <button class="clear-image form-control border-0 cancel-button"
+                                                type="button" (click)="imageHandlerService.clearImage()">
+                                                Eliminar Imagen
+                                            </button>
+
+                                            <div class="image-container text-center" style="margin: 2rem;">
+                                                <img [src]="imageHandlerService.previsualizacion" alt=""
+                                                    style="width: 30rem; height: 300px; object-fit: cover; border-radius: 1rem;" />
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div class="card-body collapse show" id="collapse8">
+                                    <input type="file" class="form-control" aria-label="file example" required
+                                        (change)="imageHandlerService.capturarFile($event)"
+                                        accept=".jpg, .jpeg, .png, .webp" />
+                                    <div class="invalid-feedback">La foto de portada es necesaria.</div>
+                                </div>
+                                <div class="oaerror danger invalid-feedback">
+                                    <strong>Error</strong> - La foto para la portada es obligatorio.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button (click)="onSubmit()" type="submit" class="btn btn-oblong" 
+                [class.btn-warning]="!editarClicked" [class.btn-primary]="editarClicked"
+                [class.bg-navy]="!editarClicked">
+            {{ editarClicked ? 'Actualizar Programa' : 'Registrar Programa' }}
+        </button>
+        
+
+                <button type="button" #myModalClose data-bs-dismiss="modal"
+                    class="btn btn-oblong btn-outline-danger btn-block">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body collapse show">
+
+        <div class="col-md-12 col-lg-12">
+            <div class="d-flex">
+                <button (click)="loadData()" class="btn btn-success">
+                    <i class="fas fa-sync"></i>
+                </button>
+                <button (click)="filterService.openFilters()" class="btn btn-dark ms-2">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+
+                <ng-multiselect-dropdown style="width: 30rem;" *ngIf="filterService.editFilterTabs"
+                    [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings"
+                    [data]="filterService.dropdownList" [(ngModel)]="filterService.selectedItems"
+                    (onSelect)="filterService.onItemSelect($event)" (onSelectAll)="filterService.onSelectAll($event)"
+                    (onDeSelect)="filterService.onItemDeSelect($event)"
+                    (onDeSelectAll)="filterService.onDeSelectAll($event)" class="ms-2">
+                </ng-multiselect-dropdown>
+
+                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
+                class="btn btn-primary ms-2" style="width: 20rem;">
+            Agregar Programa
+        </button>
+        
+            </div>
+        </div>
+
+        <div class="mt-3 show animate__animated animate__bounceInUp animate__fast">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered table-hover">
+                    <tbody>
+                        <tr *ngFor="let programas of gestionProgramasList; let i = index">
+                            <th class="text-center" scope="row">{{ i + 1 }}</th>
+                            <td>{{ programas.titulo }}</td>
+                            <td>{{ programas.subTitulo }}</td>
+                            <td>{{ programas.resumen }}</td>
+                            <td>{{ programas.tipoxml }}</td>
+                            <td class="text-right text-center align-middle">
+                                <a (click)="onEditarClick(programas.id_prom)" data-bs-toggle="modal"
+                                    data-bs-target="#modalData" class="btn btn-label-primary btn-sm">
+                                    <i class="fa fa-pencil"></i> Editar
+                                </a>
+                                <a (click)="onDeleteClick(programas.id_prom)"
+                                    class="btn btn-label-danger btn-sm mg-y-5 ms-2">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

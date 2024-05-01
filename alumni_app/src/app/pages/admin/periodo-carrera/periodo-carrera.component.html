@@ -1,0 +1,142 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/bg/Comunidad.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Gestión De Períodos</h1>
+        </div>
+    </div>
+</section>
+
+<div class="col-md-12 col-lg-12">
+    <div class="card">
+        <div class="card-body collapse show" id="collapse1">
+            <!-- Modal -->
+            <div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+                aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-lg" role="document" data-bs-backdrop="static">
+                    <div class="modal-content">
+                        <div class="modal-header text-white bg-primary">
+                            <h5 [innerText]="editMode ? 'Modificar Período' : 'Crear nuevo Período'">
+                            </h5>
+                        </div>
+
+                        <div class="modal-body">
+                            <form [formGroup]="registerPeriodForm">
+                                <div class="form-layout form-layout-1">
+                                    <div class="row mg-b-25">
+                                        <div class="col-lg-10 mx-auto">
+                                            <div class="form-group">
+                                                <label class="form-control-label active">Nombre Período: <span
+                                                        class="tx-danger">*</span></label>
+                                                <input type="text" placeholder="Período 21 - 22"
+                                                    formControlName="nombrePeriodo">
+                                                <div class="text-danger"
+                                                    *ngIf="registerPeriodForm.get('nombrePeriodo')?.hasError('required') && registerPeriodForm.get('nombrePeriodo')?.touched">
+                                                    El nombre del período es obligatorio.
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label active">Fecha Inicio: <span
+                                                        class="tx-danger">*</span></label>
+                                                <input type="date" formControlName="fecha_inicio">
+                                                <div class="text-danger"
+                                                    *ngIf="registerPeriodForm.get('fecha_inicio')?.hasError('required') && registerPeriodForm.get('fecha_inicio')?.touched">
+                                                    Elija una fecha de apertura.
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label active">Fecha Fin: <span
+                                                        class="tx-danger">*</span></label>
+                                                <input type="date" formControlName="fecha_fin">
+                                                <div class="text-danger"
+                                                    *ngIf="registerPeriodForm.get('fecha_fin')?.hasError('required') && registerPeriodForm.get('fecha_fin')?.touched">
+                                                    Elija una fecha de cierre.
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label active">Carreras: <span
+                                                        class="tx-danger">*</span></label>
+                                                <ng-multiselect-dropdown name="carreras"
+                                                    [placeholder]="'Seleccione las carreras'" [data]="careerList"
+                                                    formControlName="carreras" [disabled]="disabled"
+                                                    [settings]="dropdownSettings">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button (click)="!editMode ? createPeriod() : UpdatePeriod()" type="submit"
+                                data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong btn-primary">
+                                {{editMode ? 'Guardar Cambios' : 'Crear'}}
+                            </button>
+                            <button data-bs-dismiss="modal" id="close-button"
+                                class="btn btn-oblong btn-outline-danger btn-block"
+                                (click)="closeModal()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <div class="d-flex">
+                    <div class="mt-2">
+                        <button data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
+                            class="btn btn-oblong btn-primary mg-b-10"
+                            style="margin-right:10px; width: 17rem; height: 2.5rem;">
+                            Registrar Período</button>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" #searchInput id="searchInput" placeholder="Buscar...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body pd-0 collapse show" id="collapse1">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="table-light ">
+                            <tr>
+                                <th>#</th>
+                                <th>Carrera</th>
+                                <th>Período</th>
+                                <th>Desde</th>
+                                <th>Hasta</th>
+                                <th class="text-center w-100px">Acciones</th>
+                                <th class="text-center w-100px">Activo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let period of periodList;">
+                                <td>{{ period.id }}</td>
+                                <td>
+                                    <span>
+                                        {{ getCareerNames(period.carreras) }}
+                                    </span>
+                                </td>
+                                <td>{{period.nombre}}</td>
+                                <td>{{ period.fechaInicio }}</td>
+                                <td>{{ period.fechaFin }}</td>
+                                <td class="text-center">
+                                    <a (click)="catchPeriod(period)" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                                        class="table-action mg-r-10" [class.text-primary]="!editMode">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center justify-content-center">
+                                    <label class="switch">
+                                        <input type="checkbox" [checked]="period.estado"
+                                            (change)="toggleSwitch(period)">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>

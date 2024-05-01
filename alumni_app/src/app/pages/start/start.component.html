@@ -1,0 +1,337 @@
+<!-- START NAVBAR -->
+<header class="animate__animated animate__fadeIn animate__fast">
+    <a href="#" class="logo animate__animated animate__fadeInLeft">
+        <i><img src="./assets/imgs/ALumni_Logo_Light_Large 3.png" alt="Alumni"></i>
+    </a>
+
+    <nav class="navbar animate__animated animate__fadeInRight">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#acceso">Acceso</a></li>
+        <li><a href="#video">Video</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+    </nav>
+
+    <div class="nav__toggle" id="menu-icon">
+        <i class="fa-solid fa-bars nav__burger"></i>
+    </div>
+</header>
+
+<!-- START HOME -->
+<section id="home" class="home_bg">
+    <div class="container">
+        <div class="col-md-8 col-sm-12 col-xs-12">
+            <div class="hero-text animate__animated animate__fadeIn animate__slower">
+                <h2>Seguimiento a Graduados</h2>
+                <p>Trayectorias brillantes después de la graduación: Acompañamos a nuestros graduados en cada paso
+                    del camino. descubre
+                    cómo nuestro riguroso seguimiento a graduados abre puertas a oportunidades profesionales y
+                    contribuye al éxito duradero
+                    de nuestra comunidad educativa.</p>
+                <div class="home_btn">
+                    <a href="#video" class="app-btn wow bounceIn page-scroll" data-wow-delay=".8s"><i
+                            class="fa fa-play"></i> Ver Más Información</a>
+                </div>
+            </div>
+        </div><!--- END COL -->
+    </div><!--- END CONTAINER -->
+</section>
+<!-- END  HOME -->
+
+<!-- INGRESO A LA PLATAFORMA -->
+<section id="acceso" class="our_pricing section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="section-title text-center wow zoomIn">
+                <h2>INGRESO A LA PLATAFORMA</h2>
+                <p>"Accede a nuestra plataforma y disfruta de todos nuestros servicios"</p>
+            </div>
+
+            <!-- Start Features -->
+            <section class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                            <div class="feature feature-transition bg-light p-4 py-5 shadow rounded text-center">
+                                <ng-lottie [options]="options_Anim1"></ng-lottie>
+
+                                <h5 class="title mt-3">Alumni</h5>
+
+                                <p class="text-muted">Espacio dedicado a los graduados que desean aprovechar las
+                                    oportunidades profesionales disponibles. En esta sección, los
+                                    graduados encontrarán recursos y información valiosa. </p>
+
+
+                                <br>
+                                <button (click)="loginAsGraduado()"
+                                    class="btn btn-oblong btn-outline-primary btn-block mg-b-10">Acceder</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                            <div class="feature feature-transition bg-light p-4 py-5 shadow rounded text-center">
+                                <ng-lottie [options]="options_Anim2"></ng-lottie>
+
+                                <h5 class="title mt-3">Empresario o Empleador</h5>
+                                <p class="text-muted">Espacio dedicado para que los empresarios puedan presentar y
+                                    ofrecer oportunidades laborales teniendo la posibilidad de
+                                    compartir sus ofertas de empleo </p>
+
+                                <br>
+                                <button (click)="loginAsEmpresario()"
+                                    class="btn btn-oblong btn-outline-primary btn-block mg-b-10">Acceder</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                            <div class="feature feature-transition p-4 py-5 shadow rounded text-center">
+                                <ng-lottie [options]="options_Anim3"></ng-lottie>
+
+                                <h5 class="title mt-3">Administración</h5>
+
+                                <p class="text-muted">Espacio dedicado dedicada para que el personal administrativo
+                                    pueda ingresar y gestionar las funcionalidades de la
+                                    plataforma de manera efectiva y eficiente. </p>
+                                <br>
+                                <button (click)="loginAsResponsableCarreraOrAdmin()"
+                                    class="btn btn-oblong btn-outline-primary btn-block mg-b-10 mb-4">Acceder</button>
+                            </div>
+                        </div>
+                    </div><!--end row-->
+                </div><!--end conatiner-->
+            </section><!--end section-->
+            <!-- End Features -->
+        </div><!--- END ROW -->
+    </div><!--- END CONTAINER -->
+</section>
+<!-- END INGRESO A LA PLATAFORMA -->
+
+<!-- START VIDEO ALUMNI -->
+<section class="about_video" id="video">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                <div class="video-container">
+                    <h3>¡SÉ PARTE DE ALUMNI!</h3>
+                    <p>Descubre las Mejores Ofertas Académicas en el Instituto Superior Universitario Tecnológico
+                        del Azuay</p>
+
+                </div>
+                
+                <!-- VIDEO POPUP -->
+                <div class="play-video-icon">
+                    <a href="https://www.youtube.com/watch?v=0t5x8UA_260" target="_blank" class="video-popup vide_btn ">
+                        <i class="fa fa-play"></i>
+                        <div class="sonar-wrapper">
+                            <div class="sonar-emitter">
+                                <div class="sonar-wave"></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- END VIDEO POPUP -->
+            </div><!--- END COL -->
+        </div><!--- END ROW -->
+    </div><!--- END CONTAINER -->
+</section>
+<!-- END VIDEO ALUMNI -->
+
+<!-- Servicios de Alumni -->
+<section id="servicios" class="section-padding">
+    <div class="serviceArea StartUpTwo">
+        <div class="container">
+            <div class="section-title text-center wow zoomIn">
+                <h2>SERVICIOS DE ALUMNI</h2>
+                <p>"Construyendo puentes entre generaciones: El propósito de las funciones de Alumni"</p>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="singleService">
+                        <div class="serviceHead">
+                            <div class="serviceIcon">
+                                <i class="fa-sharp fa-solid fa-users"></i>
+                            </div>
+                            <h2>COMUNIDAD DE ESTUDIANTES</h2>
+                        </div>
+                        <p>Conéctate con compañeros que compartieron contigo el camino académico y construye relaciones
+                            significativas. La
+                            comunidad de estudiantes es el lugar perfecto para intercambiar experiencias, consejos y
+                            colaborar en proyectos
+                            emocionantes.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="singleService">
+                        <div class="serviceHead">
+                            <div class="serviceIcon">
+                                <i class="fa-solid fa-person-walking-luggage"></i>
+                            </div>
+                            <h2>SEGUIMIENTO</h2>
+                        </div>
+                        <p>Mantente al tanto del progreso de tus compañeros y comparte tus propios logros. El
+                            seguimiento te permite estar conectado con la evolución profesional y personal de aquellos
+                            que compartieron contigo
+                            la travesía académica en TecAzuay. ¡Celebremos juntos los hitos alcanzados!</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="singleService">
+                        <div class="serviceHead">
+                            <div class="serviceIcon">
+                                <i class="fa-solid fa-square-up-right"></i>
+                            </div>
+                            <h2>COMPARTE TUS LOGROS</h2>
+                        </div>
+                        <p>En Alumni TecAzuay, creemos que cada logro merece ser celebrado y compartido. Esta sección es
+                            tu espacio personal para
+                            destacar tus éxitos, grandes y pequeños. Tu historia inspira a la comunidad y construye un
+                            legado de triunfos colectivos. ¡Destaca tus
+                            logros y forma parte de la
+                            inspiradora narrativa de TecAzuay!</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="singleService">
+                        <div class="serviceHead">
+                            <div class="serviceIcon">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <h2>BOLSA DE EMPLEO</h2>
+                        </div>
+                        <p>Accede a oportunidades profesionales exclusivas para graduados de TecAzuay. Nuestra bolsa de
+                            empleo te conecta con
+                            empresas que valoran la formación de calidad y buscan talento como el tuyo. Impulsa tu
+                            carrera con ofertas laborales
+                            adaptadas a tus habilidades y aspiraciones.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="singleService">
+                        <div class="serviceHead">
+                            <div class="serviceIcon">
+                                <i class="fa-solid fa-bell-concierge"></i>
+                            </div>
+                            <h2>SERVICIOS Y BENEFICIOS</h2>
+                        </div>
+                        <p>Disfruta de servicios y beneficios exclusivos diseñados pensando en ti. Alumni TecAzuay te
+                            brinda ventajas que enriquecerán tu vida profesional y personal. Descubre cómo tu conexión
+                            con
+                            TecAzuay continúa siendo una fuente inagotable de beneficios.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="singleService">
+                        <div class="serviceHead">
+                            <div class="serviceIcon">
+                                <i class="fa-solid fa-database"></i>
+                            </div>
+                            <h2>REPORTE DE DATOS</h2>
+                        </div>
+                        <p>Obtén información valiosa sobre la trayectoria de los graduados de TecAzuay. A través de
+                            nuestro sistema de reporte de
+                            datos, analizamos tendencias y destacamos los éxitos colectivos. Contribuye a este proceso
+                            compartiendo tu progreso y
+                            forma parte de la historia de éxito de nuestra comunidad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END FUNCIONES ALUMNI -->
+ <!-- =====================================================
+                    PROGRAMAS MISIONALES
+    =======================================================-->
+
+    <app-programas-presentation></app-programas-presentation>
+
+<!-- START CONTACT FORM -->
+<section id="contacto" class="contact_area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="section-title text-center wow zoomIn">
+                <h2>Contáctate Con Nosotros</h2>
+                <p>Si tienes alguna duda puedes comunicarte con el siguiente formulario.</p>
+            </div>
+            <div class="col-sm-8 col-xs-12">
+                <form class="form" (submit)="onSubmit()">
+                    <div class="row">
+                        <div class="input_padding text-center">
+                            <div class="form-group col-md-12 mb-3">
+                                <input type="text" name="name" class="form-control" placeholder="Nombres y Apellidos"
+                                    [(ngModel)]="mailRequest.name" required>
+                            </div>
+                            <div class="form-group col-md-12 mb-3">
+                                <input type="email" name="email" class="form-control" placeholder="Email"
+                                    [(ngModel)]="mailRequest.from" required>
+                            </div>
+                            <div class="form-group col-md-12 mb-3">
+                                <input type="text" name="subject" class="form-control" placeholder="Título"
+                                    [(ngModel)]="mailRequest.subject" required>
+                            </div>
+                            <div class="form-group col-md-12 mab-none mb-3">
+                                <textarea rows="6" name="message" class="form-control" placeholder="Escriba su mensaje"
+                                    [(ngModel)]="mailRequest.caseEmail" required></textarea>
+                            </div>
+                            <div class="form-group mb0 col-md-12">
+                                <div class="actions">
+                                    <button type="submit" class="btn btn-default contact_btn"
+                                        title="Enviar Mensaje!">Enviar Mensaje</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div><!-- END COL -->
+
+            <div class="col-sm-4">
+                <div class="single_address">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h4>Dirección</h4>
+                    <p>Octavio Chacón Moscoso 1-98 y Primera Transversal (Parque industrial)</p>
+                </div>
+                <div class="single_address">
+                    <i class="fa-solid fa-envelope"></i>
+                    <h4>Envianos un Correo</h4>
+                    <p>info&#64;tecazuay.edu.ec</p>
+                </div>
+                <div class="single_address">
+                    <i class="fa-solid fa-phone"></i>
+                    <h4>Teléfono</h4>
+                    <p>07 2809 551 - 0995363076</p>
+                </div>
+            </div>
+        </div><!--- END ROW -->
+    </div><!--- END CONTAINER -->
+</section>
+<!-- END CONTACT FORM  -->
+
+<iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15939.279807575842!2d-78.97972230266978!3d-2.8682734537328134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91cd1781c898f975%3A0xfd4a76bc986f8990!2sTec%20Azuay%20INSTITUTO%20UNIVERSITARIO!5e0!3m2!1ses!2sec!4v1705278797180!5m2!1ses!2sec"
+    width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+<!-- Start footer -->
+<footer class="footer_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer_text text-center">
+                    <div><a href="#"><img src="assets/imgs/Alumni_logo_mini.png" alt="logo"></a></div>
+
+                    <ul class="fot_menu">
+                        <li><a href="https://www.tecazuay.edu.ec/" target="_blank">Inicio</a></li>
+                        <!-- <li><a href="#">Politicas De Privacidad</a></li>
+                        <li><a href="#">Terminos y Condiciones</a></li> -->
+                        <li><a href="https://www.tecazuay.edu.ec/acerca-nosotros/" target="_blank">Acerca de
+                                Nosotros</a></li>
+                        <li><a href="https://www.tecazuay.edu.ec/contactos/" target="_blank">Contacto</a></li>
+                    </ul>
+                    <p>&copy; 2024 ALUMNI - Todos Los Derechos Reservados</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End footer -->

@@ -1,0 +1,470 @@
+<div class="container_Editor">
+    <!-- Modal -->
+    <div class="modal fade" id="modalImage-Video" tabindex="-1" aria-labelledby="modalDataLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-dark">
+                    <h5 [innerText]="isEditingImage ? 'Modificar Imagen' : 'Subir Imagen'"></h5>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation" [formGroup]="validateInputs">
+                        <div class="form-group col-lg-6">
+                            <label for="Tipo" class="form-label">Tipo:</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-camera-rotate"></i>
+                                </span>
+                                <select class="form-select" id="imgOrVideo" formControlName="imgOrVideo"
+                                    (change)="onTypeChange($event)">
+                                    <option value="image">Imagen</option>
+                                    <option value="video">Video</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <label for="bloqueC" class="form-label">Bloque de Contenido:</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-wand-sparkles"></i>
+                                </span>
+                                <select class="form-select" id="tipoBloque" formControlName="tipoBloque"
+                                    (change)="onContentChange($event)">
+                                    <option>Único</option>
+                                    <option>{{ isImage ? 'Imagen' : 'Video' }} - Texto</option>
+                                    <option>Texto - {{ isImage ? 'Imagen' : 'Video' }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="card" *ngIf="!validateInputs.value.imageUrl && isImage">
+                            <label class="form-label my-3">Subir desde el equipo:</label>
+                            <div class="card-header">
+                                <h4 class="card-header-title">
+                                    <div class="preview-img" *ngIf="previsualizacion">
+                                        <div class="input-group">
+                                            <a (click)="copiarCodigoBase64()" class="btn btn-label-primary btn-sm"
+                                                title="Copiar el código BASE 64 de la imagen"><i
+                                                    class="fa-regular fa-clipboard"></i></a>
+                                            <button class="clear-image form-control border-0 cancel-button"
+                                                type="button" (click)="clearImage()">
+                                                Eliminar Imagen
+                                            </button>
+
+                                        </div>
+
+                                        <div class="image-container text-center" style="margin: 2rem;">
+                                            <img [src]="previsualizacion" alt=""
+                                                [style.width]="validateInputs.value.ancho ? validateInputs.value.ancho : '100%'"
+                                                [style.height]="validateInputs.value.alto ? validateInputs.value.alto : '100%'"
+                                                [style.border-radius]="validateInputs.value.borderRadius + 'rem'"
+                                                style="-o-object-fit: cover; object-fit: cover;" />
+                                        </div>
+
+                                    </div>
+                                </h4>
+                            </div>
+                            <div class="card-body collapse show">
+                                <input type="file" class="form-control" aria-label="file example" required
+                                    (change)="capturarFile($event)" accept=".jpg, .jpeg, .png, .webp"
+                                    formControlName="imageFile" id="foto" />
+                                <div class="invalid-feedback">La foto de portada es necesaria.</div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="!previsualizacion || !isImage" class="col-lg-12 my-3" id="urlUploadDiv">
+                            <label class="form-label">
+                                {{ validateInputs.value.imageUrl ? ('URL ' + (isImage ? 'de la imagen:' : 'del video:'))
+                                : ('Introduzca la URL ' + (isImage ? 'de la imagen:' : 'del video:')) }}
+                            </label>
+
+                            <input type="url" class="form-control" id="fotoUrl" name="fotoUrl"
+                                formControlName="imageUrl"
+                                placeholder="{{isImage?'http://ejemplo.com/imagen.jpg':'https://www.youtube.com/watch?v'}}">
+                            <div class="invalid-feedback">La foto de portada es necesaria.</div>
+                        </div>
+
+                        <label class="form-label">Personalización {{ isImage ? 'de la imagen' : 'del video' }}</label>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <div class="form-check form-switch"
+                                    title="Activar el ancho al 100%, es decir, ocupará todo el ancho disponible.">
+                                    <label class="form-check-label"><strong>Ancho:</strong></label>
+                                    <input class="form-check-input" type="checkbox" role="switch" id="anchoSwitch"
+                                        (change)="toggleWidth($event)" [checked]="anchoEnabled">
+                                </div>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-vector-square"></i>
+                                    </span>
+
+                                    <input type="text" class="form-control" id="ancho" formControlName="ancho"
+                                        [disabled]="!anchoEnabled" placeholder="Ingrese el ancho" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <div class="form-check form-switch"
+                                    title="Activar el alto al 100%, es decir, ocupará todo el alto disponible.">
+                                    <label class="form-check-label"><strong>Alto:</strong></label>
+                                    <input class="form-check-input" type="checkbox" role="switch" id="altoSwith"
+                                        (change)="toggleHeight($event)" [checked]="altoEnabled">
+                                </div>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-vector-square"></i>
+                                    </span>
+                                    <input type="text" class="form-control" id="alto" formControlName="alto"
+                                        [disabled]="!altoEnabled" placeholder="Ingrese el alto" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="form-check-label"><strong>Margin Top:</strong></label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-border-none"></i>
+                                    </span>
+
+                                    <input type="text" class="form-control" id="margin_top" formControlName="margin_top"
+                                        placeholder="Ejemplo: 5rem" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="form-check-label"><strong>Margin Bottom:</strong></label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-border-none"></i>
+                                    </span>
+                                    <input type="text" class="form-control" id="margin_bottom"
+                                        formControlName="margin_bottom" placeholder="Ejemplo: 5rem" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mb-5">
+                            <div class="form-range">
+                                <label for="customRange2" class="form-label me-2">Border Radius</label>
+                                <a class="btn btn-label-primary btn-sm">{{ validateInputs.value.borderRadius }} rem</a>
+                                <input type="range" class="form-range" min="0" max="8" step="1"
+                                    formControlName="borderRadius">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                    <button (click)="insertImage()" type="submit" class="btn" [class.btn-warning]="!isEditingImage"
+                        [class.btn-primary]="isEditingImage">
+                        {{ isEditingImage ? 'Actualizar Imagen' : 'Subir ' + (isImage ? 'Imagen' : 'Video') }}
+                    </button>
+
+                    <button #cerrarModal (click)="isEditingImage = false" type="button" data-bs-dismiss="modal"
+                        class="btn btn-outline-danger btn-block">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal INFO -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="modalDataLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <label class="form-label">ATAJOS DE TECLADO</label>
+                    <div class="card-body pd-0 collapse show" id="collapse1">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>COMANDO</th>
+                                        <th>ACCIÓN</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td><b>CTRL + SHIFT + G</b></td>
+                                        <td>SUBIR CÓDIGO HTML</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td><b>CTRL + SHIFT + L</b></td>
+                                        <td>Justificar a la izquierda</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td><b>CTRL + SHIFT + E</b></td>
+                                        <td>Centrar texto</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td><b>CTRL + SHIFT + R</b></td>
+                                        <td>Justificar a la derecha</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td><b>CTRL + SHIFT + 1</b></td>
+                                        <td>Aplicar formato de encabezado H1</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">6</th>
+                                        <td><b>CTRL + SHIFT + 2</b></td>
+                                        <td>Aplicar formato de encabezado H2</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">7</th>
+                                        <td><b>CTRL + SHIFT + 3</b></td>
+                                        <td>Aplicar formato de encabezado H3</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">8</th>
+                                        <td><b>CTRL + SHIFT + 4</b></td>
+                                        <td>Aplicar formato de párrafo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">9</th>
+                                        <td><b>CTRL + SHIFT + P</b></td>
+                                        <td>Imprimir contenido</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">10</th>
+                                        <td><b>CTRL + SHIFT + A</b></td>
+                                        <td>Convertir a mayúsculas</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">11</th>
+                                        <td><b>CTRL + SHIFT + Q</b></td>
+                                        <td>Convertir a minúsculas</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">12</th>
+                                        <td><b>CTRL + SHIFT + G</b></td>
+                                        <td>Abrir modal de subida de código HTML</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">13</th>
+                                        <td><b>CTRL + SHIFT + H</b></td>
+                                        <td>Abrir modal de imagen/video</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">14</th>
+                                        <td><b>CTRL + SHIFT + I</b></td>
+                                        <td>Insertar lista ordenada</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">15</th>
+                                        <td><b>CTRL + SHIFT + O</b></td>
+                                        <td>Insertar lista desordenada</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">16</th>
+                                        <td><b>CTRL + B</b></td>
+                                        <td><strong>Negrita</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">17</th>
+                                        <td><b>CTRL + I</b></td>
+                                        <td>Italic</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">18</th>
+                                        <td><b>CTRL + U</b></td>
+                                        <td>Subrayar</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button #codeModal type="button" data-bs-dismiss="modal" class="btn btn-primary btn-block">
+                        Volver
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="options">
+        <!-- Undo/Redo -->
+        <button (click)="modifyText('undo', false)" class="option-button" title="Deshacer">
+            <i class="fa-solid fa-rotate-left"></i>
+        </button>
+
+        <button (click)="modifyText('redo', false)" class="option-button" title="Rehacer">
+            <i class="fa-solid fa-rotate-right"></i>
+        </button>
+
+        <!-- Botones para Descargar y Cargar el código fuente -->
+        <button (click)="downloadContent()" class="option-button" title="Copia de seguridad">
+            <i class="fas fa-download"></i>
+        </button>
+
+        <button (click)="uploadFile()" class="option-button" data-placement="bottom" title="Subir plantilla .XML o .HTML">
+            <i class="fas fa-upload"></i>
+        </button>
+
+        <!-- Show Code -->
+        <button (click)="toggleShowCode()" class="option-button" id="show-code" title="Mostrar el código">
+            <i class="fas fa-code"></i>
+        </button>
+
+        <button (click)="printContent()" class="option-button" title="Imprimir contenido">
+            <i class="fa-solid fa-print"></i>
+        </button>
+
+        <button (click)="toggleFullScreen()" class="option-button" id="full-screen" title="Poner en pantalla completa">
+            <i class="fa-solid" [class.fa-expand]="!isFullScreen" [class.fa-minimize]="isFullScreen"></i>
+        </button>
+
+        <!-- Headings -->
+        <select class="adv-option-button" (change)="modifyExtraValues('formatBlock', false, $event)">
+            <option [value]="'H1'">Heading 1</option>
+            <option [value]="'H2'">Heading 2</option>
+            <option [value]="'H3'">Heading 3</option>
+            <option [value]="'H4'">Heading 4</option>
+            <option [value]="'H5'">Heading 5</option>
+            <option [value]="'H6'">Heading 6</option>
+            <option [value]="'P'" selected>Paragraph</option>
+        </select>
+
+        <!-- Font -->
+        <!-- Selector de fuente -->
+
+        <select class="adv-option-button" (change)="modifyExtraValues('fontName', false, $event)">
+            <option *ngFor="let font of fontList" [value]="font">{{font}}</option>
+        </select>
+        
+        
+
+        <select [(ngModel)]="selectedFontSize" (change)="modifyFontSize()" class="adv-option-button">
+            <option *ngFor="let size of fontSizeList" [value]="size">Tamaño {{size}}</option>
+        </select>
+
+        <!-- Text Format -->
+        <button (click)="modifyText('bold', false)" class="option-button format" title="Negrita">
+            <i class="fa-solid fa-bold"></i>
+        </button>
+
+        <button (click)="modifyText('italic', false)" class="option-button format" title="Italic">
+            <i class="fa-solid fa-italic"></i>
+        </button>
+
+        <button (click)="modifyText('underline', false)" class="option-button format" title="Subrayar">
+            <i class="fa-solid fa-underline"></i>
+        </button>
+
+        <button (click)="modifyText('strikethrough', false)" class="option-button format" title="Tachado">
+            <i class="fa-solid fa-strikethrough"></i>
+        </button>
+
+        <!-- Botón para convertir a minúsculas -->
+        <button (click)="modifyTextCase('lowercase')" class="option-button" title="Convertir a minúsculas">
+            <i class="fas fa-text-height"></i>
+        </button>
+
+        <!-- Botón para convertir a mayúsculas -->
+        <button (click)="modifyTextCase('uppercase')" class="option-button" title="Convertir a mayúsculas">
+            <i class="fas fa-text-height"></i>
+        </button>
+
+        <!-- Alignment -->
+        <button (click)="modifyText('justifyLeft', false)" class="option-button align">
+            <i class="fa-solid fa-align-left"></i>
+        </button>
+        <button (click)="modifyText('justifyCenter', false)" class="option-button align">
+            <i class="fa-solid fa-align-center"></i>
+        </button>
+        <button (click)="modifyText('justifyRight', false)" class="option-button align">
+            <i class="fa-solid fa-align-right"></i>
+        </button>
+        <button (click)="modifyText('justifyFull', false)" class="option-button align">
+            <i class="fa-solid fa-align-justify"></i>
+        </button>
+
+        <button (click)="modifyText('indent', false)" class="option-button spacing">
+            <i class="fa-solid fa-indent"></i>
+        </button>
+        <button (click)="modifyText('outdent', false)" class="option-button spacing">
+            <i class="fa-solid fa-outdent"></i>
+        </button>
+
+        <!-- Text Format -->
+        <button (click)="modifyText('superscript', false)" class="option-button script" title="Aumentar Sangria">
+            <i class="fa-solid fa-superscript"></i>
+        </button>
+        <button (click)="modifyText('subscript', false)" class="option-button script" title="Disminuir Sangria">
+            <i class="fa-solid fa-subscript"></i>
+        </button>
+
+        <!-- List -->
+        <button (click)="modifyText('insertOrderedList', false)" class="option-button" title="Lista numerada">
+            <div class="fa-solid fa-list-ol"></div>
+        </button>
+
+        <button (click)="modifyText('insertUnorderedList', false)" class="option-button" title="Numeración">
+            <i class="fa-solid fa-list"></i>
+        </button>
+
+        <!-- Color -->
+        <div class="input-wrapper text-color" title="Color del Texto">
+            <input type="color" (change)="modifyExtraValues('foreColor', false, $event)">
+        </div>
+
+        <div class="input-wrapper background-color" title="Color de fondo del texto">
+            <input type="color" (change)="modifyExtraValues('backColor', false, $event)">
+        </div>
+
+        <!-- Link -->
+        <button (click)="createLink()" class="option-button" title="Insertar Enlace">
+            <i class="fa fa-link"></i>
+        </button>
+        <button (click)="unlink()" class="option-button" title="Eliminar Enlace">
+            <i class="fa fa-unlink"></i>
+        </button>
+
+        <!-- Upload Image or Video -->
+        <button (click)="cleanDataImage()" data-bs-toggle="modal" data-bs-target="#modalImage-Video"
+            class="option-button" title="Subir Imágenes o Videos" #imageBtn>
+            <i class="fa-solid fa-photo-film"></i>
+        </button>
+
+        <button *ngIf="currentImageElement" data-bs-toggle="modal" data-bs-target="#modalImage-Video"
+            class="option-button" title="Editar Imagen">
+            <i class="fa-solid fa-wand-magic-sparkles" style="color: #ff3434;"></i>
+        </button>
+
+        <button *ngIf="currentImageElement" (click)="deleteImage()" class="option-button" title="Eliminar Imagen">
+            <i class="fa-regular fa-trash-can" style="color: #ff3434;"></i>
+        </button>
+
+        <!-- Eliminar Formato -->
+        <button (click)="modifyText('removeFormat', false)" id="removeFormat" class="option-button"
+            title="Eliminar Formato">
+            <i class="fa-solid fa-ban"></i>
+        </button>
+
+        <!-- Botón para limpiar contenido -->
+        <button (click)="clearContent()" class="option-button" title="Borrar todo el contenido">
+            <i class="fas fa-trash"></i>
+        </button>
+
+        <button data-bs-toggle="modal" data-bs-target="#infoModal" class="option-button" title="Atajos de teclado">
+            <i class="fa-solid fa-circle-question"></i>
+        </button>
+    </div>
+
+    <!-- Text Editor -->
+    <div  id="editor" class="editorTextInput" #textInput contenteditable="true" ></div>
+   
+</div>

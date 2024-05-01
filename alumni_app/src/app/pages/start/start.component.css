@@ -1,0 +1,679 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #333;
+    font-weight: 700;
+    font-family: 'Raleway', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+a:focus {
+    outline: none;
+    text-decoration: none;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+.section-padding {
+    padding: 60px 0;
+}
+
+/*
+* ----------------------------------------------------------------------------------------
+* 01.START NAV BAR
+* ----------------------------------------------------------------------------------------
+*/
+
+header {
+    position: fixed;
+    color: white;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    padding: 28px 90px;
+    transition: all .50s ease;
+}
+
+header.abajo {
+    background: rgba(21, 28, 59, 0.9);
+    padding: 5px 160px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo i {
+    color: var(--alumni-color);
+    font-size: 28px;
+    margin-right: 20rem;
+}
+
+.logo span {
+    color: var(--white-color);
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+.navbar {
+    display: flex;
+    text-decoration: none;
+    list-style: none;
+}
+
+.navbar a {
+    color: var(--white-color);
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 5px 0;
+    margin: 0 30px;
+    transition: all .50s ease;
+}
+
+.navbar a:hover {
+    color: var(--alumni-color);
+}
+
+.navbar a.active {
+    color: var(--alumni-color);
+}
+
+
+.nav__toggle {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+.nav__burger {
+    cursor: pointer;
+    font-size: 30px;
+    color: var(--white-color);
+    z-index: 999;
+    transition: opacity .1s, transform .4s;
+}
+
+/* Dispositivos grandes */
+@media screen and (min-width: 1118px) {
+    .nav__toggle {
+        display: none;
+    }
+}
+
+@media (max-width: 1280px) {
+    header {
+        padding: 14px 10%;
+        transition: .2s;
+    }
+
+    .navbar a {
+        padding: 5px 0;
+        margin: 0px 20px;
+    }
+
+    .show-icon .nav__burger {
+        transform: rotate(90deg);
+    }
+}
+
+@media (max-width: 1090px) {
+    .navbar {
+        position: absolute;
+        top: 100%;
+        right: -100%;
+        width: 270px;
+        height: 20rem;
+        background: var(--alumni-color);
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        transition: all .50s ease;
+    }
+
+    .navbar a {
+        display: block;
+        margin: 12px 0;
+        padding: 0 25px;
+        transition: all .50s ease;
+    }
+
+    .navbar a:hover {
+        color: var(--white-color);
+        transform: translateY(5px);
+    }
+
+    .navbar a.active {
+        color: var(--white-color);
+    }
+
+    .navbar.open {
+        right: 2%;
+    }
+
+    header.abajo {
+        padding: 5px 60px;
+    }
+}
+
+/*
+* ----------------------------------------------------------------------------------------
+* 01.END NAV BAR
+* ----------------------------------------------------------------------------------------
+*/
+
+/*
+* ----------------------------------------------------------------------------------------
+* 02.START SSECTION TITLE DESIGN*
+* ----------------------------------------------------------------------------------------
+*/
+.section-title {
+    margin-bottom: 60px
+}
+
+.section-title h2 {
+    font-size: 25px;
+    margin-bottom: 20;
+    margin-top: 0;
+    text-transform: uppercase;
+}
+
+.line {
+    border-bottom: 1px dashed #777;
+    display: block;
+    margin: 15px auto;
+    width: 80px;
+}
+
+@media only screen and (max-width:480px) {
+    .section-title p {
+        padding: 0 15px
+    }
+}
+
+/*
+* ----------------------------------------------------------------------------------------
+* 03.START SERVICIOS INFO
+* ----------------------------------------------------------------------------------------
+*/
+
+.serviceArea.StartUpTwo .singleService h2 {
+    color: #4d4d4d;
+    font-size: 17px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    -webkit-transition: all .4s ease .2s;
+    -o-transition: all .4s ease .2s;
+    transition: all .4s ease .2s;
+}
+.descripcion-servicio {
+    text-align: justify; 
+    margin: 0 auto; 
+}
+
+.serviceArea.StartUpTwo .singleService:hover h2 {
+    color: rgb(23, 92, 195);
+}
+
+.serviceArea.StartUpTwo .singleService {
+    color: #717171;
+    padding: 100px 35px 0;
+    text-align: center;
+}
+
+.serviceArea.StartUpTwo .col-md-4:nth-child(1) .singleService,
+.serviceArea.StartUpTwo .col-md-4:nth-child(2) .singleService,
+.serviceArea.StartUpTwo .col-md-4:nth-child(3) .singleService {
+    padding-top: 40px
+}
+
+.serviceArea.StartUpTwo .singleService p {
+    line-height: 24px;
+    margin: 0;
+}
+
+.serviceArea.StartUpTwo .serviceIcon i {
+    font-size: 38px;
+    margin-bottom: 15px;
+    color: #000000;
+}
+
+.serviceArea.StartUpTwo .serviceIcon {
+    position: relative
+}
+
+.serviceArea.StartUpTwo .serviceIcon:before,
+.serviceArea.StartUpTwo .serviceIcon:after {
+    position: absolute;
+    content: '';
+    width: 50px;
+    height: 1px;
+    background: #5d9bff;
+    left: 50%;
+    margin-left: -25px;
+    top: -40px;
+    -webkit-transition: .4s;
+    transition: .4s;
+    -webkit-transition-delay: .15s;
+    transition-delay: .15s;
+}
+
+.serviceArea.StartUpTwo .singleService:hover .serviceIcon:before {
+    width: 0;
+}
+
+.serviceArea.StartUpTwo .serviceIcon:after {
+    height: 20px;
+    width: 1px;
+    margin: 0;
+    -webkit-transition: .2s;
+    transition: .2s;
+    -webkit-transition-delay: 0s;
+    transition-delay: 0s;
+}
+
+.serviceArea.StartUpTwo .singleService:hover .serviceIcon:after {
+    height: 0
+}
+
+/*
+* ----------------------------------------------------------------------------------------
+* 03.END SERVICIOS INFO
+* ----------------------------------------------------------------------------------------
+*/
+/*
+* ----------------------------------------------------------------------------------------
+* 03.START HOME DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+.home_bg {
+    height: 52rem;
+    position: relative;
+    background-image: url(../../../assets/imgs/bg/Estudiantes3.jpg);
+    background-size: cover;
+    background-position: center center;
+}
+
+.home_bg:before {
+    background: rgba(25, 31, 43, 0.83);
+    filter: alpha(opacity=80);
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+.hero-text {
+    position: relative;
+    margin-left: 5rem;
+}
+
+.hero-text h2 {
+    color: #fff;
+    font-size: 55px;
+    letter-spacing: 0;
+    line-height: 64px;
+    padding-top: 20rem;
+}
+
+.hero-text p {
+    color: #fff;
+}
+
+.home_btn {
+    margin-left: -10px;
+    margin-top: 50px;
+}
+
+.home_btn a {
+    background: transparent none repeat scroll 0 0;
+    border: 2px solid #fff;
+    border-radius: 50px;
+    color: #fff;
+    display: inline-block;
+    padding: 10px 30px;
+    margin: 0 10px 15px;
+    transition: all 0.3s ease 0s;
+}
+
+.home_btn a:hover {
+    background: #fff;
+    color: #333;
+}
+
+.home_btn a i {
+    font-size: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.hero-text-img {
+    padding-top: 150px;
+}
+
+.hero-text-img img {
+    width: 406px;
+}
+
+.off---white-color {
+    background: #f9f9f9;
+}
+
+/*
+* ----------------------------------------------------------------------------------------
+* 03.END HOME DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+/*
+* ----------------------------------------------------------------------------------------
+* 08.START HOW IT WORKS DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+.about_video p {
+    color: #fff;
+    margin: 23px 0 55px;
+}
+
+.about_video {
+    margin: 0;
+    padding-bottom: 0px;
+    padding-top: 140px;
+    padding-bottom: 180px;
+    position: relative;
+    background-image: url(../../../assets/imgs/bg/Estudiantes4.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+.about_video:before {
+    background: rgba(25, 31, 43, 0.83);
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.video-container {
+    position: relative;
+}
+
+.video-container h3 {
+    color: #fff;
+    margin-top: 0px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.play-video-icon {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.play-video-icon a {
+    background-color: #ffffff;
+    border-radius: 50%;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 36px;
+    height: 80px;
+    line-height: 80px;
+    padding: 0 0 0 8px;
+    text-align: center;
+    width: 80px;
+    transition: .3s;
+    -webkit-transition: .3s;
+    position: relative;
+}
+
+.play-video-icon a i {
+    border-radius: 50%;
+    height: 70px;
+    left: 0;
+    line-height: 66px;
+    margin: auto;
+    padding: 0 0 0 3px;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    width: 70px;
+    z-index: 1;
+    color: #5178d2;
+}
+
+.play-video-icon a i::before {
+    margin-left: 3px;
+    font-size: 30px;
+}
+
+.sonar-wrapper {
+    position: relative;
+    z-index: 0;
+}
+
+.sonar-wrapper .sonar-emitter {
+    position: relative;
+    margin: 5px auto;
+    width: 70px;
+    height: 70px;
+    border-radius: 9999px;
+}
+
+.sonar-wrapper .sonar-emitter .sonar-wave {
+    position: absolute;
+    top: 0;
+    left: -4px;
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    background-color: #ffffff;
+    opacity: 0;
+    z-index: -9;
+    pointer-events: none;
+}
+
+.sonar-wrapper .sonar-emitter .sonar-wave {
+    -webkit-animation: sonarWave 2s linear infinite;
+    animation: sonarWave 2s linear infinite;
+}
+
+/* @-webkit-keyframes sonarWave { */
+@keyframes sonarWave {
+    from {
+        opacity: 0.5;
+    }
+
+    to {
+        transform: scale(3);
+        -webkit-transform: scale(3);
+        opacity: 0;
+    }
+}
+
+/*
+* ----------------------------------------------------------------------------------------
+* 08.END HOW IT WORKS DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+/*
+* ----------------------------------------------------------------------------------------
+* 14.START CONTACT FORM DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+.form .form-group input {
+    background: transparent;
+    border-color: #e3e3e3;
+    height: 40px;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.dark_bg .form .form-group input {
+    border-color: #fff;
+}
+
+.form .form-group input:focus {
+    border-color: #5178d2;
+}
+
+.form .form-group textarea {
+    background: transparent;
+    border-color: #e3e3e3;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.dark_bg .form .form-group textarea {
+    border-color: #fff;
+}
+
+.form .form-group textarea:focus {
+    border-color: #5178d2;
+}
+
+.contact_btn {
+    color: #fff;
+    font-size: 13px;
+    margin-top: 30px;
+    text-transform: capitalize;
+    padding: 15px 35px;
+    letter-spacing: 0.6px;
+    font-weight: 600;
+    background: #5178d2;
+    border-radius: 25px;
+    line-height: 10px;
+    border: 2px solid #5178d2;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out 0s;
+}
+
+.contact_btn:hover {
+    background: transparent;
+    border: 2px solid #5178d2;
+    color: #5178d2;
+}
+
+/*
+* ----------------------------------------------------------------------------------------
+* 14.END CONTACT FORM DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+/*
+* ----------------------------------------------------------------------------------------
+* 15.START ADDRESS DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+
+.our-address {
+    background: #f9f9f9;
+}
+
+.single_address {
+    margin-bottom: 30px;
+}
+
+.single_address i {
+    color: #5178d2;
+    font-size: 27px;
+    float: left;
+    margin-right: 12px;
+}
+
+.single_address h4 {
+    text-transform: capitalize;
+}
+
+.single_address p {
+    color: #777;
+}
+
+/*
+* ----------------------------------------------------------------------------------------
+* 15.END ADDRESS DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+
+/*
+* ----------------------------------------------------------------------------------------
+* 15.START FOOTER DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+
+.footer_area {
+    background: linear-gradient(to right, #1c47a3 0%, #112366 100%);
+    padding: 40px 0;
+}
+
+.footer_area p {
+    margin-bottom: 0;
+    color: #fff;
+}
+
+.fot_menu {
+    list-style-type: none;
+    margin-top: 30px;
+    margin-bottom: 6px;
+}
+
+.fot_menu li {
+    display: inline-block;
+    padding-right: 12px;
+}
+
+.fot_menu li:last-child {
+    padding: none;
+}
+
+.fot_menu li a {
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: .5s;
+    font-size: 14px;
+}
+
+.fot_menu li a:hover {
+    color: #7ea5ff;
+}
+
+/*
+* ----------------------------------------------------------------------------------------
+* 16.END FOOTER DESIGN
+* ----------------------------------------------------------------------------------------
+*/

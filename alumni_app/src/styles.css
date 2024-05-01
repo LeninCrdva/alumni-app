@@ -1,0 +1,332 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+    /*========== Colores ==========*/
+    --alumni-color: hsl(222, 70%, 57%);
+    --alumni-dark: hsl(224, 82%, 47%);
+    --white-color: hsl(0, 0%, 100%);
+
+    --dark: hsl(210, 12%, 10%);
+    --dark-x: hsl(217, 12%, 13%);
+
+    /*========== Font y tipografia ==========*/
+    --body-font: 'Poppins', sans-serif;
+    --normal-font-size: .85rem;
+
+    /*========== Font weight ==========*/
+    --font-regular: 400;
+    --font-semi-bold: 600;
+
+    --animate-duration: 2s;
+}
+
+* {
+    font-family: var(--body-font);
+    scroll-behavior: smooth;
+}
+
+
+/** =============== PARTE DEL FONDO PARALLAX EN EL INICIO DE CADA PAGINA ===============*/
+
+.page-title {
+    display: block;
+    padding-top: 140px;
+    padding-bottom: 80px;
+    position: relative;
+}
+
+.page-title span {
+    text-transform: capitalize;
+}
+
+.page-title h1 {
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    position: relative;
+}
+
+.page-title .page-breadcrumb {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+ul.page-breadcrumb {
+    padding-top: 30px;
+    padding-right: 30px;
+}
+
+ul.page-breadcrumb li span {
+    color: #ffffff;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+ul.page-breadcrumb li {
+    color: #fff;
+    display: inline-block;
+    list-style: none;
+}
+
+ul.page-breadcrumb li i {
+    font-size: 16px;
+    padding: 0 10px;
+}
+
+ul.page-breadcrumb li a {
+    color: #fff;
+    font-size: 16px;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+ul.page-breadcrumb li a:hover {
+    color: #6984ff;
+    font-weight: bold;
+}
+
+.bg-overlay-black::before {
+    background: rgba(0, 0, 0, 0.7);
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.parallax {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+/** =============== FIN DE LA PARTE DEL FONDO EN EL INICIO DE CADA PAGINA ===============*/
+
+/** =============== ALERTAS ===============*/
+.cancel-button {
+    background-color: var(--cruz-roja-color) !important;
+    color: #ffffff !important;
+}
+
+.oaerror {
+    padding: 20px;
+    margin-top: 17px !important;
+    border: 1px solid #eee;
+    font-size: 14px;
+    border-left-width: 5px;
+    border-radius: 6px;
+    /* color: #000000 !important; */
+}
+
+.danger {
+    border-left-color: #d9534f;
+    background-color: rgba(217, 83, 79, 0.1)
+}
+
+.danger strong {
+    color: #d9534f
+}
+
+.warning {
+    border-left-color: #f0ad4e;
+    background-color: rgba(240, 173, 78, 0.1);
+}
+
+.warning strong {
+    color: #f0ad4e;
+}
+
+/** =============== FIN DE ESTILOS DE ALERTAS ===============*/
+
+/*=============== CUSTOM DELETE BUTTON  ===============*/
+
+.btn-label-secondary {
+    background-color: rgba(0, 0, 0, .1);
+    color: #000 !important
+}
+
+.btn-label-secondary:hover {
+    background-color: #000;
+    color: #fff !important
+}
+
+.btn-label-info {
+    background-color: rgba(0, 123, 255, .1);
+    color: #007bff !important
+}
+
+.btn-label-info:hover {
+    background-color: #007bff;
+    color: #fff !important
+}
+
+.btn.btn-label-danger {
+    background-color: rgba(253, 57, 122, .1);
+    color: #fd397a !important
+}
+
+.btn.btn-label-danger:hover {
+    background-color: #f00;
+    color: #fff !important
+}
+
+/*=============== CUSTOM EDIT BUTTON  ===============*/
+.btn.btn-label-primary {
+    background-color: rgba(93, 120, 255, .1);
+    color: #605dff !important
+}
+
+.btn.btn-label-primary:hover {
+    background-color: #5926ff;
+    color: #fff !important
+}
+
+.btn-danger {
+    background-color: #ff0000;
+    border-color: #ff0000;
+}
+
+.btn-danger:hover {
+    background-color: #cc0000;
+    border-color: #cc0000;
+}
+
+.btn-success {
+    background-color: #009e05;
+    border-color: #0eab00;
+}
+
+.btn-success:hover {
+    background-color: #00a503;
+    border-color: #18a300;
+}
+
+.btn-primary {
+    background-color: #1180ff;
+    border-color: #006edb;
+}
+
+.btn-primary:hover {
+    background-color: #005eca;
+    border-color: #0056ac;
+}
+
+.btn {
+    transition: 250ms all ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+/** =============== ESTILOS ANGULAR - DATATABLES =============== */
+
+table.dataTable thead th {
+    background-color: #1e90ff;
+    color: white;
+}
+
+table.dataTable thead th:hover {
+    background-color: #067bf1;
+}
+
+.dataTables_length,
+.dataTables_filter {
+    padding: 5px;
+}
+
+.dataTables_filter input {
+    height: 2.6rem;
+    border-radius: .6rem;
+    width: 18rem !important;
+    border-color: rgb(159, 159, 159);
+}
+
+.dataTables_filter input:hover {
+    border-color: rgb(0, 140, 255);
+}
+
+.dataTables_filter input:focus {
+    box-shadow: 0 0 8px rgb(0, 111, 201);
+}
+
+
+.form-label {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/** =============== Modificar el color de fondo del dropdown =============== */
+
+.multiselect-dropdown .dropdown-btn {
+    border-color: #dddee2 !important;
+}
+
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+    margin: 2px 0;
+    background-color: #1ca010 !important;
+    border: none !important;
+    border-radius: 7px !important;
+    max-width: 350px !important;
+    padding: 0 10px !important;
+    transition: 250ms all ease-in-out;
+}
+
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item:hover {
+    transform: translateY(-3px);
+    background-color: #00b90c !important;
+}
+
+.multiselect-dropdown .dropdown-list .no-filtered-data h5 {
+    font-size: 1rem !important;
+    color: #0091ff;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px;
+}
+
+.multiselect-dropdown .dropdown-list .no-data h5 {
+    font-size: 1rem;
+    color: #007bff;
+    text-align: center;
+}
+
+.multiselect-dropdown .dropdown-multiselect__caret {
+    height: 40px !important;
+}
+
+/** =============== FIN color de fondo del dropdown =============== */
+
+
+/** =============== FIN ESTILOS ANGULAR - DATATABLES ===============*/
+
+
+/** =============== PACE STYLES - LOADING PAGE BAR =============== */
+.pace {
+    -webkit-pointer-events: none;
+    pointer-events: none;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.pace-inactive {
+    display: none;
+}
+
+.pace .pace-progress {
+    background: #29d;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    height: 6px;
+}

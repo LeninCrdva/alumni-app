@@ -1,0 +1,96 @@
+.btn-close-white {
+  color: #ffffff; 
+}
+.texto-negrita {
+  font-weight: bold;
+}
+
+/* Estilos para el modal */
+.modal-header {
+    background-color: #007bff; /* Azul primario de Bootstrap */
+    color: #fff; /* Texto blanco */
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .modal-footer {
+    justify-content: flex-start; /* Alinear botones a la izquierda */
+    padding: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo para el título del modal */
+  .modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Estilo para las preguntas */
+  .modal-body .mb-3 {
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para los elementos de las preguntas */
+  .question-text {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilo para las opciones de checkbox y radio */
+  .form-check {
+    margin-bottom: 10px;
+  }
+  
+  .form-check-label {
+    margin-left: 10px;
+  }
+  
+  /* Estilo para los botones en el footer */
+  .modal-footer .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+  
+  /* Estilo para el botón Responder */
+  .btn-primary {
+    background-color: #007bff; /* Azul primario de Bootstrap */
+    color: #fff; /* Texto blanco */
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3; /* Azul más oscuro al hacer hover */
+  }
+  
+  /* Estilo para el botón Cerrar */
+  .btn-secondary {
+    background-color: #6c757d; /* Gris medio de Bootstrap */
+    color: #fff; /* Texto blanco */
+    border: none;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268; /* Gris más oscuro al hacer hover */
+  }
+  
+  /* Ajustes para tamaños responsivos en dispositivos móviles */
+  @media (max-width: 767px) {
+    .modal-footer {
+      justify-content: center; /* Centrar botones en dispositivos móviles */
+    }
+    .modal-title {
+      font-size: 1.3rem; /* Tamaño de título reducido en dispositivos móviles */
+    }
+    .question-text {
+      font-size: 1rem; /* Tamaño de texto de pregunta reducido en dispositivos móviles */
+    }
+    .modal-footer .btn {
+      font-size: 0.9rem; /* Tamaño de botones reducido en dispositivos móviles */
+    }
+  }
+  

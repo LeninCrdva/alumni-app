@@ -1,0 +1,98 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/headers/Referencias.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Mis Postulaciones</h1>
+        </div>
+    </div>
+</section>
+
+
+<div class="card">
+    <div class="card-body collapse show">
+
+        <div>
+            <div class="d-flex">
+                <button title="Actualizar datos de la tabla" (click)="detallarOferta()" class="btn btn-success">
+                    <i class="fas fa-sync"></i>
+                </button>
+
+                <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters('filterTable')"
+                    class="btn btn-dark ms-2">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+
+                <ng-multiselect-dropdown style="width: 25rem;" *ngIf="filterService.editFilterTabs['filterTable']"
+                    [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
+                    [data]="filterService.dropdownLists['filterTable']"
+                    [(ngModel)]="filterService.selectedItems['filterTable']"
+                    (onSelect)="filterService.onItemSelect($event)"
+                    (onSelectAll)="filterService.onSelectAll('filterTable')"
+                    (onDeSelect)="filterService.onItemDeSelect($event)"
+                    (onDeSelectAll)="filterService.onDeSelectAll('filterTable')" class="ms-2">
+                </ng-multiselect-dropdown>
+            </div>
+        </div>
+
+
+        <div class="mt-3 show animate__animated animate__bounceInUp animate__fast">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered custom-table">
+
+                    <tbody>
+                        <tr *ngFor="let postulacion of misPostulaciones; let id = index">
+                            <th scope="row">{{id + 1}}</th>
+                            <td>{{postulacion.ofertaLaboral?.empresa?.nombre}}</td>
+                            <td>{{postulacion.ofertaLaboral?.cargo}}</td>
+                            <td>{{postulacion.ofertaLaboral?.areaConocimiento}}</td>
+                            <td class="text-center">
+                                {{ postulacion.ofertaLaboral?.salario !== 0 ? '$' + postulacion.ofertaLaboral?.salario : 'Hablarlo con la empresa' }}
+                            </td>
+                            <td>{{ postulacion.ofertaLaboral?.fechaApertura ? (postulacion.ofertaLaboral?.fechaApertura | date: 'yyyy-MMMM-dd HH:mm') : 'No definido' }}</td>
+                            <td>{{ postulacion.ofertaLaboral?.experiencia ? postulacion.ofertaLaboral?.experiencia : 'No definido' }}</td>
+                            <td>{{postulacion.ofertaLaboral?.empresa?.ciudad?.nombre}}</td>
+                            <td class="text-danger fw-bold">{{ postulacion.estado === 'CANCELADA_POR_GRADUADO' ? 'CANCELADA':postulacion.estado }}</td>
+                            <td class="text-center">
+                                <button *ngIf="!loading && postulacion.ofertaLaboral?.fotoPortada" (click)="openModal(postulacion.ofertaLaboral?.fotoPortada)"
+                                    class="btn btn-label-info btn-sm mg-y-5 ms-2">
+                                    <i class="fas fa-image" style="cursor: pointer;"></i> Ver foto
+                            </button>
+                            </td>
+                            <td class="text-center">
+                                <button *ngIf="postulacion.estado === 'APLICANDO'"
+                                    class="btn btn-label-danger btn-sm mg-y-5 ms-2" aria-hidden="true"
+                                    (click)="cancelOffer(postulacion)">
+                                    <i class="fa fa-trash"></i> Cancelar postulacion
+                                </button>
+                                <button *ngIf="postulacion.estado === 'CANCELADA_POR_GRADUADO'"
+                                    class="btn btn-label-primary btn-sm mg-y-5" aria-hidden="true"
+                                    (click)="repostulateOffer(postulacion)"><i class="fas fa-undo-alt"></i> Postular nuevamente
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal" #m_modal_4 id="m_modal_4" tabindex="-1" role="dialog" [hidden]="!modalImage">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Oferta Laboral</h5>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+                <img [src]="modalImage" alt="Foto de Portada" class="img-fluid">
+            </div>
+
+            <div class="modal-footer">
+                <button data-bs-dismiss="modal" #myModalClose class="btn btn-oblong btn-outline-danger btn-block"
+                    id="close-button">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

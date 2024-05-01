@@ -1,0 +1,104 @@
+.container {
+  max-width: 1300px;
+  margin: 10px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1,
+h3 {
+  color: #007bff;
+}
+
+p,
+label,
+.form-label,
+.btn {
+  color: #495057;
+}
+
+.btn-primary,
+.btn-outline-primary {
+  color: #fff;
+  border-color: #007bff;
+  background-color: #007bff;
+}
+
+.btn-primary:hover,
+.btn-outline-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.form-control {
+  border-color: #ced4da;
+}
+
+.form-text.text-danger {
+  color: #dc3545;
+}
+
+textarea.form-control {
+  height: 100px;
+}
+
+.text-end {
+  text-align: right;
+}
+
+.card {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.card-body {
+  background-color: #fff;
+}
+
+.card-footer {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* Estilos específicos para preguntas y opciones */
+.card-question {
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+}
+
+.card-option {
+  margin-top: 10px;
+}
+
+/* Cambios visuales para checkboxes y radio buttons */
+.form-check-input:checked {
+  background-color: #007bff;
+}
+
+/* Estilos para los botones de eliminación */
+.btn-delete {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}

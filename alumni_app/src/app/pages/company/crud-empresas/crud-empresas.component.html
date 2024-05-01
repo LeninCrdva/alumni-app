@@ -1,0 +1,216 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Mis Empresas</h1>
+        </div>
+    </div>
+</section>
+
+<div class="card">
+    <div class="card-body collapse show" id="collapse1">
+        <!-- Modal -->
+        <div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div [class.bg-success]="!editarClicked" [class.bg-primary]="editarClicked"
+                        class="modal-header text-white">
+                        <h5
+                            [innerText]="editarClicked ? 'Modificar Empresa' : 'Crear nueva Empresa'">
+                        </h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-layout form-layout-1">
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">EMPRESA: <span
+                                                    class="tx-danger">*</span></label>
+                                            <select class="form-control" name="empresa">
+                                                <option value="">-- Seleccione una opción --</option>
+                                                <option value="tiempo-completo">WILLSOFTEC</option>
+                                                <option value="tiempo-completo">RENAFIT</option>
+                                                <option value="tiempo-completo">LIBELULA</option>
+                                                <option value="tiempo-completo">STEVE BRO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">CARGO: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control wd-250" type="text" name="username"
+                                                placeholder="Ingrese el cargo">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">JORNADA: <span
+                                                    class="tx-danger">*</span></label>
+                                            <select class="form-control" name="jornada">
+                                                <option value="">-- Seleccione una opción --</option>
+                                                <option value="tiempo-completo">MATUTINA</option>
+                                                <option value="medio-tiempo">Medio Tiempo</option>
+                                                <option value="temporal">Temporal</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">EXPERIENCIA: <span
+                                                    class="tx-danger">*</span></label>
+                                            <select class="form-control" name="jornada">
+                                                <option value="">-- Seleccione una opción --</option>
+                                                <option value="tiempo-completo">Sin Experiencia</option>
+                                                <option value="medio-tiempo">Con Experiencia</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">FECHA INICIO: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="date" name="fechaInicio">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">FECHA FIN: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="date" name="fechaFin">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25" data-parsley-validate>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">DESCRIPCIÓN: <span
+                                                    class="tx-danger">*</span></label>
+                                            <textarea class="form-control" name="descripcion" rows="4"
+                                                placeholder="Ingrese la descripción de la oferta de trabajo"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">REQUISITOS: <span
+                                                    class="tx-danger">*</span></label>
+                                            <textarea class="form-control" name="requisitos" rows="4"
+                                                placeholder="Ingrese los requisitos para su oferta de trabajo"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mg-b-25 my-3" data-parsley-validate>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">UBICACIÓN: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="ubicacion"
+                                                placeholder="Ingrese la ubicación">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label active">SALARIO: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input class="form-control" type="text" name="salario" pattern="[0-9]+"
+                                                title="Ingrese solo números" placeholder="Ingrese el salario">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <!-- Botón para registrar -->
+                        <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                            class="btn btn-oblong btn-success" *ngIf="!editarClicked">
+                            Registrar Título
+                        </button>
+
+                        <!-- Botón para editar -->
+                        <button (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
+                            Editar Título
+                        </button>
+
+                        <button data-bs-dismiss="modal"
+                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ Modal -->
+
+        <div class="col-md-12 col-lg-12">
+            <div class="d-flex">
+                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
+                    class="btn btn-oblong btn-success mg-b-10" style="margin-right:10px; width: 17rem; height: 2.5rem;">
+                    Crear Oferta de Trabajo</button>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar...">
+                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card-body pd-0 collapse show" id="collapse1">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>EMPRESA</th>
+                            <th>CARGO</th>
+                            <th>DESCRIPCION</th>
+                            <th>ÁREA CONOCIMINETO</th>
+                            <th>SALARIO</th>
+                            <th>JORNADA</th>
+                            <th>REQUISITOS ACADEMICOS</th>
+                            <th>EXPERIENCIA</th>
+                            <th>UBICACIONES</th>
+                            <th class="text-center w-100px">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>ofertalaborales.empresa</td>
+                            <td>ofertalaborales.cargo</td>
+                            <td>ofertalaborales.descripcion</td>
+                            <td>ofertalaborales.area_conocimiento</td>
+                            <td>ofertalaborales.salario</td>
+                            <td>ofertalaborales.jornada</td>
+                            <td>ofertalaborales.requisitos_academicos</td>
+                            <td>ofertalaborales.experiencia</td>
+                            <td>ofertalaborales.ubicacion</td>
+                            <td class="text-center table-actions d-flex justify-content-center">
+                                <a (click)="onEditarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                                    class="table-action mg-r-10" [class.text-primary]="!editarClicked"
+                                    [class.text-danger]="editarClicked" href="#">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+
+                                <a class="table-action ms-2 text-danger" href="#">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

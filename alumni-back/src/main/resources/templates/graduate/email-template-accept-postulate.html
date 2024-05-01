@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Java Techie Mail</title>
+    <style>
+
+        .space-icon img {
+            padding: 15px;
+        }
+
+        .space-icon a {
+            text-decoration: none;
+            color: black;
+        }
+
+    </style>
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td align="center" valign="top" style="background-color: white;"><br> <br>
+            <table width="600" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center" valign="top"
+                        style="background-color: white; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000000; padding: 0px 15px 10px 15px;">
+
+                        <body>
+                        <div class="center-icon">
+                            <img src="https://i.postimg.cc/3wSf4tHR/approved.png" alt="approved-icon" width="100px"/>
+                        </div>
+                        <div class="center-text">
+                            <h2><strong>¡Felicidades, has sido seleccionado!</strong></h2>
+                            <br>
+                            <p>Saludos cordiales,</p>
+                            <br>
+                            <p>Estimado/a <strong th:text="${fullName}"></strong>,</p>
+                            <br>
+                            <p>Felicitaciones, tu postulación a la oferta laboral con cargo de <strong th:text="${oferta.cargo}"></strong> de la
+                                empresa <strong th:text="${oferta.empresa.nombre}"></strong> ha sido
+                                seleccionada.</p>
+                            <br>
+                            <p>Estamos seguros de que tu perfil profesional y personal encajará perfectamente
+                                con el equipo de trabajo y las necesidades de la empresa.</p>
+                            <br>
+                            <p>Un representante de la empresa se pondrá en contacto contigo para continuar con el
+                                proceso de selección.</p>
+                            <br>
+                            <p>¡Gracias por confiar en nosotros!</p>
+                            <p>El equipo de ISTA.</p>
+                        </div>
+                        <div class="center-icon">
+                            <img src="https://i.postimg.cc/7G2S7n52/logo-ista.png" alt="logo-ista">
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="center-icon space-icon">
+                            <a href="https://www.facebook.com/TecAzuay"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png" alt="face-ico" width="30px"></a>
+                            <a href="https://www.instagram.com/tecdelazuay/?hl=es-la"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Instagram-Icon.png/1200px-Instagram-Icon.png" alt="insta-ico" width="30px"></a>
+                        </div>
+                        </body>
+                        <footer>
+                            <small class="center-text">
+                                <p>Copyright (C) 2024 <strong>Instituto Tecnológico del Azuay</strong>. All rights
+                                    reserved.</p>
+                                <p>Octavio Chacón Moscoso 1-98 y Primera Transversal (Parque industrial)</p>
+                                <p>Cuenca, Ecuador</p><br>
+                                <p>Teléfono: 07 2809 551 - 0995363076</p>
+                                <p>O contáctanos a nuestro correo: info.alumni.est@gmail.com</p>
+                            </small>
+                        </footer>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br> <br>
+        </td>
+    </tr>
+</table>
+</body>
+
+</html>

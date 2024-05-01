@@ -1,0 +1,48 @@
+<section class="page-title bg-overlay-black parallax"
+  style="background-image: url(../../../../assets/imgs/headers/Referencias.jpg);">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1>Encuestas con Preguntas y Respuestas</h1>
+    </div>
+  </div>
+</section>
+
+<div class="container mt-4">
+  <div class="row row-cols-1 row-cols-md-2 g-5">
+    <ng-container *ngIf="(surveyQuestionsAnswersStatsList$ | async) as surveyQuestionsAnswersStatsList">
+      <ng-container *ngFor="let survey of surveyQuestionsAnswersStatsList">
+        <div class="col">
+          <div class="card h-100 rounded shadow card-custom">
+            <div class="card-body">
+              <h5 class="card-title">{{ survey.surveyTitle }}</h5>
+              <p class="card-text">{{ survey.surveyDescription }}</p>
+              <hr>
+              <div *ngFor="let question of survey.questionsWithAnswers">
+                <h6 class="card-subtitle mb-3"><b>Pregunta: </b>{{ question.questionText }}</h6>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Opción</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="question.typeQuestion === 'ABIERTA'">
+                      <td>PREGUNTA CON RESPUESTAS ABIERTAS</td>
+                      <td>{{ question.numResponses }}</td>
+                    </tr>
+                    <tr *ngFor="let entry of question.responsesByOption | keyvalue">
+                      <td *ngIf="question.typeQuestion === 'ABIERTA'">PREGUNTA ABIERTA</td>
+                      <td *ngIf="question.typeQuestion !== 'ABIERTA'">{{ entry.key }}</td>
+                      <td>{{ entry.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,424 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/headers/Postulaciones.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Mis Trabajos</h1>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================
+    *          MODAL PARA REGISTRAR O EDITARDATOS
+ ======================================================= -->
+<div class="modal fade" id="modalData" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalDataLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white" [class.bg-dark]="!editarClicked" [class.bg-primary]="editarClicked">
+                <h5 [innerText]="editarClicked ? 'Modificar Oferta Laboral' : 'Crear Oferta Laboral'"></h5>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3 needs-validation" [formGroup]="validateForm">
+                    <div>
+                        <div class="form-group col-lg-6">
+                            <label class="form-label" for="estilo">ESTILO:</label>
+                            <div class="input-group has-validation">
+                                <a class="input-group-text">
+                                    <i class="fa-solid fa-spell-check"></i>
+                                </a>
+                                <select class="form-select" formControlName="tipo" (change)="selectStyle()"
+                                    [value]="validateForm.get('tipo')?.value" required>
+                                    <option value="estilo1">Estilo 1</option>
+                                    <option value="estilo2">Estilo 2</option>
+                                    <option value="estilo3">Estilo 3</option>
+                                </select>
+                                <div class="oaerror danger invalid-feedback">
+                                    <strong>Dato Faltante</strong> - Es obligatorio seleccionar un estilo.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!showThirdStyle" class="form-group col-lg-6">
+                        <label class="form-label active" for="cargo">CARGO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-users"></i>
+                            </a>
+                            <input class="form-control" type="text" name="cargo" placeholder="Ingrese el cargo"
+                                id="cargo" formControlName="cargo" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - El cargo es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="form-label active" for="duracion">EMPRESA:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-building"></i>
+                            </a>
+                            <select class="form-select" name="nombreEmpresa" formControlName="nombreEmpresa" required>
+                                <option value="" disabled selected>-- Seleccione una opción --</option>
+                                <option *ngFor="let empresa of empresas">{{empresa.nombre}}</option>
+                            </select>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - La empresa es obligatoria.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label class="form-label active">FECHA PUBLICACIÓN:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-calendar-alt"></i>
+                            </a>
+                            <input class="form-control wd-250" type="datetime-local" name="fechaPublicacion"
+                                formControlName="fechaPublicacion"
+                                [value]="fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss'" required readonly>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - La fecha de publicación es obligatoria.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div *ngIf="!this.showThirdStyle" class="form-group col-lg-6">
+                        <label class="form-label active">TIEMPO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-clock"></i>
+                            </a>
+                            <select class="form-select" name="tiempo" formControlName="tiempo" required>
+                                <option value="" disabled selected>-- Seleccione una opción --</option>
+                                <option value="COMPLETO" [selected]="ofertaslaboralesCarga.tiempo === 'COMPLETO'">
+                                    Completo</option>
+                                <option value="PARCIAL" [selected]="ofertaslaboralesCarga.tiempo === 'PARCIAL'">
+                                    Parcial</option>
+                                <option value="FIN DE SEMANA"
+                                    [selected]="ofertaslaboralesCarga.tiempo === 'FIN DE SEMANA'">Fin de semana
+                                </option>
+                            </select>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - El tiempo es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!showThirdStyle" class="form-group col-lg-6">
+                        <label *ngIf="!showSecondStyle && !showThirdStyle" class="form-label active">FECHA
+                            APERTURA:</label>
+                        <div *ngIf="!showSecondStyle && !showThirdStyle" class="input-group has-validation mb-2">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </a>
+                            <input class="form-control" type="datetime-local" name="fechaApertura"
+                                formControlName="fechaApertura" [min]="this.fechaPublicacion | date: 'yyyy-MM-dd HH:mm'"
+                                [max]="validateForm.get('fechaCierre')?.value" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - La fecha de apertura es obligatoria o es anterior a
+                                la fecha de publicación.
+                            </div>
+                        </div>
+
+                        <label class="form-label active">FECHA CIERRE:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-calendar-times"></i>
+                            </a>
+                            <input class="form-control" type="datetime-local" name="fechaCierre"
+                                formControlName="fechaCierre" [min]="this.fechaPublicacion | date: 'yyyy-MM-dd HH:mm'"
+                                required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - La fecha de cierre es obligatoria o es anterior a
+                                la fecha de publicación o la fecha de apertura.
+                            </div>
+                        </div>
+
+                    </div>
+                    <div *ngIf="!showThirdStyle" class="form-group col-lg-6">
+                        <label class="form-label active">ÁREA CONOCIMIENTO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-book"></i>
+                            </a>
+                            <textarea class="form-control" name="areaConocimiento" rows="4"
+                                placeholder="Ingrese el área de conocimiento para su oferta de trabajo"
+                                formControlName="areaConocimiento" required></textarea>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - El área de conocimiento es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label class="form-label active">ESTADO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </a>
+                            <input class="form-control wd-250" type="text" name="estado" formControlName="estado"
+                                readonly required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - El estado es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!showSecondStyle && !showThirdStyle" class="form-group col-lg-6">
+                        <label class="form-label active" for="salario">SALARIO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-dollar-sign"></i>
+                            </a>
+                            <input class="form-control" 
+                                   type="number" 
+                                   name="salario" 
+                                   placeholder="Ingrese el Salario"
+                                   id="salario" 
+                                   formControlName="salario" 
+                                   required
+                                   min="1">
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - El salario es obligatorio.
+                            </div>
+                        </div>
+                    </div>                    
+
+                    <div *ngIf="!showSecondStyle && !showThirdStyle" class="form-group col-lg-6 mb-3">
+                        <label class="form-label active">EXPERIENCIA:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </a>
+                            <select class="form-select" name="experiencia" formControlName="experiencia" required>
+                                <option value="" disabled>-- Seleccione una opción --</option>
+                                <option value="SIN EXPERIENCIA"
+                                    [selected]="ofertaslaboralesCarga.experiencia === 'Sin Experiencia'">
+                                    Sin Experiencia
+                                </option>
+                                <option value="CON EXPERIENCIA"
+                                    [selected]="ofertaslaboralesCarga.experiencia === 'Con Experiencia'">
+                                    Con Experiencia
+                                </option>
+                            </select>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - La experiencia es obligatoria.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="(showSecondStyle && !showThirdStyle) || (showThirdStyle && !showSecondStyle)"
+                        class="row mb-3 mt-3" data-parsley-validate>
+                        <div class="col-lg-12">
+                            <label class="form-label">Subir Foto De La Portada</label>
+
+                            <div class="card mg-b-20 form-group flex-grow-1 mr-3">
+                                <div class="card-header">
+                                    <div class="preview-img"
+                                        *ngIf="imageHandlerService.previsualizacion || (editarClicked && imageHandlerService.previsualizacion)">
+                                        <div class="image-container text-center" style="margin: 2rem;">
+                                            <img [src]="imageHandlerService.previsualizacion" alt=""
+                                                style="max-width: 40%; object-fit: cover; border-radius: 1rem;" />
+                                        </div>
+
+                                        <div>
+                                            <button
+                                                class="clear-image form-control border-0 cancel-button mt-3 custom-cancel-button"
+                                                type="button" (click)="imageHandlerService.clearImage()">
+                                                Eliminar Imagen
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body collapse show" id="collapse8">
+                                    <input type="file" max-file-size="1024" class="form-control"
+                                        aria-label="file example"
+                                        [required]="(showSecondStyle && !showThirdStyle) || (showThirdStyle && !showSecondStyle)"
+                                        (change)="capturarImagen($event)" accept=".jpg, .jpeg, .png, .webp" />
+                                    <div class="invalid-feedback">La foto de portada es necesaria.</div>
+                                </div>
+                            </div>
+                            <div class="oaerror danger"
+                                *ngIf="!imageHandlerService.previsualizacion || (editarClicked && !imageHandlerService.previsualizacion)">
+                                <strong>Error</strong> - La foto para la portada es obligatoria.
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+
+                <button (click)="onSubmit()" class="btn btn-oblong" [class.btn-success]="!editarClicked"
+                    [class.btn-primary]="editarClicked">
+                    {{ editarClicked ? 'Actualizar Oferta Laboral' : 'Registrar Oferta Laboral' }}
+                </button>
+
+                <button data-bs-dismiss="modal" #myModalClose class="btn btn-oblong btn-outline-danger btn-block"
+                    id="close-button">Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body collapse show">
+
+        <!-- =====================================================
+            *             BOTONES DE ACCIONES
+         ======================================================= -->
+        <div class="col-md-12 col-lg-12">
+            <div class="d-flex">
+                <button title="Actualizar datos de la tabla" (click)="loadData()" class="btn btn-success">
+                    <i class="fas fa-sync"></i>
+                </button>
+
+                <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters('filterTable')"
+                    class="btn btn-dark ms-2">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+
+                <ng-multiselect-dropdown style="width: 25rem;" *ngIf="filterService.editFilterTabs['filterTable']"
+                    [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
+                    [data]="filterService.dropdownLists['filterTable']"
+                    [(ngModel)]="filterService.selectedItems['filterTable']"
+                    (onSelect)="filterService.onItemSelect($event)"
+                    (onSelectAll)="filterService.onSelectAll('filterTable')"
+                    (onDeSelect)="filterService.onItemDeSelect($event)"
+                    (onDeSelectAll)="filterService.onDeSelectAll('filterTable')" class="ms-2">
+                </ng-multiselect-dropdown>
+
+                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
+                    class="btn btn-primary ms-2" style="width: 15rem;">
+                    Registrar Oferta Laboral
+                </button>
+            </div>
+        </div>
+
+        <!-- =====================================================
+            *            CONTENIDO DE LA TABLA
+         ======================================================= -->
+        <div class="mt-3 show animate_animated animatebounceInUp animate_fast">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered table-hover">
+                    <tbody>
+                        <tr *ngFor="let oferta of ofertaslaboraleslist; let i ">
+                            <th scope="row">{{oferta.id}}</th>
+                            <td>{{oferta.salario > 0 ? '$ ' + oferta.salario : 'ADJUNTADO EN LA IMAGEN'}}</td>
+                            <td>{{oferta.fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
+                            <td>{{ oferta.estado }} </td>
+                            <td>{{ oferta.nombreEmpresa}}</td>
+                            <td>{{ oferta.tipo === 'estilo1' ? 'ESTILO 1' : oferta.tipo === 'estilo2' ? 'ESTILO 2' :
+                                'ESTILO 3'
+                                }}</td>
+                            <td class="text-center table-actions d-flex justify-content-center">
+                                <a *ngIf="showEditDeleteButtons(oferta)" (click)="onEditarClick(oferta.id)"
+                                    data-bs-toggle="modal" data-bs-target="#modalData"
+                                    class="btn btn-label-primary btn-sm mg-y-5">
+                                    <i class="fa fa-pencil"></i> Editar
+                                </a>
+                                <a *ngIf="(oferta.estado === 'EN_CONVOCATORIA' || oferta.estado === 'REACTIVADA' ) && showEditDeleteButtons(oferta)"
+                                    (click)="deleteOfertaLaboral(oferta.id, 'CANCELADA')"
+                                    class="btn btn-label-danger btn-sm mg-y-5 ms-2">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </a>
+                                <a *ngIf="oferta.estado === 'CANCELADA'  && showEditDeleteButtons(oferta)"
+                                    (click)="deleteOfertaLaboral(oferta.id, 'REACTIVADA')"
+                                    class="btn btn-label-secondary btn-sm mg-y-5 ms-2">
+                                    <i class="fas fa-undo-alt"></i> Reactivar
+                                </a>
+                                <a (click)="listPostulantesActivos(oferta.id)" data-bs-toggle="modal"
+                                    data-bs-target="#modalPostulantes" class="btn btn-label-info btn-sm mg-y-5 ms-2"
+                                    style="cursor: pointer;">
+                                    <i class="fa fa-eye"></i> Ver postulantes
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- =====================================================
+    *          MODAL PARA VISUALIZAR POSTULANTES
+ ======================================================= -->
+<div class="modal fade" id="modalPostulantes" tabindex="-1" data-bs-backdrop="static" aria-labelledby="modalPostulantes"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white bg-primary">
+                <h5 [innerText]="editarClicked ? 'Listado Postulantes' : 'Listado Postulantes'"></h5>
+                <button #modalPostulante class="btn-close text-right" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <label for="" style="margin-left: 10px;">
+                    <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                        class="form-select form-select-sm mb-3" [(ngModel)]="filtropostulados"
+                        (ngModelChange)="filtroPostulados()">
+                        <option [value]="1">Postulantes activos</option>
+                        <option [value]="2">Postulantes inactivos</option>
+                        <option [value]="3">Postulantes seleccionados</option>
+                    </select>
+                </label>
+
+                <div class="card-body pd-0 collapse show" id="collapse1">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cédula</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Acciones</th>
+                                    <th
+                                        *ngIf="(filtropostulados == 1 || filtropostulados == 4) && activeSelectPostulant">
+                                        Seleccionar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let graduado of allGraduados; let i = index">
+                                    <td>{{graduado.id}}</td>
+                                    <td>{{graduado.usuario.persona.cedula}}</td>
+                                    <td>{{graduado.usuario.persona.primerNombre + ' ' +
+                                        graduado.usuario.persona.apellidoPaterno[0] + '.' }}</td>
+                                    <td>{{graduado.emailPersonal}}</td>
+                                    <td>
+                                        <button class="btn btn-label-info" data-bs-dismiss="modal"
+                                            (click)="setIDGraduado(graduado.id)"
+                                            [routerLink]="['/system/company/graduado-perfil']">
+                                            <i class="fa fa-eye"></i> Ver perfil
+                                        </button>
+                                    </td>
+                                    <td class="text-center"
+                                        *ngIf="(filtropostulados == 1 || filtropostulados == 4) && activeSelectPostulant">
+                                        <input *ngIf="filtropostulados == 1" type="checkbox"
+                                            [(ngModel)]="selectedRows[i]" />
+                                        <input *ngIf="filtropostulados == 4" type="checkbox"
+                                            [(ngModel)]="selectedRows[i]" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="!existenPostulantes" class="text-center fw-semibold">
+                            <h5>No existen datos de postulantes.</h5>
+                        </div>
+                        <div class="text-right" *ngIf="selectedRows.includes(true)">
+                            <button (click)="seleccionarPostulantes()"
+                                class="btn btn-oblong btn-primary">Seleccionar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ Modal 2 -->

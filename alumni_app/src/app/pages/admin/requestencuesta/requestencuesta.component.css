@@ -1,0 +1,111 @@
+/* Estilos para las tarjetas de encuesta */
+
+.card {
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-image: linear-gradient(to right bottom, #e2f0ff, #ffd9d99b);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(25, 0, 255, 0.2);
+}
+
+.card::before {
+  content: '';
+  /* Pseudo-elemento para añadir capa de color translúcida */
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  /* Capa de color translúcida */
+  z-index: 1;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  /* Texto oscuro */
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #000000;
+  /* Texto gris */
+  margin-bottom: 1.5rem;
+}
+
+.card-subtitle {
+  font-size: 1.1rem;
+  color: #4c4a4a;
+  /* Texto gris más oscuro */
+  margin-bottom: 0.5rem;
+}
+
+.list-group-item {
+  background-color: #f8f9fa;
+  /* Fondo gris claro para elementos de lista */
+  border-color: #848c94;
+  /* Borde gris más oscuro */
+  color: #333;
+  /* Texto oscuro para elementos de lista */
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+  background-color: #e9ecef;
+  /* Cambio de color al hacer hover */
+}
+
+.container {
+  padding-top: 40px;
+}
+
+/* Estilos específicos para cada tipo de tarjeta */
+.card.blue {
+  background-color: #d9efff;
+  /* Fondo azul claro */
+  background-image: linear-gradient(to right bottom, #79b4e6, #4a9bbf);
+  /* Gradiente azul más intenso */
+}
+
+.card.green {
+  background-color: #d4f2db;
+  /* Fondo verde claro */
+  background-image: linear-gradient(to right bottom, #6bd491, #4aaf83);
+  /* Gradiente verde más intenso */
+}
+
+.card.orange {
+  background-color: #ffe8cc;
+  /* Fondo naranja claro */
+  background-image: linear-gradient(to right bottom, #ffcf99, #ffa64d);
+  /* Gradiente naranja más intenso */
+}
+
+/* Ajustes para tamaños responsivos en dispositivos móviles */
+@media (max-width: 767px) {
+  .card {
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .card-subtitle {
+    font-size: 1rem;
+  }
+
+  .list-group-item {
+    font-size: 0.9rem;
+  }
+}

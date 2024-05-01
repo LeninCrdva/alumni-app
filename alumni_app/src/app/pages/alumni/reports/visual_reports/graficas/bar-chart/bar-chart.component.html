@@ -1,0 +1,15 @@
+<div *ngIf="chartOptions">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [dataLabels]="chartOptions.dataLabels"
+      [yaxis]="chartOptions.yaxis"
+      [labels]="chartOptions.labels"
+      [legend]="chartOptions.legend"
+      [title]="chartOptions.title"
+      [subtitle]="chartOptions.subtitle"
+      [plotOptions]="chartOptions.options"
+      [fill]="chartOptions.fill"
+    ></apx-chart>
+  </div>

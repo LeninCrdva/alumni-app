@@ -1,0 +1,196 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/headers/Capacitaciones.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Mis Capacitaciones</h1>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================
+    *          MODAL PARA REGISTRAR DATOS
+ ======================================================= -->
+
+<div class="modal fade" id="modalData" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalDataLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white" [class.bg-dark]="!editarClicked" [class.bg-primary]="editarClicked">
+                <h5 [innerText]="editarClicked ? 'Modificar Capacitación' : 'Agregar Capacitación'">
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3 needs-validation" [formGroup]="validateForm">
+                    <div class="form-group col-lg-6">
+                        <label for="nombre" class="form-label">NOMBRE:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-signature"></i>
+                            </a>
+                            <input type="text" class="form-control" id="nombre"
+                                placeholder="Ingrese el nombre." formControlName="nombre" required>
+                            <div class="oaerror danger  invalid-feedback">
+                                <strong>Dato Faltante</strong> - Ingrese el nombre de su Capacitación.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="institucion" class="form-label">INSTITUCIÓN:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-school"></i>
+                            </span>
+                            <input type="text" class="form-control" id="institucion"
+                                placeholder="Ingrese el nombre de la institucion" formControlName="institucion"
+                                required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución de su
+                                Capacitación.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="tipoCertificado" class="form-label">TIPO DE CERTIFICADO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-regular fa-file"></i>
+                            </a>
+                            <input type="text" class="form-control" id="tipoCertificado"
+                                placeholder="Ingrese el tipo de certificado." formControlName="tipoCertificado"
+                                required>
+                            <div class="oaerror danger  invalid-feedback">
+                                <strong>Dato Faltante</strong> - Ingrese el tipo de certificado de su Capacitación.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="numHoras" class="form-label">HORAS:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-regular fa-clock"></i>
+                            </span>
+                            <input type="number" class="form-control" id="numHoras"
+                                placeholder="Ingrese la cantidad de horas" formControlName="numHoras" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese la cantidad de horas que realizo en su
+                                Capacitación.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="fechaInicio" class="form-label">FECHA DE INICIO:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </span>
+                            <input type="date" class="form-control" id="fechaInicio"
+                                placeholder="Ingrese la fecha de inicio" formControlName="fechaInicio" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de inicio de su
+                                Capacitación.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="fechaFin" class="form-label">FECHA DE FIN:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </span>
+                            <input type="date" class="form-control" id="fechaFin"
+                                placeholder="Ingrese la fecha de fin" formControlName="fechaFin" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de fin de su
+                                Capacitación.
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button (click)="onSubmit()" class="btn btn-oblong" [class.btn-success]="!editarClicked"
+                    [class.btn-primary]="editarClicked">
+                    {{ editarClicked ? 'Actualizar Capacitación' : 'Registrar Capacitación' }}
+                </button>
+
+                <button type="button" #myModalClose data-bs-dismiss="modal"
+                    class="btn btn-oblong btn-outline-danger btn-block">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+    *          TABLA DE DATOS
+ ======================================================= -->
+<div class="card">
+    <div class="card-body collapse show">
+
+        <!-- =====================================================
+            *             BOTONES DE ACCIONES
+         ======================================================= -->
+        <div class="d-flex">
+            <button title="Actualizar datos de la tabla" (click)="loadData()" class="btn btn-success">
+                <i class="fas fa-sync"></i>
+            </button>
+
+            <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters('filterTable')"
+                class="btn btn-dark ms-2">
+                <i class="fa-solid fa-filter"></i>
+            </button>
+
+            <ng-multiselect-dropdown style="width: 25rem;" *ngIf="filterService.editFilterTabs['filterTable']"
+                [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
+                [data]="filterService.dropdownLists['filterTable']" [(ngModel)]="filterService.selectedItems['filterTable']"
+                (onSelect)="filterService.onItemSelect($event)"
+                (onSelectAll)="filterService.onSelectAll('filterTable')"
+                (onDeSelect)="filterService.onItemDeSelect($event)"
+                (onDeSelectAll)="filterService.onDeSelectAll('filterTable')" class="ms-2">
+            </ng-multiselect-dropdown>
+
+            <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
+                class="btn btn-primary ms-2" style="width: 18rem;">
+                Agregar Capacitación
+            </button>
+        </div>
+
+        <!-- =====================================================
+            *            CONTENIDO DE LA TABLA
+         ======================================================= -->
+        <div class="mt-3 show animate__animated animate__bounceInUp animate__fast">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered table-hover">
+                    <tbody>
+                        <tr *ngFor="let item of capacitacionList;">
+                            <th scope="row">{{ item.id }}</th>
+                            <td>{{ item.nombre }}</td>
+                            <td>{{ item.institucion }}</td>
+                            <td>{{ item.numHoras }}</td>
+                            <td>{{ item.tipoCertificado }}</td>
+                            <td>{{ item.fechaInicio }}</td>
+                            <td>{{ item.fechaFin }}</td>
+                            <td class="text-right text-center">
+                                <button (click)="onEditarClick(item.id)" data-bs-toggle="modal"
+                                    data-bs-target="#modalData" class="btn btn-label-primary btn-sm mg-y-5">
+                                    <i class="fa fa-pencil"></i> Editar
+                                </button>
+                                <button (click)="onDeleteClick(item.id)"
+                                    class="btn btn-label-danger btn-sm mg-y-5 ms-2">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

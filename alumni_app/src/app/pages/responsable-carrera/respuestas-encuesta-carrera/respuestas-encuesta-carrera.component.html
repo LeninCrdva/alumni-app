@@ -1,0 +1,66 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/headers/Referencias.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Respuestas por Carrera</h1>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row mb-4 mt-4">
+        <div class="col-12">
+            <label for="filterBy" class="mb-1">Nombre de la carrera:</label>
+            <select id="filterBy" class="form-control" [(ngModel)]="careerName" (ngModelChange)="onFilterChange()">
+                <option *ngFor="let career of careerList" [ngValue]="career.nombre">
+                    {{career.nombre}}
+                </option>
+            </select>
+        </div>
+        <div class="col-12">
+            <label for="filterBy" class="mb-1">Título de la Encuesta:</label>
+            <select id="filterBy" class="form-control" [(ngModel)]="surveyTitle" (ngModelChange)="onFilterChange()">
+                <option *ngFor="let survey of surveyList" [ngValue]="survey.title">
+                    {{survey.title}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div *ngIf="answerList.length === 0" class="text-center">
+                <p>No hay Respuestas por Carrera disponibles.</p>
+            </div>
+            <div class="card">
+                <div *ngIf="answerList.length > 0">
+                    <div class="card-header">
+                        <h4>Respuestas de la encuesta "{{ surveyTitle }}" para la carrera "{{ careerName }}"</h4>
+                    </div>
+                    <div class="card-body" *ngFor="let answer of answerList">
+                        <h5>{{ answer.questionText }}</h5>
+
+                        <ng-container *ngIf="(answer.responsesByOption | json) !== '{}'">
+                            <h6>Opciones de respuesta:</h6>
+                            <ul>
+                                <li *ngFor="let option of answer.responsesByOption | keyvalue">
+                                    {{ option.key }}: {{ option.value }}
+                                </li>
+                            </ul>
+                        </ng-container>
+
+                        <p *ngIf="(answer.responsesByOption | json) === '{}'">
+                            Esta pregunta no tiene opciones de respuesta predefinidas.
+                        </p>
+
+                        <div *ngIf="answer.questionAnswers">
+                            <h6>Respuestas de texto:</h6>
+                            <ul>
+                                <li *ngFor="let answerText of answer.questionAnswers">{{ answerText }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

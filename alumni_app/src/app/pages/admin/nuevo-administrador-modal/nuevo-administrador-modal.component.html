@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h4 class="modal-title">Complete informacion del  Administrador</h4>
+    <button type="button" class="close" (click)="cerrarModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  <div class="modal-body">
+    <form (ngSubmit)="guardarAdministrador()">
+      <!-- Campos del formulario -->
+      <div class="form-group">
+        <label for="cargo">Cargo:</label>
+        <input type="text" class="form-control" id="cargo" [(ngModel)]="nuevoAdministrador.cargo" name="cargo" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" [(ngModel)]="nuevoAdministrador.email" name="email" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="usuario">Usuario:</label>
+        <input type="text" class="form-control" id="usuario" [(ngModel)]="nuevoAdministrador.usuario" name="usuario" required readonly>
+      </div>
+  
+      <div *ngIf="!formularioValido && (nuevoAdministrador.cargo || nuevoAdministrador.email || nuevoAdministrador.usuario)">
+        <div class="alert alert-danger">
+          Por favor, completa todos los campos obligatorios antes de guardar.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="formularioValido">Guardar</button>
+    </form>
+  </div>
+  

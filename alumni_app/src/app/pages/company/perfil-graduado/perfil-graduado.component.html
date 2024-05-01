@@ -1,0 +1,100 @@
+<!-- Hero Start -->
+<section class="bg-half-260 pb-4 d-table w-100"
+    style="background: url('../../../../assets/imgs/bg/Isuta_bg.jpg'); background-repeat: no-repeat; background-size: cover;">
+    <div class="bg-overlay"></div>
+    <div *ngIf="graduado" class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="candidate-detail text-center text-md-left p-4 rounded shadow bg-white">
+                    <div class="row align-items-end">
+                        <div class="col-md-8">
+                            <div class="candidate-detail-top align-items-center">
+                                <img [src]="graduado?.usuario?.urlImagen" alt="Imagen de usuario"
+                                    class="avatar avatar-medium rounded-circle shadow mr-md-3" alt="">
+                                <div class="content mt-4 mt-sm-0" style="padding-left: 20px;">
+                                    <h4 class="mb-0">{{graduado?.usuario?.persona?.primerNombre}}
+                                        {{graduado?.usuario?.persona?.segundoNombre}}
+                                        {{graduado?.usuario?.persona?.apellidoPaterno}}
+                                        {{graduado?.usuario?.persona?.apellidoMaterno}} </h4>
+                                    <p class="mb-0"><i data-feather="map-pin" class="fas fa-church n-sm mr-1"></i><span
+                                            class="text-muted h6">{{graduado.estadoCivil}}</span></p>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                    </div><!--end row-->
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+    </div><!--end container-->
+</section><!--end section-->
+<!-- Hero End -->
+
+
+<!-- Section Start -->
+<section class="section pt-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                <div class="sticky-bar rounded bg-white shadow">
+                    <div class="border-bottom p-4">
+                        <h5 class="mb-0">Información personal</h5>
+                    </div>
+
+                    <div class="p-4">
+                        <div class="d-flex align-items-center">
+                            <i data-feather="mail" class="float-left mr-3"></i>
+                            <div class="overflow-hidden d-block">
+                                <h6 class="mb-0">Email :</h6>
+                                <p class="text-muted mb-0">{{graduado.emailPersonal}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mt-3">
+                            <i data-feather="map-pin" class="float-left mr-3"></i>
+                            <div class="overflow-hidden d-block">
+                                <h6 class="mb-0">Ubicación :</h6>
+                                <p class="text-muted mb-0">{{graduado?.ciudad?.nombre}},
+                                    {{graduado?.ciudad?.provincia?.pais}}</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mt-3">
+                            <i data-feather="monitor" class="float-left mr-3"></i>
+                            <div class="overflow-hidden d-block">
+                                <h6 class="mb-0">Título :</h6>
+                                <p class="text-muted mb-0">Tecnologo superior en desarrollo de software</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mt-3">
+                            <i data-feather="award" class="float-left mr-3"></i>
+                            <div class="overflow-hidden d-block">
+                                <h6 class="mb-0">Teléfono :</h6>
+                                <p class="text-muted mb-0">{{graduado?.usuario?.persona?.telefono}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mt-3">
+                            <i data-feather="briefcase" class="float-left mr-3"></i>
+                            <div class="overflow-hidden d-block">
+                                <h6 class="mb-0">Fecha de registro :</h6>
+                                <p class="text-muted mb-0">{{graduado?.usuario?.persona?.fechaNacimiento}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--end col-->
+
+            <div class="col-lg-8 col-md-6 col-12 mt-4 pt-2">
+                <div class="rounded shadow bg-white p-4">
+                    <div class="border-bottom pb-4">
+                        <h5 class="mt-4">Hoja de vida: </h5>
+                    </div>
+                    <div class="embed-responsive embed-responsive-19by9">
+                        <iframe [src]="pdfUrl" width="100%" height="600px" frameborder="0">"No es posible visualizar el
+                            contenido"</iframe>
+                    </div>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+    </div> <!--end container-->
+</section><!--end section-->
+<!-- Hero End -->

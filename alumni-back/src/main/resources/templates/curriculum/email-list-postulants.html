@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{src/main/resources/static/css/style.css}">
+    <style>
+        .principal-container {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            font-family: 'Tahoma', sans-serif;
+            max-width: 794px;
+            margin: 200px 0;
+        }
+
+        .principal-title {
+            color: #12468c;
+            font-size: 65pt;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .date {
+            text-align: center;
+            font-size: 24pt;
+            color: #666666;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .local-date {
+            text-align: center;
+            font-size: 16pt;
+            color: #666666;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+<div class="">
+    <br>
+    <br>
+    <br>
+    <div class="col-8 col-md-4" style="margin-top: auto;">
+        <img th:src="@{src/main/resources/static/images/logo-ista-large.png}" alt="logo-ista-large" height="50px">
+    </div>
+    <div class="principal-container">
+        <h1 class="principal-title">Instituto Tecnológico del Azuay</h1>
+
+        <p class="date">FECHA</p>
+        <p class="local-date" th:text="${#dates.format(#dates.createNow(), 'dd-MM-yyyy')}"></p>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
+
+<!-- SECCION DE GRADUDADOS -->
+<section class="text-center" th:each="graduateEntry : ${graduates}">
+    <div class="container">
+        <div class="row">
+            <div class="col-8 col-md-4" style="margin-top: auto;">
+                <img th:src="@{src/main/resources/static/images/logo-ista-large.png}" alt="logo-ista-large"
+                     height="50px">
+            </div>
+            <div class="col-8 col-md-8 pt-2">
+                <h3 class="mt-5 title" th:text="${graduateEntry.value.fullName}"></h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Datos personales del graduado -->
+    <div class="container mt-5">
+        <div class="d-flex">
+            <h5 class="text-secondary">Datos Personales</h5>
+        </div>
+        <hr>
+        <div class="d-flex">
+            <div class="text-start col-sm-2 titles">
+                <h6>Email:</h6>
+                <h6>Teléfono:</h6>
+                <h6>Cédula:</h6>
+                <h6>Dirección:</h6>
+            </div>
+            <div class="ms-5 text-start col-sm-4 contents">
+                <!-- Utilizar los datos personales de cada graduado -->
+                <h6 th:text="${graduateEntry.value.graduado.emailPersonal}"></h6>
+                <h6 th:text="${graduateEntry.value.graduado.usuario.persona.telefono}"></h6>
+                <h6 th:text="${graduateEntry.value.graduado.usuario.persona.cedula}"></h6>
+                <h6 th:text="${graduateEntry.value.graduado.ciudad.nombre} + ', ' + ${graduateEntry.value.graduado.ciudad.provincia.nombre}"></h6>
+            </div>
+            <div class="ms-5 col-md-4">
+                <img class="image" th:src="@{${graduateEntry.value.graduado.usuario.urlImagen}}"
+                     alt="foto-usuario">
+            </div>
+        </div>
+    </div>
+
+    <!-- Perfil del graduado -->
+    <div class="container mt-5">
+        <div class="d-flex">
+            <h5 class="text-secondary mt-4">Perfil</h5>
+        </div>
+        <hr>
+        <table class="table">
+            <tr th:each="titulo : ${graduateEntry.value.titulos}">
+                <div>
+                    <th class="p-2">Institución</th>
+                </div>
+                <td class="col-md-8">
+                    <div class="text-start">
+                        <ol class="text-start">
+                            <!-- Utilizar los títulos de cada graduado -->
+                            <li><h6 th:text="${titulo.institucion}"></h6></li>
+                            <li th:text="'Título: ' + ${titulo.nombreTitulo}"></li>
+                            <li th:text="'Número de registro: ' + ${titulo.numRegistro}"></li>
+                            <li th:text="'Carrera: ' + ${titulo.carrera.nombre}"></li>
+                        </ol>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Experiencias del graduado -->
+    <div th:if="${#lists.size(graduateEntry.value.experiencias) > 0}" class="container mt-5">
+        <div class="d-flex">
+            <h5 class="text-secondary mt-4">Experiencia</h5>
+        </div>
+        <hr>
+        <table class="table">
+            <tr th:each="experiencia : ${graduateEntry.value.experiencias}">
+                <div>
+                    <th class="p-2">
+                        <ol>
+                            <li>Institución</li>
+                            <li>Oficio</li>
+                            <li>Descripción</li>
+                        </ol>
+                    </th>
+                </div>
+                <td class="col-md-8">
+                    <div class="text-start">
+                        <ol class="text-start">
+                            <!-- Utilizar las experiencias de cada graduado -->
+                            <li th:text="${experiencia.nombreInstitucion}"></li>
+                            <li th:text="${experiencia.cargo}"></li>
+                            <li th:text="${experiencia.areaTrabajo}"></li>
+                        </ol>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Logros del graduado -->
+    <div th:if="${#lists.size(graduateEntry.value.logros) > 0}" class="container mt-5">
+        <div class="d-flex">
+            <h5 class="text-secondary mt-4">Logros</h5>
+        </div>
+        <hr>
+        <table class="table">
+            <tr th:each="logro : ${graduateEntry.value.logros}">
+                <div>
+                    <th class="p-2">
+                        <ol>
+                            <li>Tipo</li>
+                            <li>Descripción</li>
+                        </ol>
+                    </th>
+                </div>
+                <td class="col-md-8">
+                    <div class="text-start">
+                        <ol class="text-start">
+                            <!-- Utilizar los logros de cada graduado -->
+                            <li th:text="${logro.tipo}"></li>
+                            <li th:text="${logro.descripcion}"></li>
+                        </ol>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Capacitaciones del graduado -->
+    <div th:if="${#lists.size(graduateEntry.value.capacitaciones) > 0}" class="container mt-5">
+        <div class="d-flex">
+            <h5 class="text-secondary mt-4">Capacitaciones</h5>
+        </div>
+        <hr>
+        <table class="table">
+            <tr th:each="cap : ${graduateEntry.value.capacitaciones}">
+                <div>
+                    <th class="p-2">
+                        <ol>
+                            <li th:text="${cap.tipoCertificado}"></li>
+                            <li th:text="'(' + ${cap.horas} + 'horas)'">Institución</li>
+                        </ol>
+                    </th>
+                </div>
+                <td class="col-md-8">
+                    <div class="text-start">
+                        <ol class="text-start">
+                            <!-- Utilizar las capacitaciones de cada graduado -->
+                            <li th:text="${cap.nombre}"></li>
+                            <li th:text="${cap.institucion}"></li>
+                            <li th:text="${cap.fechaFin}"></li>
+                        </ol>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Referencias del graduado -->
+    <div class="container mt-2">
+        <div class="d-flex">
+            <h5 class="text-secondary">Referencias</h5>
+        </div>
+        <hr>
+        <table class="table">
+            <!-- Referencias personales -->
+            <tr th:each="personal : ${graduateEntry.value.referencias}">
+                <div>
+                    <th class="p-2">Referencia Personal</th>
+                </div>
+                <td class="col-md-8">
+                    <div class="text-start">
+                        <ol class="text-start">
+                            <!-- Utilizar las referencias personales de cada graduado -->
+                            <li th:text="${personal.nombreReferencia}"></li>
+                            <li th:text="${personal.telefono}"></li>
+                            <li th:text="${personal.email}"></li>
+                        </ol>
+                    </div>
+                </td>
+            </tr>
+            <!-- Referencias profesionales -->
+            <tr th:each="profesional : ${graduateEntry.value.referenciasProfesionales}">
+                <div>
+                    <th class="p-2">Referencia Profesional</th>
+                </div>
+                <td class="col-md-8">
+                    <div class="text-start">
+                        <ul class="text-start">
+                            <!-- Utilizar las referencias profesionales de cada graduado -->
+                            <li th:text="${profesional.nombre}"></li>
+                            <li th:text="${profesional.institucion}"></li>
+                            <li th:text="${profesional.email}"></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <hr>
+    </div>
+</section>
+
+</body>
+
+</html>

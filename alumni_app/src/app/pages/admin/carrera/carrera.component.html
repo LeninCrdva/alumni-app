@@ -1,0 +1,105 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Carreras</h1>
+        </div>
+    </div>
+</section>
+
+<div class="card">
+    <div class="card-body collapse show" id="collapse1">
+        <!-- Modal -->
+        <div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+            aria-hidden="true" data-bs-backdrop="static">
+
+            <div class="modal-dialog modal-lg" role="document" data-bs-backdrop="static">
+
+                <div class="modal-content">
+                    <div [class.bg-primary]="true" class="modal-header text-white">
+                        <h5 [innerText]="editMode ? 'Modificar Carrera' : 'Crear nueva Carrera'"></h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <form [formGroup]="registerCareerForm">
+                            <div class="form-layout form-layout-1">
+                                <div class="row mg-b-25">
+                                    <div class="col-lg-10 mx-auto">
+
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Nombre de carrera: <span
+                                                    class="tx-danger">*</span></label>
+                                            <input type="text" placeholder="Software" formControlName="nombreCarrera">
+                                            <div class="text-danger"
+                                                *ngIf="registerCareerForm.get('nombreCarrera')?.hasError('required') && registerCareerForm.get('nombreCarrera')?.touched">
+                                                El nombre de la carrera es obligatorio.
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-control-label active">Descripción de la Carrera: <span
+                                                    class="tx-danger"></span></label>
+                                            <input type="text" placeholder="Ejem: Carrera de tecnología..."
+                                                formControlName="descripcionCarrera">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button (click)="!editMode ? createCareer() : UpdateCareer()" type="submit"
+                            data-bs-toggle="modal" data-bs-target="#m_modal_5" class="btn btn-oblong btn-primary">
+                            {{editMode ? 'Editar' : 'Crear'}}
+                        </button>
+                        <button data-bs-dismiss="modal" id="close-button"
+                            class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12">
+            <div class="d-flex">
+                <button data-bs-toggle="modal" [attr.data-bs-target]="!editMode ? '#m_modal_5' : null" type="button"
+                    class="btn btn-oblong btn-primary mg-b-10 mt-2" style="margin-right:10px; width: 17rem; height: 2.5rem;"
+                    (click)="editMode = false">
+                    Registrar Carrera
+                </button>
+                <div class="input-group">
+                    <input type="text" class="form-control-sm rounded" #searchInput placeholder="Buscar...">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-body pd-0 collapse show" id="collapse1">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th>#</th>
+                            <th>CARRERA</th>
+                            <th>DESCRIPCIÓN</th>
+                            <th class="text-center w-100px">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let career of careerList;">
+                            <td>{{career.id}}</td>
+                            <td>{{career.nombre}}</td>
+                            <td>{{career.descripcion}}</td>
+                            <td class="text-center">
+                                <a (click)="catchCareer(career)" data-bs-toggle="modal" data-bs-target="#m_modal_5"
+                                    class="table-action mg-r-10" [class.text-primary]="!editMode">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

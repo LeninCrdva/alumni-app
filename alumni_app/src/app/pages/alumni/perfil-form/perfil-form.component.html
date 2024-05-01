@@ -1,0 +1,227 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/bg/Estudiantes4.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Actualizar Información</h1>
+        </div>
+    </div>
+</section>
+
+<div class="perfil-content">
+    <div class="wrapper">
+        <ul class="indicator">
+            <li class="active" data-target="#home"><i class="ph-house"></i> Perfil</li>
+            <li data-target="#ubicación"><i class="ph-user-circle"></i> Ubicación</li>
+            <li data-target="#foto"><i class="ph-user-circle"></i> Foto</li>
+        </ul>
+        <ul class="content">
+            <li class="active" id="home">
+                <h1>Perfil</h1>
+                <p>Por favor, complete todos los campos del formulario con información personal precisa y actualizada.
+                    Los datos
+                    proporcionados serán utilizados únicamente con fines académicos y de contacto. Asegúrese de revisar
+                    cuidadosamente la
+                    información antes de enviar el formulario. Gracias por su colaboración.</p>
+                <br>
+                <form [formGroup]="updatePersonForm" class="mb-5">
+
+                    <div class="mb-4">
+                        <div class="form-group mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="primerNombre"
+                                id="InputNombreM1">
+                            <label for="InputNombreM1" class="form-label">Ingresa tu primer Nombre</label>
+                            <i class="ri-user-smile-line form-icon"></i>
+                        </div>
+
+                        <div class="text-danger mb-4"
+                            *ngIf="updatePersonForm.get('primerNombre')?.hasError('required') && updatePersonForm.get('primerNombre')?.touched">
+                            El primer nombre es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="flex-grow-1">
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder=" " formControlName="segundoNombre"
+                                    id="InputNombreP">
+                                <label for="InputNombreP" class="form-label">Ingresa tu segundo Nombre</label>
+                                <i class="ri-user-smile-line form-icon"></i>
+                            </div>
+
+                            <div class="text-danger mb-4"
+                                *ngIf="updatePersonForm.get('segundoNombre')?.hasError('required') && updatePersonForm.get('segundoNombre')?.touched">
+                                El segundo nombre es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="flex-grow-1">
+                            <div class="form-group mr-3">
+                                <input type="text" class="form-input" placeholder=" " formControlName="primerApellido"
+                                    id="InputApellidoM"  style="text-transform: uppercase;">
+                                <label for="" class="form-label">Ingresa tu primer Apellido</label>
+                                <i class="ri-user-smile-line form-icon"></i>
+                            </div>
+                            <div class="text-danger mb-4"
+                                *ngIf="updatePersonForm.get('primerApellido')?.hasError('required') && updatePersonForm.get('primerApellido')?.touched">
+                                El primer apellido es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="flex-grow-1">
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder=" " formControlName="segundoApellido"
+                                    id="InputApellidoP" style="text-transform: uppercase;">
+                                <label for="" class="form-label">Ingresa tu segundo Apellido</label>
+                                <i class="ri-user-smile-line form-icon"></i>
+                            </div>
+
+                            <div class="text-danger mb-4"
+                                *ngIf="updatePersonForm.get('segundoApellido')?.hasError('required') && updatePersonForm.get('segundoApellido')?.touched">
+                                El segundo apellido es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-group flex-grow-1 mr-3">
+                            <input type="text" class="form-input" placeholder=" " formControlName="cedula"
+                                id="InputCedula" readonly>
+                            <label for="" class="form-label">Ingresa tu Cédula</label>
+                            <i class="fa-solid fa-id-card form-icon"></i>
+                        </div>
+
+                        <div class="text-danger"
+                            *ngIf="updatePersonForm.get('cedula')?.hasError('required') && updatePersonForm.get('cedula')?.touched">
+                            La cedula es obligatoria.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-group flex-grow-1 mr-3">
+                            <input type="text" 
+                            class="form-input" 
+                            placeholder=" " 
+                            formControlName="telefono" 
+                            id="InputTelefono" 
+                            (input)="onPhoneInput($event)"
+                            (blur)="onPhoneBlur()"
+                            appNumericOnly>
+                                                     
+                            <label for="" class="form-label">Ingresa tu Teléfono</label>
+                            <i class="fa-solid fa-phone-volume form-icon"></i>
+                        </div>
+
+                        <div class="text-danger"
+                            *ngIf="updatePersonForm.get('telefono')?.hasError('required') && updatePersonForm.get('telefono')?.touched">
+                            El número de telefono es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
+
+                        <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento"
+                            class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
+                        <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
+                        <div class="text-danger"
+                            *ngIf="updatePersonForm.get('fechaNacimiento')?.hasError('required') && updatePersonForm.get('fechaNacimiento')?.touched">
+                            La fecha de nacimiento es obligatoria.
+                        </div>
+
+                        <div class="mt-3">
+                            <button class="btn btn-oblong btn-success btn-block mg-b-10"
+                                (click)="updateInfoGraduate()">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+
+            </li>
+
+            <li id="ubicación">
+                <h1>Ubicación</h1>
+                <p>Para mantenernos conectados y al tanto de tus logros, te animamos a actualizar tu ubicación actual en
+                    nuestra plataforma
+                    Alumni. Este simple paso nos permitirá seguir tu trayectoria profesional, conocer tus éxitos y
+                    facilitar la conexión con
+                    otros exalumnos que puedan estar en tu área.</p>
+                <form [formGroup]="updateUbicacionForm">
+                    <div class="mb-4 my-4">
+                        <div class="form-group flex-grow-1 mr-3">
+                            <i class="fa-solid fa-id-card form-icon"></i>
+                            <select title="" formControlName="ciudad" (change)="onCiudadChange()">
+                                <option *ngFor="let ciudad of ciudades">{{ciudad.nombre}}</option>
+                            </select>
+                        </div>
+                        <div class="text-danger"
+                            *ngIf="updateUbicacionForm.get('ciudad')?.hasError('required') && updateUbicacionForm.get('ciudad')?.touched">
+                            La ubicación es obligatoria.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-group flex-grow-1 mr-3">
+                            <i class="fa-solid fa-id-card form-icon"></i>
+                            <select formControlName="provincia" >
+                                <option *ngFor="let provincia of provincias">{{provincia}}</option>
+                            </select>
+                        </div>
+                        <div class="text-danger"
+                            *ngIf="updateUbicacionForm.get('provincia')?.hasError('required') && updateUbicacionForm.get('provincia')?.touched">
+                            El nombre de la provincia es obligatorio.
+                        </div>
+                    </div>
+                    <button class="btn btn-oblong btn-success btn-block mg-b-10"
+                    (click)="updateInfoGraduate()">Guardar</button>
+
+                </form>
+            </li>
+            <li id="foto">
+                <h1>Foto</h1>
+                <p>Para una mayor personalización, puede editar su foto de perfil, lo que le permite expresar su
+                    identidad y estilo personal dentro de la plataforma. Al permitir a los usuarios cargar y actualizar
+                    su propia foto de perfil, están capacitados para representarse a sí mismos de una manera única y
+                    auténtica. Esto no solo fomenta un sentido de identidad y pertenencia, sino que también mejora la
+                    experiencia del usuario al crear una conexión más personal con la plataforma.</p>
+                <div>
+                    <form [formGroup]="photoForm" class="mb-5">
+                        <div class="mb-4">
+                            <label style="color: var(--alumni-color)">Foto</label>
+                            <div class="card mg-b-20 form-group flex-grow-1 mr-3">
+                                <div class="card-header">
+                                    <div class="text-center">
+                                        <button class="btn btn-oblong btn-primary btn-block mg-b-10" type="button"
+                                            (click)="imageHandlerService.clearImage()">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                    <div class="preview-img" *ngIf="imageHandlerService.previsualizacion">
+                                        <div class="image-container text-center mt-3">
+                                            <img id="preview" [src]="imageHandlerService.previsualizacion" alt=""
+                                                style="width: 250px; height: 250px; object-fit: cover; border-radius: 5px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body collapse show" id="collapse8">
+                                    <div>
+                                        <input class="form-control" type="file" (change)="onFileSelected($event)"
+                                            id="formFile" data-show-remove="false" accept=".jpg, .jpeg, .png">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-danger" *ngIf="!imageHandlerService.previsualizacion">
+                                Por favor, seleccione una foto.
+                            </div>
+                        </div>
+                        <button class="btn btn-oblong btn-primary btn-block mg-b-10" (click)="updatePhoto()"
+                        [disabled]="!updatePersonForm.valid || !imageHandlerService.previsualizacion">Guardar</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

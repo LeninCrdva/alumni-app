@@ -1,0 +1,107 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Fondo gris claro */
+    color: #343a40; /* Texto principal negro */
+  }
+  
+  h1 {
+    color: #fff; /* Texto blanco para títulos principales */
+  }
+  
+  p, label, .form-control-label, .btn {
+    color: #495057; /* Texto secundario gris oscuro */
+  }
+  
+  .btn-primary, .btn-outline-primary {
+    background-color: #007bff; /* Azul para botones principales */
+    border-color: #007bff;
+    color: #fff; /* Texto blanco para botones principales */
+  }
+
+  .btn-primary:hover, .btn-outline-primary:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+    border-color: #0056b3;
+  }
+  
+  .form-control {
+    border-color: #ced4da; /* Borde gris para campos de formulario */
+  }
+  
+  .form-text.text-danger {
+    color: #dc3545; /* Rojo para mensajes de error */
+  }
+  
+  .table {
+    background-color: #fff; /* Fondo blanco para tablas */
+    border-color: #dee2e6; /* Borde gris claro para tablas */
+  }
+  
+  .table thead th {
+    background-color: #007bff; /* Fondo azul para encabezados de tabla */
+    color: #fff; /* Texto blanco para encabezados de tabla */
+  }
+  
+  .table tbody tr:nth-child(odd) {
+    background-color: #f8f9fa; /* Fondo gris claro para filas impares */
+  }
+  
+  .table-actions .btn {
+    width: 100%; /* Ancho completo para botones de acción en la tabla */
+  }
+  
+  .modal-content {
+    background-color: #fff; /* Fondo blanco para el contenido del modal */
+    border-color: #007bff; /* Borde azul para el modal */
+  }
+  
+  .modal-header {
+    background-color: #007bff; /* Fondo azul para el encabezado del modal */
+    color: #fff; /* Texto blanco para el encabezado del modal */
+  }
+  .modal-body {
+    padding: 20px; /* Espaciado interno en el cuerpo del modal */
+  }
+  
+  .modal-footer {
+    background-color: #f8f9fa; /* Fondo gris claro para el pie del modal */
+  }
+  
+  .page-title {
+    background-color: #007bff; /* Fondo azul oscuro para la sección de título */
+    color: #fff; /* Texto blanco para la sección de título */
+    padding: 100px 0; /* Espaciado interno en la sección de título */
+  }
+  
+  .page-title.bg-overlay-black {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semi-transparente */
+  }
+  
+  .modal.animate__animated {
+    animation-duration: 0.3s; /* Duración de la animación */
+  }
+  
+  .animate__fadeInDown {
+    animation-name: fadeInDown;
+  }
+  
+  .animate__faster {
+    animation-duration: 0.2s; /* Duración más rápida */
+  }
+  
+  .rounded {
+    border-radius: 8px; /* Borde redondeado */
+  }
+  
+  .shadow {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  .animate__bounceInUp {
+    animation-name: bounceInUp;
+  }
+  
+  .animate__fast {
+    animation-duration: 0.4s;
+  }
+  

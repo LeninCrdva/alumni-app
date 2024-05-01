@@ -1,0 +1,79 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ survey.title }}</h4>
+
+  <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="bsModalRef.hide()"></button>
+</div>
+
+<div class="modal-body">
+  <ng-container *ngIf="survey">
+    <!-- Pregunta abierta: Escriba su correo electrónico -->
+    <div class="mb-3">
+      <p class="texto-negrita"> Su correo electrónico es:*</p>
+      <input type="email" class="form-control" readonly placeholder="Correo electrónico" [(ngModel)]="userEmail">
+    </div>
+    <div class="mb-3">
+      <p class="texto-negrita">Seleccione su carrera:*</p>
+      <div *ngFor="let carrera of carreras">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" [id]="carrera" [name]="'carrera'" [value]="carrera"
+            [(ngModel)]="selectedCarrera">
+          <label class="form-check-label" [for]="carrera">{{ carrera }}</label>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngFor="let question of survey.questions">
+      <div class="mb-3">
+
+        <p class="texto-negrita">{{ question.text }}*</p>
+
+        <ng-container *ngIf="isQuestionOpcionMultiple(question)">
+          <!-- Pregunta de opción múltiple con checkboxes -->
+          <div *ngFor="let option of question.options; let i = index">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" [id]="'option_' + i" [name]="'option_' + i"
+                (change)="toggleOption(question.id, option)"> <!-- Pasar question.id y option a toggleOption -->
+              <label class="form-check-label" [for]="'option_' + i">{{ option }}</label>
+            </div>
+          </div>
+        </ng-container>
+
+
+
+        <ng-container *ngIf="isQuestionOpcionMultipleUnico(question)">
+          <!-- Pregunta de opción única con radio buttons -->
+          <div *ngFor="let option of question.options">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" [name]="question.id" [value]="option">
+              <label class="form-check-label">{{ option }}</label>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isQuestionAbierta(question)">
+          <input type="text" class="form-control" [id]="'question_' + question.id" name="question_{{ question.id }}">
+        </ng-container>
+
+
+        <ng-container
+          *ngIf="isQuestionCalificacion1_10(question) || isQuestionCalificacion1_5(question) || isQuestionSiNo(question)">
+          <!-- Preguntas de calificación del 1 al 10, del 1 al 5 y de sí o no: -->
+          <div *ngFor="let option of getOptions(question)">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" [name]="question.id" [value]="option">
+              <label class="form-check-label">{{ option }}</label>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+  <div class="mb-3">
+    <b>Comentario:</b>
+    <textarea class="form-control" [(ngModel)]="comentario" rows="4"></textarea>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary mr-2" (click)="responderEncuesta()">Responder</button>
+  <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Cerrar</button>
+</div>

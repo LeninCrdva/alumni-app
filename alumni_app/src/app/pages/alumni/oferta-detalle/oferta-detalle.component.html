@@ -1,0 +1,137 @@
+<!-- Start Section -->
+<section class="section">
+  <div class="container">
+    <div class="row mt-5 pt-4">
+      <div class="col-12">
+        <div class="job-detail rounded shadow bg-white">
+          <div class="detail-top p-4">
+            <h4>El cargo ofertado es para: {{ofertaDetail.cargo}}</h4>
+            <p class="text-muted mt-4" *ngIf="ofertaDetail.empresa">
+              {{ obtenerTiempoTranscurrido() }} por
+              <a class="text-primary h6">{{ ofertaDetail.empresa.nombre }}</a>
+          </p>
+          
+            <div class="d-flex justify-content-between align-items-center">
+              <ul class="list-unstyled mb-0">
+                <li class="list-inline-item mr-3">
+                  <div class="d-flex h6 mb-0 align-items-center">
+                    <i data-feather="map-pin" class="fea icon-sm mr-1"></i>
+                    <p class="text-muted mb-0" *ngIf="ofertaDetail.empresa && ofertaDetail.empresa.ciudad">
+                      {{ ofertaDetail.empresa.ciudad.nombre }}
+                  </p>
+                  
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="d-flex h6 mb-0 align-items-center">
+                    <i data-feather="user" class="fea icon-sm mr-1"></i>
+                    <p class="text-muted mb-0">
+                      {{ ofertaDetail && ofertaDetail.tiempo ? ofertaDetail.tiempo : 'En diálogo con la empresa' }}
+                    </p>
+                    
+                  </div>
+                </li>
+              </ul>
+              <button *ngIf="!isPressed" class="btn btn-primary" (click)="requestOffer(ofertaDetail.id || 0)">Aplicar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end col-->
+      <div class="d-flex align-items-center justify-content-center">
+
+        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+          <div class="sticky-bar rounded bg-white shadow">
+            <div class="border-bottom p-4">
+              <h5 class="mb-0">Información del Trabajo</h5>
+            </div>
+
+            <div class="p-4">
+              <div class="d-flex align-items-center">
+                <i data-feather="cpu" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Empresa:</h6>
+                  <p class="text-primary mb-0">{{ ofertaDetail.empresa ? ofertaDetail.empresa.nombre : 'Empresa no especificada' }}</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="user" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Tipo de Empleo:</h6>
+                  <p class="text-primary mb-0">{{ofertaDetail.areaConocimiento}}</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="map-pin" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Ubicación:</h6>
+                  <p class="text-primary mb-0">
+                    {{ ofertaDetail.empresa && ofertaDetail.empresa.ciudad && ofertaDetail.empresa.ciudad.nombre ? ofertaDetail.empresa.ciudad.nombre : 'Ciudad no especificada' }},
+                    {{ ofertaDetail.empresa && ofertaDetail.empresa.ciudad && ofertaDetail.empresa.ciudad.provincia && ofertaDetail.empresa.ciudad.provincia.pais ? ofertaDetail.empresa.ciudad.provincia.pais : 'País no especificado' }}
+                </p>
+                
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="monitor" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Cargo:</h6>
+                  <p class="text-primary mb-0">{{ofertaDetail.cargo}}</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="briefcase" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Experiencia:</h6>
+                  <p class="text-primary mb-0">{{ ofertaDetail.experiencia ? ofertaDetail.experiencia : 'Experiencia no especificada' }}</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="edit-2" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Requisitos:</h6>
+                  <p class="text-primary mb-0">
+                    {{ ofertaDetail.areaConocimiento ? ofertaDetail.areaConocimiento : 'Requisitos en en la publicidad' }}
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="dollar-sign" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Salario:</h6>
+                  <p class="text-primary mb-0">{{ ofertaDetail.salario !== 0 ? ofertaDetail.salario + ' $' : 'Salario básico' }}</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3">
+                <i data-feather="clock" class="float-left mr-3"></i>
+                <div class="overflow-hidden d-block">
+                  <h6 class="mb-0">Fecha publicación:</h6>
+                  <p class="text-primary mb-0">{{ ofertaDetail.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-4 col-12 mt-4 pt-2"></div>
+        <div class="col-lg-6 col-md-8 col-12 mt-4 pt-2" *ngIf="ofertaDetail.fotoPortada">
+          <div class="sticky-bar rounded bg-white shadow">
+              <div class="border-bottom p-4">
+                  <h5 class="mb-0">Oferta laboral</h5>
+              </div>
+  
+              <div class="p-3">
+                <img src="{{ ofertaDetail.fotoPortada }}" alt="Foto de Portada" class="img-fluid imagen-portada">
+            </div>
+            
+          </div>
+      </div>
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+  </div>
+  <!--end container-->
+
+</section>
+<!--end section-->
+<!-- End Section -->

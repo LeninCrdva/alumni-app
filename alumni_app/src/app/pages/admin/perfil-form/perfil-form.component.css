@@ -1,0 +1,154 @@
+.perfil-content {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 20rem;
+    padding: 1rem;
+    width: 100%;
+    background: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .05);
+    margin-top: 1rem;
+}
+
+li {
+    list-style: none;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.indicator {
+    padding: 1.5rem 0;
+    border-right: 1px solid #eee;
+}
+
+.indicator li {
+    display: flex;
+    align-items: center;
+    grid-gap: .5rem;
+    padding: 10px 2rem;
+    cursor: pointer;
+    font-size: .875rem;
+    color: #222;
+    border-right: 3px solid transparent;
+}
+
+.indicator li i {
+    font-size: 1rem;
+}
+
+.indicator li:hover {
+    background: #f0f2ff;
+}
+
+.indicator li.active {
+    border-right-color: #2b57f7;
+    color: #2b5ef7;
+    font-size: 16px;
+    background: #f0f2ff;
+}
+
+.content {
+    padding: 1.5rem 2rem;
+}
+
+.content li {
+    display: none;
+}
+
+.content li.active {
+    display: block;
+}
+
+.content li h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: .75rem;
+}
+
+.content li p {
+    margin-bottom: .5rem;
+    color: #666;
+    font-size: .875rem;
+}
+
+@media screen and (max-width: 576px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .indicator {
+        border-right: none;
+    }
+}
+
+
+
+
+.custom-size {
+    margin-top: 8rem;
+    height: 35rem;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px 12px 40px;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color .2s;
+}
+
+.form-input:focus {
+    border-color: #0051ff;
+}
+
+.form-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    font-size: 20px;
+    color: #ccc;
+    pointer-events: none;
+    transition: color .2s;
+}
+
+.form-label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 40px;
+    pointer-events: none;
+    transition: all .2s;
+    font-weight: 500;
+    background-color: #fff;
+    color: #888;
+}
+
+.form-group:has(.form-input:not(:placeholder-shown)) .form-label,
+.form-group:focus-within .form-label {
+    top: -2px;
+    font-size: 14px;
+    box-shadow: 8px 0 0 #fff, -8px 0 0 #fff;
+}
+
+.form-group:focus-within .form-label,
+.form-group:focus-within .form-icon {
+    color: #0055ff;
+}
+
+.cancel-button {
+    background-color: #0c6efd;
+    color: #ffffff;
+}

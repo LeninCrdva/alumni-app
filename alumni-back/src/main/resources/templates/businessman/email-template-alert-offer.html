@@ -1,0 +1,108 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Java Techie Mail</title>
+    <style>
+
+        .space-icon img {
+            padding: 15px;
+        }
+
+        .space-icon a {
+            text-decoration: none;
+            color: black;
+        }
+
+    </style>
+</head>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td align="center" valign="top" style="background-color: white;"><br> <br>
+            <table width="600" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center" valign="top"
+                        style="background-color: white; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000000; padding: 0px 15px 10px 15px;">
+
+                        <body>
+                        <div class="center-icon">
+                            <img src='https://i.postimg.cc/Gh2JjCKg/alerta.png' alt='postulate-icon' width="100px"/>
+                        </div>
+                        <div class="center-text">
+                            <h2><strong>¡Atención!</strong></h2>
+                            <br>
+                            <p>Estimado usuario del sistema</p>
+                            <br>
+
+                            <p th:if="${oferta.cargo}">Se ha detectado la publicación de una oferta laboral con cargo de <strong th:text="${oferta.cargo}"></strong>
+                                publicada el día
+                                <strong th:text="${#temporals.day(oferta.fechaPublicacion)}"></strong> de
+                                <strong th:text="${#temporals.monthName(oferta.fechaPublicacion)}"></strong> del año
+                                <strong th:text="${#temporals.year(oferta.fechaPublicacion)}"></strong> a las
+                                <strong th:text="${#temporals.format(oferta.fechaPublicacion, 'HH:mm')}"></strong>
+                                . Por favor, revise la plataforma para más detalles.
+                            </p>
+                            <p th:unless="${oferta.cargo}">Se ha detectado la publicación de una oferta laboral
+                                publicada el día
+                                <strong th:text="${#temporals.day(oferta.fechaPublicacion)}"></strong> de
+                                <strong th:text="${#temporals.monthName(oferta.fechaPublicacion)}"></strong> del año
+                                <strong th:text="${#temporals.year(oferta.fechaPublicacion)}"></strong> a las
+                                <strong th:text="${#temporals.format(oferta.fechaPublicacion, 'HH:mm')}"></strong>
+                                . Por favor, revise la plataforma para más detalles.
+                            </p>
+                            <br>
+                            <div th:if="${oferta.fotoPortada}">
+                                <p>Se ha adjuntado una imagen para la publicación de la oferta por elección del empresario.</p>
+                                <br>
+                                <strong><p>Para más información, revisar las ofertas laborales en el sistema alumni o en la imagen adjuntada.</p></strong>
+                            </div>
+
+                            <div th:if="${#strings.equals(state, 'EN_SELECCION')}">
+                                <p>Sin embargo, esta oferta necesita ser aprobada por algún administrador para que esta oferta sea publicada a los demás.</p>
+                                <br>
+                                <strong><p>Para más información, revisar las ofertas laborales en el sistema alumni o en la imagen adjuntada.</p></strong>
+                            </div>
+
+                            <br>
+                            <p>Este mensaje es totalmente automático, por favor, no responder.</p>
+                            <br>
+                            <p>¡Gracias por confiar en nosotros!</p>
+                            <p>El equipo de la ISTA.</p>
+                            <br>
+                        </div>
+                        <div class="center-icon">
+                            <img src="https://i.postimg.cc/7G2S7n52/logo-ista.png" alt="logo-ista">
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="center-icon space-icon">
+                            <a href="https://www.facebook.com/TecAzuay"><img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png"
+                                    alt="face-ico" width="30px"></a>
+                            <a href="https://www.instagram.com/tecdelazuay/?hl=es-la"><img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Instagram-Icon.png/1200px-Instagram-Icon.png"
+                                    alt="insta-ico" width="30px"></a>
+                        </div>
+                        </body>
+                        <footer>
+                            <small class="center-text">
+                                <p>Copyright (C) 2024 <strong>Instituto Tecnológico del Azuay</strong>. All rights
+                                    reserved.</p>
+                                <p>Octavio Chacón Moscoso 1-98 y Primera Transversal (Parque industrial)</p>
+                                <p>Cuenca, Ecuador</p>
+                                <p>Teléfono: 07 2809 551 - 0995363076</p>
+                                <p>O contáctanos a nuestro correo: info.alumni.est@gmail.com</p>
+                            </small>
+                        </footer>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br> <br>
+        </td>
+    </tr>
+</table>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<section>
+  <div class="row g-0 animate__animated animate__fadeIn animate__fast">
+    <div class="col-lg-7 d-none d-lg-block">
+      <div class="custom-size">
+        <ng-lottie [options]="options_login"></ng-lottie>
+      </div>
+    </div>
+
+    <div class="col-lg-5 d-flex flex-column align-items-end min-vh-100">
+      <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4 mb-auto w-100">
+        <img src="./assets/imgs/ALumni_Logo_Dark_Large.png" class="img-fluid" />
+      </div>
+      <div class="align-self-center w-100 px-lg-5 py-lg-4 p-4">
+        <h1 class="font-weight-bold mb-4" style="color: var(--alumni-color); font-weight: bold;">Bienvenido</h1>
+
+        <div class="mb-4">
+          <p style="color: var(--alumni-color)">Por favor, ingrese sus credenciales:</p>
+        </div>
+
+        <form [formGroup]="loginForm" class="mb-5" (ngSubmit)="login()">
+          <div class="mb-4">
+            <div class="form-group">
+              <input type="email" class="form-input" placeholder=" " id="InputEmail1" formControlName="username"
+                aria-describedby="usernameError">
+              <label for="" class="form-label">Ingresa tu nombre de usuario</label>
+              <i class="ri-at-line form-icon"></i>
+            </div>
+            <div id="usernameError" class="text-danger"
+              *ngIf="loginForm.get('username')?.hasError('required') && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
+              El nombre de usuario es obligatorio.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div class="form-group">
+              <input type="password" class="form-input" placeholder=" " id="InputPassword1" formControlName="password"
+                aria-describedby="passwordError">
+              <label for="" class="form-label">Ingresa tu contraseña</label>
+              <i class="ri-lock-line form-icon"></i>
+              <span (click)="togglePasswordVisibility()" class="toggle-password">
+                <i class="ri-eye-fill" *ngIf="passwordVisible"></i>
+                <i class="ri-eye-off-fill" *ngIf="!passwordVisible"></i>
+              </span>
+            </div>
+
+            <div id="passwordError" class="text-danger"
+              *ngIf="loginForm.get('password')?.hasError('required') && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+              La contraseña es obligatoria.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+          <p class="text-end  mt-3"><a routerLink="/account/login/request-password"
+              class="text-decoration-none fs-6">¿Has olvidado la contraseña?</a>.</p>
+        </form>
+      </div>
+
+      <div class="text-center px-lg-5 pt-lg-3 pb-lg-4 p-4 mt-auto w-100">
+        <div *ngIf="ROLE !== 'ROLE_WITHOUT_REGISTER'">
+          <p class="d-inline-block mb-0">¿Todavía no tienes una cuenta?</p>
+          <a href="" class="text-light" [routerLink]="['/account/register']" routerLinkActive="router-link-active"> Crea
+            una cuenta</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

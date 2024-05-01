@@ -1,0 +1,25 @@
+<div class="col-md-12 text-center" style="margin-top: 4rem;">
+    <h1 class="about-title">
+        <span class="title_red">PROGRAMAS </span>
+        <span class="title_black">DEL INSTITUTO TEGNOLOGICO DLE AZUAY</span>
+    </h1>
+    <p>Descubre nuestros programas  y visitanos</p>
+</div>
+<div class="projcard-container" data-aos="fade-up">
+    <div *ngFor="let programa of programasMList" class="projcard projcard-customcolor"
+        style="--projcard-color: {{programa.colorFondo}};">
+        <div class="projcard-innerbox">
+            <img class="projcard-img" src="data:image/png;base64, {{programa.foto_portada}}" />
+            <div class="projcard-textbox">
+                <div class="projcard-title">{{ programa.titulo }}</div>
+                <div class="projcard-subtitle">{{ programa.subTitulo }}</div>
+                <hr class="projcard-bar">
+                <div class="projcard-description">{{ programa.resumen }}</div>
+                <button type="button" class="btn btn-outline-primary" (click)="verMas(programa.tipoxml)">
+                    <i class="fa-solid fa-eye"></i>
+                    <span class="button-text">Ver Más</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,228 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/headers/Postulaciones.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Mis Títulos</h1>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================================
+    *          MODAL PARA REGISTRAR DATOS
+ ======================================================= -->
+
+<div class="modal fade" id="modalData" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalDataLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white" [class.bg-dark]="!editarClicked" [class.bg-primary]="editarClicked">
+                <h5 [innerText]="editarClicked ? 'Modificar Título' : 'Agregar Título'">
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3 needs-validation" [formGroup]="validateForm">
+                    <div class="form-group col-lg-6">
+                        <label for="nombre_titulo" class="form-label">NOMBRE DEL TÍTULO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-signature"></i>
+                            </a>
+                            <input type="text" class="form-control" id="nombre_titulo"
+                                placeholder="Ingrese el nombre del título." formControlName="nombreTitulo" required>
+                            <div class="oaerror danger  invalid-feedback">
+                                <strong>Dato Faltante</strong> - Ingrese el nombre de su Título.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label for="nombrecarrera" class="form-label">CARRERA:</label>
+
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </a>
+
+                            <ng-multiselect-dropdown style="width: 20rem;" [placeholder]="'-- Seleccione una opción --'"
+                                [settings]="filterService.dropdownSettings['careersList']"
+                                [data]="filterService.dropdownLists['careersList']"
+                                [(ngModel)]="filterService.selectedItems['careersList']" formControlName="nombreCarrera">
+                            </ng-multiselect-dropdown>
+                            <div class="oaerror danger" *ngIf="validateForm.get('nombrecarrera')?.invalid">
+                                <strong>Dato Faltante</strong> - Seleccione el nombre de la carrera.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="tipo" class="form-label">TIPO DE TÍTULO:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-clipboard"></i>
+                            </span>
+                            <input type="text" class="form-control" id="tipo" placeholder="Ingrese el tipo del título."
+                                formControlName="tipo" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el tipo de título que usted posee.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="num_registro" class="form-label">NÚMERO DE REGISTRO:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-hashtag"></i>
+                            </span>
+                            <input type="number" class="form-control" id="num_registro"
+                                placeholder="XXXX-XXXX-XXXX-XXXX" formControlName="numRegistro" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del título.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="fecha_emision" class="form-label">FECHA DE EMISIÓN:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </span>
+                            <input type="date" class="form-control" id="fecha_emision"
+                                placeholder="Ingrese el número de registro del título." formControlName="fechaEmision"
+                                required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del título.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="fecha_registro" class="form-label">FECHA DE REGISTRO:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </span>
+                            <input type="date" class="form-control" id="fecha_registro"
+                                placeholder="Ingrese la fecha de registro." formControlName="fechaRegistro" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de registro título.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="nivel" class="form-label">NIVEL DE TÍTULO:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </span>
+                            <input type="text" class="form-control" id="nivel" placeholder="Ingrese el nivel de título"
+                                formControlName="nivel" required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el nivel de título.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="institucion" class="form-label">INSTITUCIÓN:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-school"></i>
+                            </span>
+                            <input type="text" class="form-control" id="institucion"
+                                placeholder="Ingrese el nombre de la institución." formControlName="institucion"
+                                required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución.
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button (click)="onSubmit()" class="btn btn-oblong" [class.btn-success]="!editarClicked"
+                    [class.btn-primary]="editarClicked">
+                    {{ editarClicked ? 'Actualizar Título' : 'Registrar Título' }}
+                </button>
+
+                <button type="button" #myModalClose data-bs-dismiss="modal"
+                    class="btn btn-oblong btn-outline-danger btn-block">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+    *          TABLA DE DATOS
+ ======================================================= -->
+<div class="card">
+    <div class="card-body collapse show">
+
+        <!-- =====================================================
+            *             BOTONES DE ACCIONES
+         ======================================================= -->
+        <div class="d-flex">
+            <button title="Actualizar datos de la tabla" (click)="loadData()" class="btn btn-success">
+                <i class="fas fa-sync"></i>
+            </button>
+
+            <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters('filterTable')"
+                class="btn btn-dark ms-2">
+                <i class="fa-solid fa-filter"></i>
+            </button>
+
+            <ng-multiselect-dropdown *ngIf="filterService.editFilterTabs['filterTable']"
+                [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
+                [data]="filterService.dropdownLists['filterTable']"
+                [(ngModel)]="filterService.selectedItems['filterTable']"
+                (onSelect)="filterService.onItemSelect($event)"
+                (onDeSelect)="filterService.onItemDeSelect($event)"
+                (onSelectAll)="filterService.onSelectAll('filterTable')"
+                (onDeSelectAll)="filterService.onDeSelectAll('filterTable')" class="ms-2">
+            </ng-multiselect-dropdown>
+
+            <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
+                class="btn btn-primary ms-2" style="width: 18rem;">
+                Agregar Título
+            </button>
+        </div>
+
+        <!-- =====================================================
+            *            CONTENIDO DE LA TABLA
+         ======================================================= -->
+        <div class="mt-3 show animate__animated animate__bounceInUp animate__fast">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered table-hover">
+                    <tbody>
+                        <tr *ngFor="let item of titulosList;">
+                            <th scope="row">{{ item.id }}</th>
+                            <td>{{ item.nombreTitulo }}</td>
+                            <td>{{ item.tipo }}</td>
+                            <td>{{ item.nivel }}</td>
+                            <td>{{ item.institucion }}</td>
+                            <td>{{ item.nombreCarrera }}</td>
+                            <td>{{ item.fechaEmision }}</td>
+                            <td>{{ item.fechaRegistro }}</td>
+                            <td>{{ item.numRegistro }}</td>
+                            <td class="text-right text-center">
+                                <button (click)="onEditarClick(item.id)" data-bs-toggle="modal"
+                                    data-bs-target="#modalData" class="btn btn-label-primary btn-sm mg-y-5">
+                                    <i class="fa fa-pencil"></i> Editar
+                                </button>
+                                <button (click)="onDeleteClick(item.id)"
+                                    class="btn btn-label-danger btn-sm mg-y-5 mt-2">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<!-- Modal -->
+<div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel_4">Crear nueva Pregunta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="ion-ios-close-empty"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name-1" class="form-control-label">Pregunta:</label>
+                        <input type="text" class="form-control" id="recipient-name-1" value="¿?">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text-2" class="form-control-label">Tipo de dato:</label>
+                        <select data-provide="selectpicker" style="border: none; padding-left: 10px;">
+                            <option>number</option>
+                            <option>text</option>
+                            <option>date</option>
+                            <option>time</option>
+                            <option>datetime-local</option>
+                            <option>email</option>
+                            <option>tel</option>
+                            <option>url</option>
+                            <option>range</option>
+                            <option>color</option>
+                            <option>checkbox</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ Modal -->
+<!-- Action Table Start -->
+<div class="col-md-12 col-lg-12">
+    <div class="card mg-b-20">
+        <div class="card-header">
+            <h4 class="card-header-title">
+                Preguntas Parametrizables
+            </h4>
+            <div class="card-header-btn">
+                <select name="" data-provide="selectpicker" style="margin-right: 30px; border: none;">
+                    <option value="">Persona</option>
+                    <option value="">Empresas</option>
+                </select>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#m_modal_4"
+                    style="display: flex; justify-content: center; align-items: center; background-color: transparent; border: none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-plus-lg"
+                        viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                    </svg>
+                </button>
+
+            </div>
+        </div>
+        <div class="card-body pd-0 collapse show" id="collapse7">
+            <table class="table table-separated table-responsive-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th class="text-center w-100px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td class="text-right table-actions">
+                            <a class="table-action  mg-r-10" href="#"><i class="fa fa-pencil"></i></a>
+                            <a class="table-action  mg-r-10" href="#"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

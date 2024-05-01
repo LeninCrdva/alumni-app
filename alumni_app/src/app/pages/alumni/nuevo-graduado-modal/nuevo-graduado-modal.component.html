@@ -1,0 +1,80 @@
+<div class="modal-header bg-primary">
+  <h4 class="modal-title" style="color: var(--white-color)">Complete su información de Graduado</h4>
+
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="nuevoGraduadoForm" (ngSubmit)="guardarGraduado()">
+
+    <div class="form-group">
+      <label for="usuario" style="color: var(--alumni-color)">Usuario:</label>
+      <input type="text" class="form-control" id="usuario" formControlName="usuario" required readonly>
+    </div>
+
+    <div class="form-group my-4">
+      <label for="emailPersonal" style="color: var(--alumni-color)">Email Personal:</label>
+      <input type="text" class="form-control" id="emailPersonal" formControlName="emailPersonal">
+    </div>
+
+    <div class="form-group my-4">
+      <label for="Inputfecha_graduacion" style="color: var(--alumni-color)">Fecha de Graduación:</label>
+      <input style="padding: 1rem 1rem;" type="date" formControlName="fecha_graduacion" class="form-control"
+        id="Inputfecha_graduacion" placeholder="Ingresa tu fecha de graduación">
+      <div class="text-danger mt-2"
+        *ngIf="nuevoGraduadoForm.get('fecha_graduacion')?.hasError('required') && nuevoGraduadoForm.get('fecha_graduacion')?.touched">
+        La fecha de graduación es obligatoria.
+      </div>
+    </div>
+
+    <div class="form-group my-4">
+      <label for="ciudad" style="color: var(--alumni-color)">Ciudad:</label>
+      <select class="form-control" id="ciudad" formControlName="ciudad">
+        <option value="" disabled selected>Seleccionar</option>
+        <option *ngFor="let ciudad of ciudades" [value]="ciudad.nombre">{{ ciudad.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="form-group my-4">
+      <label for="estadoCivil" style="color: var(--alumni-color)">Estado Civil:</label>
+      <select class="form-control" id="estadoCivil" formControlName="estadoCivil">
+        <option value="" disabled selected>Seleccionar</option>
+        <option value="Soltero/a">Soltero/a</option>
+        <option value="Casado/a">Casado/a</option>
+        <option value="Viudo/a">Viudo/a</option>
+      </select>
+    </div>
+
+    <div class="mb-4 my-3">
+      <label style="color: var(--alumni-color)">Subir PDF de Graduación</label>
+
+      <div class="card mg-b-20">
+        <div class="card-header">
+          <h4 class="card-header-title">
+            <div class="preview-img" *ngIf="previsualizacion">
+              <button class="clear-image form-control border-0 cancel-button" type="button" (click)="clearImage()">
+                Cancelar
+              </button>
+
+              <div class="image-container text-center" style="margin-top: 3rem;">
+                <img [src]="previsualizacion" alt="" style="width: 220px; height: 220px; object-fit: cover;" />
+              </div>
+            </div>
+          </h4>
+          <div class="card-header-btn">
+            <a href="" data-toggle="collapse" class="btn card-collapse" data-target="#collapse8" aria-expanded="true">
+              <i class="ion-ios-arrow-down"></i>
+            </a>
+          </div>
+        </div>
+        <div class="card-body collapse show" id="collapse8">
+          <input type="file" class="dropify" data-show-remove="false" (change)="capturarFile($event)" accept=".pdf" />
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!nuevoGraduadoForm.valid">Guardar</button>
+
+  </form>
+
+  <div class="mt-3" *ngIf="mensajevalidado">{{ mensajevalidado }}</div>
+</div>

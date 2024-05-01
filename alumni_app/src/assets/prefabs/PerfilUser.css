@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css?family=Muli:400,500,600,700|Open+Sans&display=swap");
+
+.text-muted {
+  color: #8492a6 !important;
+  margin-left: 23px;
+}
+
+@media (max-width: 768px) {
+  .display-1 {
+    font-size: 56px !important;
+  }
+
+  .display-2 {
+    font-size: 50px !important;
+  }
+
+  .display-3 {
+    font-size: 42px !important;
+  }
+
+  .display-4 {
+    font-size: 36px !important;
+  }
+}
+
+.shadow {
+  -webkit-box-shadow: 0 0 3px rgba(22, 28, 45, 0.15) !important;
+  box-shadow: 0 0 3px rgba(22, 28, 45, 0.15) !important;
+  position: relative
+}
+
+.shadow-large {
+  -webkit-box-shadow: 0 10px 25px rgba(60, 72, 88, 0.15) !important;
+  box-shadow: 0 10px 25px rgba(60, 72, 88, 0.15) !important;
+}
+
+.shadow-img {
+  -webkit-box-shadow: 0 4px 3px rgba(60, 72, 88, 0.2);
+  box-shadow: 0 4px 3px rgba(60, 72, 88, 0.2);
+}
+
+
+.avatar.avatar-ex-sm {
+  max-height: 30px;
+}
+
+.avatar.avatar-md-sm {
+  height: 45px;
+  width: 45px;
+}
+
+.avatar.avatar-small {
+  height: 70px;
+  width: 70px;
+}
+
+.avatar.avatar-medium {
+  height: 110px;
+  width: 110px;
+}
+
+.avatar.avatar-large {
+  height: 140px;
+  width: 140px;
+}
+
+.avatar.avatar-ex-large {
+  height: 180px;
+  width: 180px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: "Muli", sans-serif;
+  line-height: 1.5;
+  font-weight: 600 !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+p {
+  line-height: 1.6;
+}
+
+.bg-overlay {
+  background-color: rgba(32, 71, 121, 0.7);
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bg-half-260 {
+  padding: 260px 0;
+  background-size: cover;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  align-self: center;
+  position: relative;
+  background-position: center center;
+}
+
+.bg-half-130 {
+  padding: 130px 0;
+  background-size: cover;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  align-self: center;
+  position: relative;
+  background-position: center center;
+}
+
+.bg-half-170 {
+  padding: 170px 0;
+  background-size: auto;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  align-self: center;
+  position: relative;
+  background-position: center center;
+}
+
+
+@media (min-width: 576px) {
+  .candidate-detail .candidate-detail-top {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}

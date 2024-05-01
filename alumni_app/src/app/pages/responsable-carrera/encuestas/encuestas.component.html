@@ -1,0 +1,144 @@
+<section class="page-title bg-overlay-black parallax"
+  style="background-image: url(../../../../assets/imgs/headers/Referencias.jpg);">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1>Encuestas Creadas</h1>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="my-4">Listado de Encuestas</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div *ngIf="surveys.length === 0" class="text-center">
+        <p>No hay encuestas disponibles.</p>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <ng-container *ngFor="let survey of surveys">
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body d-flex align-items-center">
+                <div class="me-3">
+                  <i class="fas fa-poll-h fa-3x text-primary"></i>
+                </div>
+                <div>
+                  <div class="">
+                    <h5 class="card-title">{{ survey.title }}</h5>
+                    <p class="card-text">{{ survey.description }}</p>
+                  </div>
+                  <div class="d-flex mt-2">
+                    <button class="btn btn-primary me-2 btn-sm" (click)="viewSurvey(survey)">Visualizar</button>
+                    <div class="custom-switch ms-2">
+                      <label class="switch">
+                        <input type="checkbox" [checked]="survey.estado" (change)="confirmUpdateState($event, survey)">
+                        <span class="slider round" [ngClass]="{ 'blue': survey.estado, 'gray': !survey.estado }"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Edición de Encuesta -->
+<div class="modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Encuesta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario de Edición -->
+        <form [formGroup]="form">
+          <div class="mb-3">
+            <label for="editTitle" class="form-label">Título de la Encuesta</label>
+            <input type="text" class="form-control" id="editTitle" formControlName="title">
+          </div>
+          <div class="mb-3">
+            <label for="editDescription" class="form-label">Descripción de la Encuesta</label>
+            <textarea class="form-control" id="editDescription" rows="3" formControlName="description"></textarea>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-primary btn-sm" (click)="addNewQuestion()">Agregar Nueva
+              Pregunta</button>
+          </div>
+          <hr>
+          <h5>Editar Preguntas y Opciones</h5>
+          <!-- Lista de Preguntas -->
+          <div formArrayName="questions">
+            <div *ngFor="let question of form.get('questions').controls; let qI = index" [formGroupName]="qI">
+              <div class="card mb-3 p-3">
+                <div class="row align-items-center">
+
+                  <div class="col">
+                    <h6>Pregunta #{{ qI + 1 }}</h6>
+                  </div>
+                  <div class="col-auto">
+                    <button type="button" class="btn btn-danger btn-sm" (click)="removeQuestion(qI)">Eliminar
+                      Pregunta</button>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <label for="questiontext{{ qI }}" class="form-label">Título de la Pregunta</label>
+                    <input type="text" class="form-control" id="questiontext{{ qI }}" formControlName="text">
+                    <div
+                      *ngIf="form.get('questions.' + qI + '.text').touched && form.get('questions.' + qI + '.text').errors"
+                      class="form-text text-danger">
+                      Ingresa el Título de la Pregunta
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <label for="questionType{{ qI }}" class="form-label">Tipo de Pregunta</label>
+                    <select class="form-select" id="questionType{{ qI }}" formControlName="type">
+                      <option *ngFor="let type of questionTypes" [value]="type">{{ questionTypeLabels[type] }}</option>
+                    </select>
+
+
+                    <div
+                      *ngIf="form.get('questions.' + qI + '.type').touched && form.get('questions.' + qI + '.type').errors"
+                      class="form-text text-danger">
+                      Selecciona el Tipo de Pregunta
+                    </div>
+                  </div>
+                </div>
+                <!-- Opciones de la Pregunta (si aplica) -->
+                <div class="row mt-3" *ngIf="form.get('questions.' + qI + '.type').value !== 'ABIERTA'">
+                  <div class="col-12">
+                    <label for="questionOptions{{ qI }}" class="form-label">Opciones</label>
+                    <textarea class="form-control" id="questionOptions{{ qI }}" rows="3"
+                      formControlName="options"></textarea>
+                    <div
+                      *ngIf="form.get('questions.' + qI + '.options').touched && form.get('questions.' + qI + '.options').errors"
+                      class="form-text text-danger">
+                      Ingresa al menos una opción
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="saveSurveyChanges()">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>

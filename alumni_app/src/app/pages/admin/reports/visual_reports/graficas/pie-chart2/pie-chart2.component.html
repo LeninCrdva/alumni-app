@@ -1,0 +1,12 @@
+<div class="chartContainer">
+  <select class="form-select" [(ngModel)]="selectedCarrera" (change)="onCarreraSelect($event)">
+    <option value="">Seleccionar carrera</option>
+    <option *ngFor="let carrera of carreras" [value]="carrera">{{ carrera }}</option>
+  </select>
+</div>
+
+<div class="chartContainer">
+  <apx-chart *ngIf="chartOptions" [series]="chartOptions.series" [chart]="chartOptions.chart"
+    [title]="chartOptions.title" [dataLabels]="chartOptions.dataLabels">
+  </apx-chart>
+</div>

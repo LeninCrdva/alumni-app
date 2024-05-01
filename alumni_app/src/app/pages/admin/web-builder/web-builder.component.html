@@ -1,0 +1,68 @@
+<section class="page-title bg-overlay-black parallax"
+    style="background-image: url(../../../../assets/imgs/headers/Capacitaciones.jpg); padding: 120px 0; background-position: inherit;">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Creación de Eventos</h1>
+        </div>
+    </div>
+</section>
+
+<div class="card">
+    <div class="card-body collapse show">
+
+        <div class="col-md-12 col-lg-12">
+            <div class="d-flex">
+                <button (click)="loadData()" class="btn btn-success">
+                    <i class="fas fa-sync"></i>
+                </button>
+
+                <button (click)="filterService.openFilters()" class="btn btn-dark ms-2">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+
+                <ng-multiselect-dropdown style="width: 14rem;" *ngIf="filterService.editFilterTabs"
+                    [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings"
+                    [data]="filterService.dropdownList" [(ngModel)]="filterService.selectedItems"
+                    (onSelect)="filterService.onItemSelect($event)" (onSelectAll)="filterService.onSelectAll($event)"
+                    (onDeSelect)="filterService.onItemDeSelect($event)"
+                    (onDeSelectAll)="filterService.onDeSelectAll($event)" class="ms-2">
+                </ng-multiselect-dropdown>
+
+
+                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
+                type="button" class="btn btn-primary ms-2 animate__animated animate__fadeIn animate__fast" style="width: 16rem;">
+            Crear Evento
+        </button>
+        
+            </div>
+        </div>
+
+        <div class="mt-3 show animate__animated animate__bounceInUp animate__fast">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered table-hover">
+                    <tbody>
+                        <tr *ngFor="let xml of contenidoXML;">
+                            <th scope="row">{{ xml.id }}</th>
+                            <td>{{ xml.tipo }}</td>
+                            <td class="text-right text-center">
+                                <button (click)="onEditarClick(xml.id)" data-bs-toggle="modal"
+                                    data-bs-target="#modalData" class="btn btn-label-primary btn-sm mg-y-5">
+                                    <i class="fa fa-pencil"></i> Editar
+                                </button>
+                                <button (click)="onDeleteClick(xml.id)" class="btn btn-label-danger btn-sm mg-y-5 ms-2">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </button>
+                                <button (click)="visualizarPagina(xml.id)"
+                                    class="btn btn-label-danger btn-sm mg-y-5 ms-2">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

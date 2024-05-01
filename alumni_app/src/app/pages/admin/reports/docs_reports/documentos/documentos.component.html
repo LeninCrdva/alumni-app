@@ -1,0 +1,60 @@
+<section class="page-title bg-overlay-black parallax mb-4"
+  style="background-image: url(../../../../assets/imgs/bg/Comunidad.jpg);">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1>Informes De Graduados</h1>
+    </div>
+  </div>
+</section>
+
+<div class="row">
+  <div class="col-12">
+    <div class="border-bottom">
+      <div class="row">
+        <div class="col-lg-9 col-md-8">
+          <div class="section-title">
+            <h4 class="title mb-2"><strong>Informes</strong></h4>
+            <p class="text-muted mb-0">Tabla de informes de graduados</p>
+          </div>
+        </div><!--end col-->
+        <div class="col-lg-3 col-md-4 mt-4 mt-sm-0 pt-2 pt-sm-0">
+          <div class="form custom-form">
+            <b>Tipo:</b>
+            <div class="form-group d-flex align-items-center mb-2">
+              <select class="form-select" (change)="aplicarFiltros($event)">
+                <option value="todos">Todos</option>
+                <option value="sinPostular">Graduados sin postular</option>
+                <option value="graduadoMasUnaPostulacion">Graduado +1 postulacion</option>
+                <option value="sinExperienciaLaboral">Sin experiencia laboral</option>
+              </select>
+              <button title="Descargar PDF" (click)="descargarPDF()" class="btn btn-label-danger ms-2">
+                <i class="fa-solid fa-file-pdf"></i>
+              </button>
+              <button title="Descargar Excel" (click)="exportarExcel()" class="btn btn-success ms-2">
+                <i class="fa-solid fa-file-excel"></i>
+              </button>
+            </div>
+          </div>
+        </div><!--end col-->
+      </div><!--end row-->
+    </div>
+  </div><!--end col-->
+</div><!--end row-->
+
+<div class="card-body mb-3 collapse show">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+      id="htmlData">
+      <tbody>
+        <tr *ngFor="let graduado of graduados; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ graduado.usuario.persona.cedula }}</td>
+          <td>{{ graduado.usuario.persona.primerNombre }} {{ graduado.usuario.persona.segundoNombre }} {{
+            graduado.usuario.persona.apellidoPaterno }} {{ graduado.usuario.persona.apellidoMaterno }}</td>
+          <td>{{ graduado.emailPersonal }}</td>
+          <td>{{ graduado.usuario.persona.telefono }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

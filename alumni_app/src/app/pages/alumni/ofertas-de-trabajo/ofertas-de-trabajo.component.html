@@ -1,0 +1,106 @@
+<section class="page-title bg-overlay-black parallax mb-4"
+    style="background-image: url(../../../../assets/imgs/headers/empresas.jpg);">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Ofertas De Trabajo</h1>
+        </div>
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-12">
+        <div class="border-bottom">
+            <div class="row">
+                <div class="col-lg-9 col-md-8">
+                    <div class="section-title">
+                        <h4 class="title mb-2">Ofertas Laborales Disponibles</h4>
+                        <p class="text-muted mb-0">Listado de todas las Ofertas Laborales Activas y Disponibles para ti.
+                        </p>
+                    </div>
+                </div><!--end col-->
+
+                <div class="col-lg-3 col-md-4 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                    <div class="form custom-form">
+                        <div class="form-group">
+                            <label>Tipos de postulaciones:</label>
+                            <select class="form-control custom-select" id="Sortbylist-job" (change)="sortBy($event)">
+                                <option value="fechaPublicacion">Seleccionar</option>
+                                <option value="cargo">Cargo</option>
+                                <option value="nombreEmpresa">Empresa</option>
+                                <option value="salario">Salario</option>
+                                <!-- Resto de las opciones -->
+                            </select>
+                        </div>
+                    </div>
+                </div><!--end col-->
+            </div><!--end row-->
+        </div>
+    </div><!--end col-->
+</div><!--end row-->
+
+<div class="col-lg-12 col-md-7 col-12 mt-4">
+    <div *ngIf="listOfertas.length > 0; else noOfertas">
+        <div class="row">
+            <div class="col-lg-4 mb-0" *ngFor="let oferta of listOfertas">
+                <!-- Card de ofertas -->
+                <div class="card">
+                    <img [src]="oferta.fotoPortada ? oferta.fotoPortada : '../../../../assets/imgs/Logo_Isuta.png'"
+                        [class.small-img]="!oferta.fotoPortada" [class.content-img]="oferta.fotoPortada"
+                        style="cursor: pointer;" [routerLink]="['/system/alumni/oferta-detalle', oferta.id]">
+                    <div class="details">
+                        <div class="row">
+                            <div class="col">
+                                <label [routerLink]="['/system/alumni/oferta-detalle', oferta.id]">
+                                    {{ oferta.cargo ? oferta.cargo : 'Cargo definido en la imagen' }}
+                                </label>
+                            </div>
+                            <div class="col text-end">
+                                <button class="btn btn-block btn-primary sticky-button"
+                                    (click)="requestOffer(oferta.id || 0)">Aplicar
+                                </button>
+                            </div>
+                        </div>
+                        <p>
+                            <i>
+                                <ol>
+                                    <li>
+                                        <p>Oferta publicada por: <strong>{{oferta.nombreEmpresa}}</strong></p>
+                                        
+                                    </li>
+                                    <li>
+                                        <p>El área conocimiento solicitado es:</p>
+                                        <strong>
+                                            <p>{{oferta.areaConocimiento ? oferta.areaConocimiento : 'No ha sido especificado'}} </p>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        <p>Salario: </p> <strong>
+                                            <p> {{oferta.salario ? '$' + oferta.salario: 'Por definir'}}</p>
+                                        </strong>
+                                    </li>
+                                </ol>
+                            </i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Si no hay ofertas disponibles -->
+    <ng-template #noOfertas>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 mt-4 mt-lg-0">
+                <div class="content text-center text-lg-left ml-lg-4">
+                    <h4 class="title">
+                        <a class="text-dark" (click)="reloadPage()">No existen ofertas disponibles para ti para
+                            postular</a>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

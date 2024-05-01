@@ -1,0 +1,48 @@
+<section class="page-title bg-overlay-black parallax"
+  style="background-image: url(../../../../assets/imgs/headers/Referencias.jpg);">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1>Encuestas</h1>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="my-4">Listado de Encuestas a Responder</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div *ngIf="surveys.length === 0" class="text-center">
+        <p>No hay encuestas disponibles.</p>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <ng-container *ngFor="let survey of surveys">
+          <div class="col">
+            <div class="card h-100 d-flex flex-column justify-content-between">
+              <!-- Utilizamos flex-column y justify-content-between -->
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="me-3">
+                    <i class="fas fa-poll-h fa-3x text-primary"></i>
+                  </div>
+                  <div>
+                    <h5 class="card-title">{{ survey.title }}</h5>
+                    <p class="card-text">{{ survey.description }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center mb-3"> <!-- Centramos el botón en la parte inferior -->
+                <button class="btn btn-primary" (click)="viewSurvey(survey)">Responder</button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  alumni_db:
+    container_name: alumni_db
+    image: mysql:5.7
+    ports:
+      - "3310:3306"
+    environment:
+      - MYSQL_DATABASE=alumni
+      - MYSQL_ROOT_PASSWORD=root
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "192.168.1.224"]
+      timeout: 10s
+      retries: 5
+
+  alumni_app:
+    container_name: alumni_app
+    image: alumni-app:1.0.0
+    build: ./alumni-back
+    ports:
+      - "9110:8080"
+    environment:
+      - MYSQL_HOST=alumni_db
+      - MYSQL_PORT=3306
+      - MYSQL_NAME=alumni
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=root
+      - JWT_SECRET=4qhq8JWTLrEBfYcaRHxhdb9zURSecretKeyb2rfBe7Ud
+      - JWT_EXPIRATION_TIME=14400000
+      - S3_BUCKET=archivospdfyfotos
+      - AWS_ACCESS_KEY=secret-access-key
+      - AWS_SECRET_KEY=secret-key
+      - MAIL_USERNAME=info.alumni.est@gmail.com
+      - MAIL_PASSWORD=xbxd tzqz myyv fwpq
+      - CLIENT_URL=http://$IP:9115
+    restart: always
+    depends_on:
+        alumni_db:
+          condition: service_healthy
+
+  alumni_front:
+    container_name: alumni_front
+    image: alumni-front:1.0.0
+    build: 
+      context: ./alumni_app
+      args:
+        - apiURL=http://$IP:9110
+    ports:
+      - "9115:80"
+    depends_on:
+      - alumni_app
+    restart: always
+    
