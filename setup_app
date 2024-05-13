@@ -1,12 +1,16 @@
  #!/bin/bash
 echo "#####################__Levantando contenedores__######################"
 
-# # If you want to use the IP, you can use the following command
-# export IP=$(ifconfig eth0 | awk '/inet /{print $2}' | cut -f2 -d':')
+# Linux
+# Descomentar si se utilizará Linux.
+#export IP=$(ifconfig eth0 | awk '/inet /{print $2}' | cut -f2 -d':')
+#docker-compose up -d
 
+# Windows
+# Reemplazar IP con la IP verdadera, mantener las comillas.
 IP="IP"
 
-# Reemplazar la variable $IP en el archivo docker-compose.yml
+# Reemplaza la variable $IP en el archivo docker-compose.yml
 sed -i "s/\$IP/$IP/g" docker-compose.yml
 
 echo "IP de la máquina host: $IP"
