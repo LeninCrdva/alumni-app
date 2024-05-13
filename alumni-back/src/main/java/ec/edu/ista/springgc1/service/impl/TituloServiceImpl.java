@@ -56,6 +56,7 @@ public class TituloServiceImpl extends GenericServiceImpl<Titulo> implements Map
         t.setTipo(d.getTipo());
         t.setNumRegistro(d.getNumRegistro());
         t.setCarrera(c);
+        t.setOtro(d.getOtro());
         t.setGraduado(graduado);
 
         return t;
@@ -75,6 +76,7 @@ public class TituloServiceImpl extends GenericServiceImpl<Titulo> implements Map
         d.setNombreCarrera(e.getCarrera().getNombre());
         d.setNumRegistro(e.getNumRegistro());
         d.setTipo(e.getTipo());
+        d.setOtro(e.getOtro());
         return d;
     }
 
@@ -114,6 +116,7 @@ public class TituloServiceImpl extends GenericServiceImpl<Titulo> implements Map
         tituloFromDb.setNombreTitulo(e.getNombreTitulo());
         tituloFromDb.setNumRegistro(e.getNumRegistro());
         tituloFromDb.setTipo(e.getTipo());
+        tituloFromDb.setOtro(e.getOtro());
 
         return titulorepository.save(tituloFromDb);
     }

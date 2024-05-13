@@ -1,9 +1,9 @@
 <div class="animate__animated animate__fadeIn">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <button (click)="Regresarclik()" routerLinkActive="router-link-active" type="button"
-        #btnRegresar class="btn btn-oblong btn-navy">
-          Regresar
-         </button>
+        <button (click)="Regresarclik()" routerLinkActive="router-link-active" type="button" #btnRegresar
+            class="btn btn-oblong btn-navy">
+            Regresar
+        </button>
 
         <div class="d-flex align-items-center">
             <button (click)="crearCopia()" type="button" class="btn btn-outline-primary me-2">
@@ -11,10 +11,11 @@
                 Seguridad
             </button>
 
-            <button (click)="visualizarPagina()" *ngIf="editarClicked" type="button" class="btn btn-outline-dark btn-navy me-2">
+            <button (click)="visualizarPagina()" *ngIf="editarClicked" type="button"
+                class="btn btn-outline-dark btn-navy me-2">
                 <i class="fa-solid fa-eye"></i> Ver Evento
             </button>
-            
+
 
             <div (click)="onSubmit()" type="submit" class="btn button text-center">
                 <div class="content">
@@ -51,10 +52,10 @@
         </div>
 
         <div class="my-4">
-            <label><b>Foto De La Portada Del Evento</b></label>
+            <b style="color: var(--text-color);">Foto De La Portada Del Evento</b>
 
             <div class="card mg-b-20">
-                <div class="card-header">
+                <div class="card-header" style="background-color: var(--side-bg-color)">
                     <h4 class="card-header-title">
                         <div class="preview-img" *ngIf="imageHandlerService.previsualizacion">
                             <button class="clear-image form-control border-0 cancel-button" type="button"
@@ -69,7 +70,7 @@
                         </div>
                     </h4>
                 </div>
-                <div class="card-body collapse show" id="collapse8">
+                <div class="card-body collapse show" id="collapse8" style="background-color: var(--side-bg-color)">
                     <input type="file" class="form-control" aria-label="file example" required
                         (change)="this.imageHandlerService.capturarFile($event)" accept=".jpg, .jpeg, .png, .webp" />
                     <div class="oaerror danger invalid-feedback">

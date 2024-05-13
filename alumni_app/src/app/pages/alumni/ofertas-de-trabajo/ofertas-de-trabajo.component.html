@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-9 col-md-8">
                     <div class="section-title">
-                        <h4 class="title mb-2">Ofertas Laborales Disponibles</h4>
+                        <h4 class="title mb-2" style="color: var(--text-color);">Ofertas Laborales Disponibles</h4>
                         <p class="text-muted mb-0">Listado de todas las Ofertas Laborales Activas y Disponibles para ti.
                         </p>
                     </div>
@@ -23,12 +23,11 @@
                     <div class="form custom-form">
                         <div class="form-group">
                             <label>Tipos de postulaciones:</label>
-                            <select class="form-control custom-select" id="Sortbylist-job" (change)="sortBy($event)">
+                            <select class="form-select" id="Sortbylist-job" (change)="sortBy($event)">
                                 <option value="fechaPublicacion">Seleccionar</option>
                                 <option value="cargo">Cargo</option>
                                 <option value="nombreEmpresa">Empresa</option>
                                 <option value="salario">Salario</option>
-                                <!-- Resto de las opciones -->
                             </select>
                         </div>
                     </div>
@@ -44,6 +43,7 @@
             <div class="col-lg-4 mb-0" *ngFor="let oferta of listOfertas">
                 <!-- Card de ofertas -->
                 <div class="card">
+                    <div class="flag"> {{obtenerTiempoFaltante(oferta)}} </div>
                     <img [src]="oferta.fotoPortada ? oferta.fotoPortada : '../../../../assets/imgs/Logo_Isuta.png'"
                         [class.small-img]="!oferta.fotoPortada" [class.content-img]="oferta.fotoPortada"
                         style="cursor: pointer;" [routerLink]="['/system/alumni/oferta-detalle', oferta.id]">
@@ -56,7 +56,7 @@
                             </div>
                             <div class="col text-end">
                                 <button class="btn btn-block btn-primary sticky-button"
-                                    (click)="requestOffer(oferta.id || 0)">Aplicar
+                                    (click)="requestOffer(oferta.id || 0,oferta.sitioweb)">Aplicar
                                 </button>
                             </div>
                         </div>
@@ -87,16 +87,13 @@
         </div>
     </div>
 
-
-
-
     <!-- Si no hay ofertas disponibles -->
     <ng-template #noOfertas>
         <div class="row">
             <div class="col-lg-12 col-md-12 mt-4 mt-lg-0">
                 <div class="content text-center text-lg-left ml-lg-4">
                     <h4 class="title">
-                        <a class="text-dark" (click)="reloadPage()">No existen ofertas disponibles para ti para
+                        <a style="color: var(--text-color);" (click)="reloadPage()">No existen ofertas disponibles para ti para
                             postular</a>
                     </h4>
                 </div>

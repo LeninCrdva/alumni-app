@@ -38,11 +38,10 @@
             </span>
         </div>
     </div>
-    
 
-    <a class="chat-button"  rel="nofollow noreferrer"
-        target="_blank">
-        <input type="text" [(ngModel)]="whatsAppMessage" placeholder="Escribe tu mensaje aquí..." style="border: 0cap; height: auto; outline: 0; width: 95%;" />
+    <a class="chat-button" rel="nofollow noreferrer" target="_blank">
+        <input type="text" [(ngModel)]="whatsAppMessage" placeholder="Escribe tu mensaje aquí..."
+            style="border: 0cap; height: auto; outline: 0; width: 95%;" />
         <a [href]="'https://api.whatsapp.com/send?phone=593969071826&text=' + whatsAppMessage">
             <svg viewBox="0 0 32 32">
                 <path

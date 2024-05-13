@@ -38,15 +38,12 @@
             <h3>Preguntas</h3>
           </div>
 
-          <div class="col-auto">
-            <button class="btn btn-label-primary" (click)="addQuestion()" type="button"
-              [disabled]="form.invalid">Agregar Pregunta <i class="fa-solid fa-circle-plus"></i></button>
-          </div>
+        
         </div>
 
         <ng-container formArrayName="questions">
           <ng-container *ngFor="let question of form.get('questions').controls; let qI = index" [formGroupName]="qI">
-            <div class="card mb-4 p-3">
+            <div class="card mb-4 p-3" style="background: var(--body-bg-color); color: var(--text-color);">
               <div class="row align-items-center">
                 <div class="col">
                   <h6>Pregunta #{{ qI + 1 }}</h6>
@@ -134,6 +131,10 @@
             </div>
           </ng-container>
         </ng-container>
+        <div class="col-auto">
+          <button class="btn btn-label-primary" (click)="addQuestion()" type="button"
+            [disabled]="form.invalid">Agregar Pregunta <i class="fa-solid fa-circle-plus"></i></button>
+        </div>
 
         <div class="row mt-4">
           <div class="col-12 text-end">

@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonView;
 import ec.edu.ista.springgc1.view.View;
 import lombok.Data;
+import org.hibernate.annotations.ColumnTransformer;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
@@ -28,9 +29,11 @@ public class Persona {
 	private String cedula;
 
 	@JsonView(View.Base.class)
+	@ColumnTransformer(write = "UPPER(?)")
 	private String primerNombre;
 
 	@JsonView(View.Base.class)
+	@ColumnTransformer(write = "UPPER(?)")
 	private String segundoNombre;
 
 	@Column(name = "fecha_nacimiento", nullable = false)
@@ -44,16 +47,18 @@ public class Persona {
 	private String telefono;
 
 	@JsonView(View.Base.class)
+	@ColumnTransformer(write = "UPPER(?)")
 	private String apellidoPaterno;
 
 	@JsonView(View.Base.class)
+	@ColumnTransformer(write = "UPPER(?)")
 	private String apellidoMaterno;
 
 	@JsonView(View.Base.class)
 	@Enumerated(EnumType.STRING)
 	private Sex sexo;
 
-	public static enum Sex {
+	public enum Sex {
 		MASCULINO, FEMENINO, OTRO;
 	}
 }

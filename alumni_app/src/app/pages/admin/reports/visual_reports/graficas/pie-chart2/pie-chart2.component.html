@@ -1,5 +1,5 @@
 <div class="chartContainer">
-  <select class="form-select" [(ngModel)]="selectedCarrera" (change)="onCarreraSelect($event)">
+  <select class="form-select mb-3" [(ngModel)]="selectedCarrera" (change)="onCarreraSelect($event)">
     <option value="">Seleccionar carrera</option>
     <option *ngFor="let carrera of carreras" [value]="carrera">{{ carrera }}</option>
   </select>

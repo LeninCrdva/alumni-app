@@ -193,7 +193,7 @@
                         <div class="mb-4">
                             <label style="color: var(--alumni-color)">Foto</label>
                             <div class="card mg-b-20 form-group flex-grow-1 mr-3">
-                                <div class="card-header">
+                                <div class="card-header" style="background-color: var(--side-bg-color)">
                                     <div class="text-center">
                                         <button class="btn btn-oblong btn-primary btn-block mg-b-10" type="button"
                                             (click)="imageHandlerService.clearImage()">
@@ -203,11 +203,12 @@
                                     <div class="preview-img" *ngIf="imageHandlerService.previsualizacion">
                                         <div class="image-container text-center mt-3">
                                             <img id="preview" [src]="imageHandlerService.previsualizacion" alt=""
-                                                style="width: 250px; height: 250px; object-fit: cover; border-radius: 5px;" />
+                                                style="width: 250px; height: 250px; object-fit: cover; border-radius: 8rem;" />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body collapse show" id="collapse8">
+                                <div class="card-body collapse show" id="collapse8"
+                                    style="background-color: var(--side-bg-color)">
                                     <div>
                                         <input class="form-control" type="file" (change)="onFileSelected($event)"
                                             id="formFile" data-show-remove="false" accept=".jpg, .jpeg, .png">
@@ -219,7 +220,7 @@
                             </div>
                         </div>
                         <button class="btn btn-oblong btn-primary btn-block mg-b-10" (click)="updatePhoto()"
-                        [disabled]="!imageHandlerService.previsualizacion">Guardar</button>
+                            [disabled]="!imageHandlerService.previsualizacion">Guardar</button>
                     </form>
                 </div>
             </li>

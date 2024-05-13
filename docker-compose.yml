@@ -32,8 +32,8 @@ services:
       - S3_BUCKET=archivospdfyfotos
       - AWS_ACCESS_KEY=secret-access-key
       - AWS_SECRET_KEY=secret-key
-      - MAIL_USERNAME=info.alumni.est@gmail.com
-      - MAIL_PASSWORD=xbxd tzqz myyv fwpq
+      - MAIL_USERNAME=alumni@tecazuay.edu.ec
+      - MAIL_PASSWORD=email-access-app-key
       - CLIENT_URL=http://$IP:9115
     restart: always
     depends_on:
@@ -52,4 +52,3 @@ services:
     depends_on:
       - alumni_app
     restart: always
-    

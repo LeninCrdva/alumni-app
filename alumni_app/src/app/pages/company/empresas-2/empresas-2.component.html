@@ -7,358 +7,290 @@
     </div>
 </section>
 
-<div class="card">
+<div class="card" style="background: var(--side-bg-color);">
     <div class="card-body collapse show" id="collapse1">
         <!-- Modal -->
-        <div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
+        <div class="modal fade" id="modalData" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalDataLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div [class.bg-primary]="true" class="modal-header text-white">
+                    <div class="modal-header text-white" [class.bg-dark]="!editarClicked"
+                        [class.bg-primary]="editarClicked">
                         <h5 [innerText]="editarClicked ? 'Modificar Empresa' : 'Crear Empresa'"></h5>
                     </div>
                     <div class="modal-body">
-                        <form>
-                            <div class="form-layout form-layout-1">
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">RUC: <span
-                                                    class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text">
-                                                    <i class="fas fa-id-card"></i>
-                                                </a>
-                                                <input class="form-control wd-250" type="text" name="ruc"
-                                                    placeholder="Ingrese el RUC"
-                                                    [(ngModel)]="editarClicked ? empresacargar.ruc : empresanueva.ruc"
-                                                    (ngModelChange)="editarClicked ? empresacargar.ruc = $event : empresanueva.ruc = $event"
-                                                    required pattern="^\d{13}$" #rucInput="ngModel">
-                                            </div>
-
-                                            <div *ngIf="!validateRuc(rucInput.value) && rucInput.dirty" class="text-danger mt-2">
-                                                <strong>RUC Inválido</strong> - El RUC ingresado no es válido.
-                                            </div>
-
-                                            <div *ngIf="rucInput.invalid && rucInput.errors && (rucInput.dirty || rucInput.touched)"
-                                                class="text-danger">
-                                                <div *ngIf="rucInput.errors['required']">
-                                                    El RUC es requerido.
-                                                </div>
-                                                <div *ngIf="rucInput.errors['pattern']">
-                                                    El RUC debe tener 13 dígitos numéricos.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Nombre: <span
-                                                    class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-user "></i>
-                                                </a>
-
-                                                <input class="form-control wd-250" type="text" name="nombre"
-                                                    placeholder="Ingrese el nombre"
-                                                    [(ngModel)]="editarClicked ? empresacargar.nombre : empresanueva.nombre"
-                                                    (ngModelChange)="editarClicked ? empresacargar.nombre = $event : empresanueva.nombre = $event"
-                                                    required pattern="^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$"
-                                                    #nombreInput="ngModel">
-                                            </div>
-                                            <div *ngIf="nombreInput.invalid && nombreInput.errors && (nombreInput.dirty || nombreInput.touched)"
-                                                class="text-danger">
-                                                <div *ngIf="nombreInput.errors['required']">
-                                                    El nombre es requerido.
-                                                </div>
-                                                <div *ngIf="nombreInput.errors['pattern']">
-                                                    El nombre solo debe contener letras y espacios, sin caracteres
-                                                    especiales ni números.
-                                                </div>
-                                            </div>
-                                        </div>
-
+                        <form class="row g-3 needs-validation" [formGroup]="companyForm">
+                            <div class="form-group col-lg-6">
+                                <label for="ruc" class="form-label active">RUC:*</label>
+                                <div class="input-group has-validation">
+                                    <a class="input-group-text">
+                                        <i class="fas fa-id-card"></i>
+                                    </a>
+                                    <input type="text" class="form-control" id="ruc" formControlName="ruc"
+                                        placeholder="Ingrese el RUC" required>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - Por favor, ingrese el RUC.
                                     </div>
                                 </div>
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Tipo de Empresa: <span
-                                                    class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-building "></i>
-                                                </a>
-                                                <input class="form-control wd-250" type="text" name="tipoEmpresa"
-                                                    placeholder="Ingrese el tipo de empresa"
-                                                    [(ngModel)]="editarClicked ? empresacargar.tipoEmpresa : empresanueva.tipoEmpresa"
-                                                    (ngModelChange)="editarClicked ? empresacargar.tipoEmpresa = $event : empresanueva.tipoEmpresa = $event"
-                                                    #TipoEmpresaInput="ngModel" required
-                                                    pattern="^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$">
-                                            </div>
-                                            <div *ngIf="TipoEmpresaInput.invalid && TipoEmpresaInput.errors && (TipoEmpresaInput.dirty || TipoEmpresaInput.touched)"
-                                                class="text-danger">
-                                                <div *ngIf="TipoEmpresaInput.errors['required']">
-                                                    El Tipo de Empresa es requerida.
-                                                </div>
-                                                <div *ngIf="TipoEmpresaInput.errors['pattern']">
-                                                    El Tipo de Empresa solo debe contener letras y espacios, sin
-                                                    caracteres especiales ni números.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Razón Social: <span
-                                                    class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-cogs"></i>
-                                                </a>
-                                                <input class="form-control wd-250" type="text" name="razonSocial"
-                                                    placeholder="Ingrese la Razón Social"
-                                                    [(ngModel)]="editarClicked ? empresacargar.razonSocial : empresanueva.razonSocial"
-                                                    (ngModelChange)="editarClicked ? empresacargar.razonSocial = $event : empresanueva.razonSocial = $event"
-                                                    required pattern="^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$"
-                                                    #razonSocialInput="ngModel">
-                                            </div>
-                                            <div *ngIf="razonSocialInput.invalid && razonSocialInput.errors && (razonSocialInput.dirty || razonSocialInput.touched)"
-                                                class="text-danger">
-                                                <div *ngIf="razonSocialInput.errors['required']">
-                                                    La Razón Social es requerida.
-                                                </div>
-                                                <div *ngIf="razonSocialInput.errors['pattern']">
-                                                    La Razón Social solo debe contener letras y espacios, sin caracteres
-                                                    especiales ni números.
-                                                </div>
-                                            </div>
-                                        </div>
 
+                                <div class="oaerror danger"
+                                    *ngIf="companyForm.get('ruc')?.hasError('invalidRuc') && companyForm.get('ruc')?.touched">
+                                    <strong>RUC Inválido</strong> - El RUC ingresado no es válido.
+                                </div>
+                                <div class="oaerror danger"
+                                    *ngIf="companyForm.get('ruc')?.hasError('pattern') && companyForm.get('ruc')?.touched">
+                                    <strong>Dato Erróneo</strong> - Solo números y 13 caracteres.
+                                </div>
+                                <div class="oaerror danger"
+                                    *ngIf="companyForm.get('ruc')?.hasError('rucExists') && companyForm.get('ruc')?.touched">
+                                    <strong>Dato Erróneo</strong> - Ruc ya registrado.
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="nombre" class="form-label active">Nombre:*</label>
+                                <div class="input-group has-validation">
+                                    <a class="input-group-text">
+                                        <i class="fas fa-user"></i>
+                                    </a>
+                                    <input type="text" class="form-control" id="nombre" formControlName="nombre"
+                                        placeholder="Ingrese el Nombre de la Empresa" required>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - Por favor, ingrese el nombre.
                                     </div>
                                 </div>
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Área: <span
-                                                    class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation ">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-chart-area "></i>
-                                                </a>
-                                                <input class="form-control wd-250" type="text" name="area"
-                                                    placeholder="Ingrese el área"
-                                                    [(ngModel)]="editarClicked ? empresacargar.area : empresanueva.area"
-                                                    (ngModelChange)="editarClicked ? empresacargar.area = $event : empresanueva.area = $event"
-                                                    required pattern="^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s,:;.]+$"
-                                                    #areaInput="ngModel">
-                                            </div>
-                                            <div *ngIf="areaInput.invalid && areaInput.errors && (areaInput.dirty || areaInput.touched)"
-                                                class="text-danger">
-                                                <div *ngIf="areaInput.errors['required']">
-                                                    El área es requerida.
-                                                </div>
-                                                <div *ngIf="areaInput.errors['pattern']">
-                                                    El área solo debe contener letras, espacios y los siguientes
-                                                    caracteres especiales: , : ; .
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Ubicación: <span
-                                                    class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-map-marker-alt "></i>
-                                                </a>
-                                                <input class="form-control wd-250" type="text" name="ubicacion"
-                                                    placeholder="Ingrese la ubicación"
-                                                    [(ngModel)]="editarClicked ? empresacargar.ubicacion : empresanueva.ubicacion"
-                                                    (ngModelChange)="editarClicked ? empresacargar.ubicacion = $event : empresanueva.ubicacion = $event"
-                                                    required #ubicacionInput="ngModel">
-                                            </div>
-                                            <div *ngIf="ubicacionInput.invalid && ubicacionInput.errors && (ubicacionInput.dirty || ubicacionInput.touched)"
-                                                class="text-danger">
-                                                <div *ngIf="ubicacionInput.errors['required']">
-                                                    La ubicación es requerida.
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
+                                <div class="oaerror danger"
+                                    *ngIf="companyForm.get('nombre')?.hasError('nameExists') && companyForm.get('nombre')?.touched">
+                                    <strong>Dato Erróneo</strong> - Nombre ya registrado.
                                 </div>
-                                <div class="row mg-b-25" data-parsley-validate>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Sitio Web: <span
-                                                    class="tx-danger"></span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-globe "></i>
-                                                </a>
-                                                <input class="form-control wd-250" type="text" name="sitioWeb"
-                                                    placeholder="Ingrese su sitio web"
-                                                    [(ngModel)]="editarClicked ? empresacargar.sitioWeb : empresanueva.sitioWeb"
-                                                    (ngModelChange)="editarClicked ? empresacargar.sitioWeb = $event : empresanueva.sitioWeb = $event"
-                                                    required pattern="https?://.*" #sitioWebInput="ngModel">
-                                            </div>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="color: var(--alumni-color)">Subir Comprobante de RUC</label>
-                                            <div class="card mg-b-20 form-group flex-grow-1 mr-3">
-                                                <div class="card-header">
-                                                    <div class="preview-img" *ngIf="pdfHandlerService.pdfUrl">
-                                                        <div class="embed-responsive-19by9">
-
-                                                            <embed [src]="pdfHandlerService.pdfUrl"
-                                                                type="application/pdf" width="100%" height="500px">
-
-                                                        </div>
-                                                        <div>
-                                                            <button
-                                                                class="clear-image form-control border-0 mt-3 custom-cancel-button"
-                                                                type="button" (click)="pdfHandlerService.clearPdf()"
-                                                                style="background-color: blue; color: white;">
-                                                                Cancelar
-                                                            </button>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body collapse show" id="collapse8">
-                                                    <input id="pdfFile" type="file" class="dropify"
-                                                        data-show-remove="false" (change)="onPdfSelected($event)"
-                                                        accept=".pdf" [disabled]="editarClicked" />
-                                                </div>
-                                            </div>
-                                            <div class="text-danger" *ngIf="!pdfHandlerService.pdfUrl">
-                                                El PDF del Ruc es obligatorio.
-                                            </div>
-                                        </div>
+                            </div>
 
 
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Ciudad: <span
-                                                    class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-city "></i>
-                                                </a>
-                                                <select class="form-select" name="ciudad" [(ngModel)]="ID_Ciudad"
-                                                    (ngModelChange)="buscarCiudad(ID_Ciudad)" required
-                                                    #ciudadInput="ngModel">
-                                                    <option value="" selected disabled>-- Seleccione una ciudad --
-                                                    </option>
-                                                    <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">{{
-                                                        ciudad?.nombre }}</option>
-                                                </select>
-                                            </div>
-                                            <div *ngIf="ciudadInput.invalid && ciudadInput.errors && (ciudadInput.dirty || ciudadInput.touched)"
-                                                class="text-danger">
-                                                <div *ngIf="ciudadInput.errors['required']">
-                                                    Por favor, seleccione una ciudad.
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group mt-3">
-                                            <label class="form-control-label active">Sector Empresarial: <span
-                                                    class="tx-danger">*</span></label>
-                                            <div class="input-group has-validation">
-                                                <a class="input-group-text bg-blue">
-                                                    <i class="fas fa-industry"></i>
-                                                </a>
-                                                <select class="form-select" name="sector" [(ngModel)]="ID_Sector"
-                                                    (ngModelChange)="buscarSector(ID_Sector)" required
-                                                    #sectorInput="ngModel">
-                                                    <option value="" selected>-- Seleccione un sector empresarial --
-                                                    </option>
-                                                    <option *ngFor="let sector of sectoresEmpresariales"
-                                                        [value]="sector.id">{{ sector?.nombre }}</option>
-                                                </select>
-                                            </div>
-                                            <div *ngIf="sectorInput.invalid && sectorInput.errors && (sectorInput.dirty || sectorInput.touched)"
-                                                class="text-danger">
-                                                <div *ngIf="sectorInput.errors['required']">
-                                                    Por favor, seleccione un sector empresarial.
-                                                </div>
-                                            </div>
-                                        </div>
-
+                            <div class="form-group col-lg-6">
+                                <label for="tipoEmpresa" class="form-label active">Tipo de Empresa</label>
+                                <div class="input-group has-validation">
+                                    <a class="input-group-text">
+                                        <i class="fas fa-building"></i>
+                                    </a>
+                                    <input type="text" class="form-control" id="tipoEmpresa"
+                                        formControlName="tipoEmpresa" placeholder="Ingrese el tipo de Empresa" required>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - Por favor, ingrese el tipo de empresa.
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group col-lg-6">
+                                <label for="razonSocial" class="form-label active">Razón Social</label>
+                                <div class="input-group has-validation">
+                                    <a class="input-group-text">
+                                        <i class="fas fa-cogs"></i>
+                                    </a>
+                                    <input type="text" class="form-control" id="razonSocial"
+                                        formControlName="razonSocial" placeholder="Ingrese la razón social" required>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - Por favor, ingrese la razón social.
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-lg-6">
+                                <label for="area" class="form-label active">Área</label>
+                                <div class="input-group has-validation">
+                                    <a class="input-group-text">
+                                        <i class="fas fa-chart-area"></i>
+                                    </a>
+                                    <input type="text" class="form-control" id="area" formControlName="area"
+                                        placeholder="Ingrese el área" required>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - Por favor, ingrese el área.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="ubicacion" class="form-label active">Ubicación</label>
+                                <div class="input-group has-validation">
+                                    <a class="input-group-text">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </a>
+                                    <input type="text" class="form-control" id="ubicacion" formControlName="ubicacion"
+                                        placeholder="Ingrese la ubicación" required>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - Por favor, ingrese la ubicación.
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-lg-6">
+                                <label for="sitioWeb" class="form-label active">Sitio Web</label>
+                                <div class="input-group has-validation">
+                                    <a class="input-group-text">
+                                        <i class="fas fa-globe"></i>
+                                    </a>
+                                    <input type="text" class="form-control" id="sitioWeb"
+                                        placeholder="Ingrese el sitio web" formControlName="sitioWeb" (focus)="showMessage=true">
+                                    <div *ngIf="showMessage" class="oaerror warning">
+                                        <strong>Opcional</strong> - El sitio web no es necesario a menos que desee proporcionarlo.
+                                    </div>
+                                </div>
+
+                                <div class="oaerror danger"
+                                    *ngIf="companyForm.get('sitioWeb')?.hasError('pattern') && companyForm.get('sitioWeb')?.touched">
+                                    <strong>Error</strong> - La dirección del sitio web debe comenzar con http:// o https://.
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="ciudad" class="form-label active">Ciudad</label>
+                                <div class="input-group has-validation">
+                                    <a class="input-group-text">
+                                        <i class="fas fa-city"></i>
+                                    </a>
+                                    <select class="form-select" id="ciudad" formControlName="ciudad" required>
+                                        <option value="" selected disabled>-- Seleccione una ciudad --</option>
+                                        <option *ngFor="let ciudad of ciudades" [ngValue]="ciudad">{{ ciudad?.nombre }}
+                                        </option>
+                                    </select>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - Por favor, seleccione una ciudad.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="sectorEmpresarial" class="form-label active">Sector Empresarial</label>
+                                <div class="input-group has-validation">
+                                    <a class="input-group-text">
+                                        <i class="fas fa-industry"></i>
+                                    </a>
+                                    <select class="form-select" id="sectorEmpresarial" formControlName="sectorEmpresarial" required>
+                                        <option value="" selected disabled>-- Seleccione un sector empresarial --
+                                        </option>
+                                        <option *ngFor="let sectorEmpresarial of sectoresEmpresariales" [ngValue]="sectorEmpresarial">{{
+                                            sectorEmpresarial?.nombre }}</option>
+                                    </select>
+                                    <div class="oaerror danger invalid-feedback">
+                                        <strong>Error</strong> - Por favor, seleccione un sector empresarial.
+                                    </div>
+                                </div>
+                                <div class="oaerror danger"
+                                    *ngIf="companyForm.get('sectorEmpresarial')?.hasError('required') && companyForm.get('sectorEmpresarial')?.touched">
+                                    <strong>Dato Erróneo</strong> - Solo números y 13 caracteres.
+                                </div>
+                            </div>
+
+
+                            <div *ngIf="!editarClicked" class="form-group col-lg-9">
+                                <label for="pdfFile" class="form-label active">Subir Comprobante de RUC</label>
+                                <div class="input-group has-validation">
+                                    <div class="card mg-b-20 form-group flex-grow-1 mr-3">
+                                        <div class="card-header">
+                                            <div class="preview-img" *ngIf="pdfHandlerService.pdfUrl">
+                                                <div class="embed-responsive-19by9">
+                                                    <embed [src]="pdfHandlerService.pdfUrl" type="application/pdf"
+                                                        width="100%" height="800px">
+                                                </div>
+                                                <div>
+                                                    <button
+                                                        class="clear-image form-control cancel-button border-0 mt-3 custom-cancel-button"
+                                                        type="button" (click)="pdfHandlerService.clearPdf()"
+                                                        style="background-color: blue; color: white;">
+                                                        Cancelar
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body collapse show" id="collapse8">
+                                            <input id="pdfFile" type="file" class="dropify" data-show-remove="false"
+                                                (change)="onPdfSelected($event)" accept=".pdf"
+                                                [disabled]="editarClicked" />
+                                        </div>
+                                    </div>
+                                    <div class="oaerror danger" *ngIf="!pdfHandlerService.pdfUrl">
+                                        <strong>Obligatorio</strong> - Por favor, suba el comprobante de RUC.
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="editarClicked" class="oaerror warning">
+                                <strong>Información</strong> - Si necesita actualizar únicamente el comprobante de RUC, por favor cierre este diálogo y haga clic en el botón "Nuevo Documento RUC" en la tabla de empresas.
+                            </div>
                         </form>
-
                     </div>
+
                     <div class="modal-footer">
-                        <!-- Botón para registrar -->
-                        <button (click)="crearEmpresa()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-primary" *ngIf="!editarClicked">
-                            Registrar Empresa
+                        <button (click)="onSubmit()" class="btn btn-oblong" [class.btn-success]="!editarClicked"
+                            [class.btn-primary]="editarClicked">
+                            {{ editarClicked ? 'Actualizar Empresa' : 'Registrar Empresa' }}
                         </button>
 
-
-                        <!-- Botón para editar -->
-                        <button (click)="editarEmpresa()" data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                            class="btn btn-oblong btn-primary" *ngIf="editarClicked">
-                            Editar Empresa
+                        <button data-bs-dismiss="modal" #myModalClose
+                            class="btn btn-oblong btn-outline-danger btn-block" id="close-button">Cancelar
                         </button>
-                        <button data-bs-dismiss="modal"
-                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!--/ Modal -->
+
+
+        <!-- =====================================================
+            *             BOTONES DE ACCIONES
+         ======================================================= -->
         <div class="col-md-12 col-lg-12">
             <div class="d-flex">
-                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#m_modal_4" type="button"
-                    class="btn btn-custom" style="margin-right:10px; width: 17rem; height: 2.5rem;">
+                <button title="Actualizar datos de la tabla" (click)="buscarEmpresas()" class="btn btn-success">
+                    <i class="fas fa-sync"></i>
+                </button>
+
+                <button title="Act/Desac columnas de la tabla" (click)="filterService.openFilters('filterTable')"
+                    class="btn btn-dark ms-2">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+
+                <ng-multiselect-dropdown style="width: 25rem;" *ngIf="filterService.editFilterTabs['filterTable']"
+                    [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
+                    [data]="filterService.dropdownLists['filterTable']"
+                    [(ngModel)]="filterService.selectedItems['filterTable']"
+                    (onSelect)="filterService.onItemSelect($event)"
+                    (onSelectAll)="filterService.onSelectAll('filterTable')"
+                    (onDeSelect)="filterService.onItemDeSelect($event)"
+                    (onDeSelectAll)="filterService.onDeSelectAll('filterTable')" class="ms-2">
+                </ng-multiselect-dropdown>
+
+                <button (click)="onRegistrarClick()" data-bs-toggle="modal" data-bs-target="#modalData"
+                    class="btn btn-primary ms-2" style="width: 15rem;">
                     Registrar Empresa
                 </button>
             </div>
         </div>
 
-
-        <div class="card-body pd-0 collapse show" id="collapse1">
+        <!-- =====================================================
+            *            CONTENIDO DE LA TABLA
+         ======================================================= -->
+         <div class="mt-3 show animate_animated animatebounceInUp animate_fast">
             <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-primary text-white">
-                        <tr>
-                            <th>#</th>
-                            <th>RUC</th>
-                            <th>NOMBRE</th>
-                            <th>ÁREA SOCIAL</th>
-                            <th class="text-center w-100px">Acciones</th>
-                        </tr>
-                    </thead>
+                <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
+                    class="table table-bordered table-hover">
                     <tbody>
-                        <tr *ngFor="let empresa of empresass">
-                            <th scope="row">{{empresa.id}}</th>
-                            <td>{{empresa.ruc}}</td>
+                        <tr *ngFor="let empresa of empresas; let i = index">
+                            <th scope="row">{{i+1}}</th>
                             <td>{{empresa.nombre}}</td>
+                            <td>{{empresa.ruc}}</td>
                             <td>{{empresa.razonSocial}}</td>
+                            <td>{{empresa.ubicacion}}</td>
+                            <td>{{empresa.estado ? 'EMPRESA ACTIVA' : 'EMPRESA INACTIVA'}}</td>
                             <td class="text-center table-actions d-flex justify-content-center">
                                 <a (click)="onEditarClick(empresa.id)" data-bs-toggle="modal"
-                                    data-bs-target="#m_modal_4" class="table-action mg-r-10">
-                                    <i class="fa-regular fa-pen-to-square"></i>
+                                    data-bs-target="#modalData" class="btn btn-label-primary btn-sm mg-y-5">
+                                    <i class="fa fa-pencil"></i> Editar
                                 </a>
 
-                                <a (click)="deleteEmpresa(empresa.id)" class="table-action ms-2 text-danger">
-                                    <i class="fa fa-trash"></i>
+                                <a (click)="deleteEmpresa(empresa.id)" class="btn btn-label-danger btn-sm mg-y-5 ms-2">
+                                    <i class="fa fa-trash"></i> Eliminar
                                 </a>
                                 <button data-bs-toggle="modal" (click)="onEditarClick(empresa.id)"
-                                    data-bs-target="#m_modal_5" class="btn btn-primary btn-sm mg-r-10 ms-2 text-decoration-none">
-                                    Nuevo Documento RUC
+                                    data-bs-target="#modalPDF"
+                                    class="btn btn-label-info btn-sm mg-y-5 ms-2">
                                     <i class="fa-solid fa-file"></i>
+                                    Nuevo Documento RUC
                                 </button>
                             </td>
                         </tr>
@@ -370,7 +302,7 @@
 </div>
 
 
-<div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_5"
+<div class="modal fade" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="modalPDF"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -378,34 +310,33 @@
                 <h5>Nuevo Documento RUC</h5>
             </div>
             <div class="modal-body">
-                <form>
+                <form class="row g-3 needs-validation" [formGroup]="companyForm">
                     <div class="form-layout form-layout-1">
                         <div class="row mg-b-25" data-parsley-validate>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label style="color: var(--alumni-color)">Número de RUC</label>
-                                    <div class="card mg-b-20 form-group flex-grow-1 mr-3">
-                                        <div class="card-body collapse show" id="collapse8">
-                                            <p>{{empresacargar.ruc}}</p>
-                                        </div>
-                                    </div>
+                            <div class="form-group col-lg-12">
+                                <label for="ruc" class="form-label active">RUC:</label>
+                                <div class="input-group has-validation">
+                                    <a class="input-group-text">
+                                        <i class="fas fa-id-card"></i>
+                                    </a>
+                                    <input type="text" class="form-control" id="ruc" formControlName="ruc"
+                                        placeholder="Ingrese el RUC" required readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label style="color: var(--alumni-color)">Subir Nuevo Comprobante de RUC</label>
+
+                            <div class="form-group col-lg-12">
+                                <label for="pdfFile" class="form-label active">Subir nuevo omprobante de RUC</label>
+                                <div class="input-group has-validation">
                                     <div class="card mg-b-20 form-group flex-grow-1 mr-3">
                                         <div class="card-header">
                                             <div class="preview-img" *ngIf="pdfHandlerService.pdfUrl">
                                                 <div class="embed-responsive-19by9">
-
                                                     <embed [src]="pdfHandlerService.pdfUrl" type="application/pdf"
-                                                        width="100%" height="500px">
-
+                                                        width="100%" height="800px">
                                                 </div>
                                                 <div>
                                                     <button
-                                                        class="clear-image form-control border-0 mt-3 custom-cancel-button"
+                                                        class="clear-image form-control cancel-button border-0 mt-3 custom-cancel-button"
                                                         type="button" (click)="pdfHandlerService.clearPdf()"
                                                         style="background-color: blue; color: white;">
                                                         Cancelar
@@ -416,22 +347,21 @@
                                         </div>
                                         <div class="card-body collapse show" id="collapse8">
                                             <input id="pdfFile" type="file" class="dropify" data-show-remove="false"
-                                                (change)="onPdfSelected($event)" accept=".pdf" />
+                                                (change)="onPdfSelected($event)" accept=".pdf"/>
                                         </div>
                                     </div>
-                                    <div class="text-danger" *ngIf="!pdfHandlerService.pdfUrl">
-                                        El PDF del Ruc es obligatorio.
+                                    <div class="oaerror danger" *ngIf="!pdfHandlerService.pdfUrl">
+                                        <strong>Obligatorio</strong> - Por favor, suba el comprobante de RUC.
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
-
             </div>
             <div class="modal-footer">
                 <button (click)="updatePdfRuc()" [disabled]="notActive" data-bs-toggle="modal"
-                    data-bs-target="#m_modal_5" class="btn btn-oblong btn-primary">
+                    data-bs-target="#modalPDF" class="btn btn-oblong btn-primary">
                     Actualizar Documento
                 </button>
                 <button data-bs-dismiss="modal" (click)="disableButton()"

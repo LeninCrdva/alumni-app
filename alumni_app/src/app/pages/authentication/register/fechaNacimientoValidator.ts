@@ -7,7 +7,7 @@ export function fechaNacimientoValidator(): ValidatorFn {
 
     if (fechaNacimiento < limiteInferior) {
       return { 'fechaNacimientoInvalida': true };
-    } else if (fechaNacimiento > new Date('2005-01-01')) {
+    } else if (fechaNacimiento > new Date('2005-12-31')) {
       return { 'fechaNacimientoInvalida': true };
     }
     

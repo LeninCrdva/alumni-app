@@ -53,4 +53,6 @@ public class OfertasLaboralesDTO implements Serializable {
 
     @JsonView({View.Postulacion.class, View.Public.class})
     private String tipo;
+    @JsonView({View.Postulacion.class, View.Public.class})
+    private String sitioweb;
 }

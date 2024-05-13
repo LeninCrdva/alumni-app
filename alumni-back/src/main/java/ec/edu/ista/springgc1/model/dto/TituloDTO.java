@@ -39,4 +39,6 @@ public class TituloDTO implements Serializable {
 
     @NotNull
     private String nombreCarrera;
+
+    private String otro;
 }

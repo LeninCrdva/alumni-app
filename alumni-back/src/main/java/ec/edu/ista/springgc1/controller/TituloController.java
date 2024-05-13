@@ -89,6 +89,7 @@ public class TituloController {
         tituloFromDb.setNombreCarrera(e.getNombreCarrera());
         tituloFromDb.setNumRegistro(e.getNumRegistro());
         tituloFromDb.setTipo(e.getTipo());
+        tituloFromDb.setOtro(e.getOtro());
 
         // Utiliza el método update del servicio para actualizar la instancia existente
         Titulo updatedTitulo = tituloService.update(id, tituloFromDb);

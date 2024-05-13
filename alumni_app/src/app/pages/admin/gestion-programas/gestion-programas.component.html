@@ -108,7 +108,7 @@
                             <label class="form-label">Subir Foto De La Portada</label>
 
                             <div class="card mg-b-20">
-                                <div class="card-header">
+                                <div class="card-header" style="background: var(--side-bg-color);">
                                     <h4 class="card-header-title">
                                         <div class="preview-img" *ngIf="imageHandlerService.previsualizacion">
                                             <button class="clear-image form-control border-0 cancel-button"
@@ -123,7 +123,7 @@
                                         </div>
                                     </h4>
                                 </div>
-                                <div class="card-body collapse show" id="collapse8">
+                                <div class="card-body collapse show" id="collapse8" style="background: var(--side-bg-color);">
                                     <input type="file" class="form-control" aria-label="file example" required
                                         (change)="imageHandlerService.capturarFile($event)"
                                         accept=".jpg, .jpeg, .png, .webp" />
@@ -154,7 +154,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="card" style="background: var(--side-bg-color);">
     <div class="card-body collapse show">
 
         <div class="col-md-12 col-lg-12">

@@ -24,7 +24,6 @@
                     información antes de enviar el formulario. Gracias por su colaboración.</p>
                 <br>
                 <form [formGroup]="updatePersonForm" class="mb-5">
-
                     <div class="mb-4">
                         <div class="form-group mr-3">
                             <input type="text" class="form-input" placeholder=" " formControlName="primerNombre"
@@ -59,7 +58,7 @@
                         <div class="flex-grow-1">
                             <div class="form-group mr-3">
                                 <input type="text" class="form-input" placeholder=" " formControlName="primerApellido"
-                                    id="InputApellidoM"  style="text-transform: uppercase;">
+                                    id="InputApellidoM" style="text-transform: uppercase;">
                                 <label for="" class="form-label">Ingresa tu primer Apellido</label>
                                 <i class="ri-user-smile-line form-icon"></i>
                             </div>
@@ -102,15 +101,9 @@
 
                     <div class="mb-4">
                         <div class="form-group flex-grow-1 mr-3">
-                            <input type="text" 
-                            class="form-input" 
-                            placeholder=" " 
-                            formControlName="telefono" 
-                            id="InputTelefono" 
-                            (input)="onPhoneInput($event)"
-                            (blur)="onPhoneBlur()"
-                            appNumericOnly>
-                                                     
+                            <input type="text" class="form-input" placeholder=" " formControlName="telefono"
+                                id="InputTelefono" (input)="onPhoneInput($event)" (blur)="onPhoneBlur()" appNumericOnly>
+
                             <label for="" class="form-label">Ingresa tu Teléfono</label>
                             <i class="fa-solid fa-phone-volume form-icon"></i>
                         </div>
@@ -123,10 +116,10 @@
 
                     <div class="mb-4">
 
-                        <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
+                        <label for="InputFechaNacimiento" style="color: var(--text-color)">Fecha de Nacimiento</label>
 
                         <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento"
-                            class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
+                            class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento" min="1960-01-01" max="2005-12-31">
                         <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
                         <div class="text-danger"
                             *ngIf="updatePersonForm.get('fechaNacimiento')?.hasError('required') && updatePersonForm.get('fechaNacimiento')?.touched">
@@ -166,7 +159,7 @@
                     <div class="mb-4">
                         <div class="form-group flex-grow-1 mr-3">
                             <i class="fa-solid fa-id-card form-icon"></i>
-                            <select formControlName="provincia" >
+                            <select formControlName="provincia">
                                 <option *ngFor="let provincia of provincias">{{provincia}}</option>
                             </select>
                         </div>
@@ -176,7 +169,7 @@
                         </div>
                     </div>
                     <button class="btn btn-oblong btn-success btn-block mg-b-10"
-                    (click)="updateInfoGraduate()">Guardar</button>
+                        (click)="updateInfoGraduate()">Guardar</button>
 
                 </form>
             </li>
@@ -190,9 +183,8 @@
                 <div>
                     <form [formGroup]="photoForm" class="mb-5">
                         <div class="mb-4">
-                            <label style="color: var(--alumni-color)">Foto</label>
                             <div class="card mg-b-20 form-group flex-grow-1 mr-3">
-                                <div class="card-header">
+                                <div class="card-header" style="background-color: var(--side-bg-color)">
                                     <div class="text-center">
                                         <button class="btn btn-oblong btn-primary btn-block mg-b-10" type="button"
                                             (click)="imageHandlerService.clearImage()">
@@ -202,11 +194,11 @@
                                     <div class="preview-img" *ngIf="imageHandlerService.previsualizacion">
                                         <div class="image-container text-center mt-3">
                                             <img id="preview" [src]="imageHandlerService.previsualizacion" alt=""
-                                                style="width: 250px; height: 250px; object-fit: cover; border-radius: 5px;" />
+                                                style="width: 250px; height: 250px; object-fit: cover; border-radius: 8rem;" />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body collapse show" id="collapse8">
+                                <div class="card-body collapse show" id="collapse8" style="background-color: var(--side-bg-color)">
                                     <div>
                                         <input class="form-control" type="file" (change)="onFileSelected($event)"
                                             id="formFile" data-show-remove="false" accept=".jpg, .jpeg, .png">
@@ -218,7 +210,7 @@
                             </div>
                         </div>
                         <button class="btn btn-oblong btn-primary btn-block mg-b-10" (click)="updatePhoto()"
-                        [disabled]="!updatePersonForm.valid || !imageHandlerService.previsualizacion">Guardar</button>
+                            [disabled]="!updatePersonForm.valid || !imageHandlerService.previsualizacion">Guardar</button>
                     </form>
                 </div>
             </li>

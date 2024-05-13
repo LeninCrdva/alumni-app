@@ -54,9 +54,9 @@ export class ReferenciasPersonalesComponent {
     private renderer: Renderer2
   ) {
     this.validateForm = this.fb.group({
-      nombreReferencia: ['', Validators.required],
-      telefono: ['', Validators.required],
-      email: ['', Validators.required]
+      nombreReferencia: ['', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
+      telefono: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 

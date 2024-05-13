@@ -8,7 +8,7 @@
 </section>
 
 <div class="col-md-12 col-lg-12">
-    <div class="card">
+    <div class="card" style="background-color: var(--side-bg-color)">
         <div class="card-body collapse show" id="collapse1">
             <div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
                 aria-hidden="true">
@@ -61,7 +61,8 @@
                                                     <div class="mt-2">
                                                         <h6 class="form-control-label active">RUC:</h6>
                                                         <a [href]="companyUrl">
-                                                            <iframe [src]="companyUrl" width="100%" height="250px"></iframe>
+                                                            <iframe [src]="companyUrl" width="100%"
+                                                                height="250px"></iframe>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -103,8 +104,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let company of filterCompanyList;">
-                                <td>{{ company.id }}</td>
+                            <tr *ngFor="let company of filterCompanyList;let i=index">
+                                <td>{{ i+1 }}</td>
                                 <td>
                                     {{ company.nombre }}
                                 </td>

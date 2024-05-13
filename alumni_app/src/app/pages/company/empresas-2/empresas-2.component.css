@@ -9,3 +9,11 @@
     background-color: #0056b3;
 }
 
+.form-control-label {
+    font-weight: bold;
+}
+
+.cancel-button {
+    background-color:#0c6efd !important;
+    color: #ffffff;
+}

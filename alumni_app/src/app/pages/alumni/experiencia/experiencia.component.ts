@@ -54,11 +54,16 @@ export class ExperienciaComponent {
     private renderer: Renderer2
   ) {
     this.validateForm = this.fb.group({
-      cargo: ['', Validators.required],
-      duracion: ['', Validators.required],
-      area_trabajo: ['', Validators.required],
-      institucionNombre: ['', Validators.required],
-      actividad: ['', Validators.required],
+      cargo: ['', [Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
+      duracion:  ['', [
+        Validators.required, 
+        Validators.minLength(2), 
+        Validators.maxLength(10),
+        Validators.pattern(/^[0-9]+$/) 
+      ]],
+      area_trabajo:  ['', [Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
+      institucionNombre:  ['', [Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
+      actividad:  ['', [Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]]
     });
   }
 

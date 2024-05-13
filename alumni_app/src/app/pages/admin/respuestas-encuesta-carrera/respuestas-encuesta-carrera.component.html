@@ -7,19 +7,19 @@
     </div>
 </section>
 
-<div class="container">
-    <div class="row mb-4 mt-4">
+<div class="container p-5 mt-4" style="background: var(--side-bg-color); color: var(--text-color);">
+    <div class="row">
         <div class="col-12">
             <label for="filterBy" class="mb-1">Nombre de la carrera:</label>
-            <select id="filterBy" class="form-control" [(ngModel)]="careerName" (ngModelChange)="onFilterChange()">
+            <select id="filterBy" class="form-select" [(ngModel)]="careerName" (ngModelChange)="onFilterChange()">
                 <option *ngFor="let career of careerList" [ngValue]="career.nombre">
                     {{career.nombre}}
                 </option>
             </select>
         </div>
-        <div class="col-12">
+        <div class="col-12 mt-3">
             <label for="filterBy" class="mb-1">Título de la Encuesta:</label>
-            <select id="filterBy" class="form-control" [(ngModel)]="surveyTitle" (ngModelChange)="onFilterChange()">
+            <select id="filterBy" class="form-select" [(ngModel)]="surveyTitle" (ngModelChange)="onFilterChange()">
                 <option *ngFor="let survey of surveyList" [ngValue]="survey.title">
                     {{survey.title}}
                 </option>
@@ -27,15 +27,16 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-12">
             <div *ngIf="answerList.length === 0" class="text-center">
                 <p>No hay Respuestas por Carrera disponibles.</p>
             </div>
-            <div class="card">
+            <div class="card" style="background: var(--body-bg-color); color: var(--text-color);">
                 <div *ngIf="answerList.length > 0">
-                    <div class="card-header">
-                        <h4>Respuestas de la encuesta "{{ surveyTitle }}" para la carrera "{{ careerName }}"</h4>
+                    <div class="card-header mt-4">
+                        <p style="font-size: 22px;"><b>Respuestas de la encuesta:</b> "{{ surveyTitle }}"</p>
+                        <p style="font-size: 22px;"><b>Para la carrera:</b> "{{ careerName }}"</p>
                     </div>
                     <div class="card-body" *ngFor="let answer of answerList">
                         <h5>{{ answer.questionText }}</h5>
@@ -63,15 +64,13 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 mb-3">
-                <button title="Descargar Excel" (click)="downloadAsExcel()" class="btn btn-success ms-2">
-                    <i class="fas fa-file-excel"></i> Descargar Excel
-                </button>
-                <button title="Descargar PDF" (click)="downloadAsPDF()" class="btn btn-danger ms-2">
-                    <i class="fas fa-file-pdf"></i> Descargar PDF
-                </button>
-            </div>
-          </div>
-          
+        <div class="d-flex justify-content-center align-items-center mt-5">
+            <button title="Descargar Excel" (click)="downloadAsExcel()" class="btn btn-success ms-2">
+                <i class="fas fa-file-excel"></i> Descargar Excel
+            </button>
+            <button title="Descargar PDF" (click)="downloadAsPDF()" class="btn btn-danger ms-2">
+                <i class="fas fa-file-pdf"></i> Descargar PDF
+            </button>
+        </div>
     </div>
+</div>

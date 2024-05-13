@@ -49,6 +49,7 @@ export class TitulosComponent {
   protected name: string | null = localStorage.getItem('name');
 
   numeroUndefinido: number = 0;
+  invalidCharacters: boolean = false;
 
   // =====================================================
   //*                   CONSTURCTOR
@@ -65,16 +66,49 @@ export class TitulosComponent {
     private usuarioGraduado: GraduadoService
   ) {
     this.validateForm = this.fb.group({
-      nombreTitulo: ['', Validators.required],
+      nombreTitulo:  ['', [Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
       tipo: ['', Validators.required],
-      numRegistro: ['', Validators.required],
-      fechaEmision: ['', Validators.required],
+      numRegistro: ['', [
+        Validators.required, 
+        Validators.minLength(5), 
+        Validators.maxLength(20), 
+        Validators.pattern(/^[0-9]+$/) 
+      ]],
+      
+      fechaEmision: ['', [Validators.required]],
       fechaRegistro: ['', Validators.required],
       nivel: ['', Validators.required],
-      institucion: ['', Validators.required],
-      nombreCarrera: ['', Validators.required]
+      institucion: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚ,;\s]+$/)]],
+      nombreCarrera: ['', Validators.required],
+      otro: ['', [Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]]
     });
+   
   }
+  //Validaciones  de fecha
+  validarFechaEmision() {
+    const fechaRegistro = this.validateForm.get('fechaRegistro')?.value;
+    const fechaEmision = this.validateForm.get('fechaEmision')?.value;
+    if (fechaRegistro && fechaEmision) {
+      const fechaRegistroObj = new Date(fechaRegistro);
+      const fechaEmisionObj = new Date(fechaEmision);
+      return fechaEmisionObj >= fechaRegistroObj;
+    }
+    return false;
+  }
+  
+  onFechaRegistroChange() {
+    const fechaRegistroControl = this.validateForm.get('fechaRegistro');
+    const fechaEmisionControl = this.validateForm.get('fechaEmision');
+  
+    if (fechaRegistroControl && fechaEmisionControl) {
+      if (fechaRegistroControl.value) {
+        fechaEmisionControl.enable();
+      } else {
+        fechaEmisionControl.disable();
+      }
+    }
+  }
+  
 
   // Note: Desuscribirse del evento para evitar fugas de memoria
   ngOnDestroy(): void {
@@ -91,6 +125,9 @@ export class TitulosComponent {
     this.filterService.initializeDropdowns('filterTable', columnTitles);
     this.obtenerCarreras();
     this.loadData();
+    this.validateForm.get('fechaRegistro')?.valueChanges.subscribe(() => {
+      this.onFechaRegistroChange();
+    });
   }
  
   
@@ -147,13 +184,20 @@ export class TitulosComponent {
       });
 
       this.filterService.selectItemByName('careersList', dataToEdit.nombreCarrera);
+
+      if (dataToEdit.nombreCarrera === 'OTRO') {
+        this.validateForm.patchValue({
+          otro: dataToEdit.otro 
+        });
+      }
     } else {
       console.error(`Elemento con id ${id} no encontrado en la lista.`);
     }
 
     this.alertService.resetInputsValidations(this.renderer);
     this.idEdit = id;
-  }
+}
+
 
   onSubmit() {
     if (!this.validateForm.valid) {
@@ -170,6 +214,10 @@ export class TitulosComponent {
   obtenerDatosFormulario(): any {
     // Buscar en la lista de carreras para encontrar el id correspondiente al nombre seleccionado
     // const carreraSeleccionada = this.carrerasList.find(carrera => carrera.nombre === this.validateForm.value.nombrecarrera[0].item_text);
+    let nombreCarrera = '';
+    if (this.validateForm.value.nombreCarrera) {
+        nombreCarrera = this.validateForm.value.nombreCarrera[0]?.item_text;
+    }
     return {
       nombreTitulo: this.validateForm.value.nombreTitulo,
       tipo: this.validateForm.value.tipo,
@@ -178,7 +226,8 @@ export class TitulosComponent {
       fechaRegistro: this.validateForm.value.fechaRegistro,
       nivel: this.validateForm.value.nivel,
       institucion: this.validateForm.value.institucion,
-      nombreCarrera: this.validateForm.value.nombreCarrera[0].item_text,
+      nombreCarrera: nombreCarrera,
+      otro: nombreCarrera === 'OTRO' ? this.validateForm.value.otro : '',
       cedula: this.obtenerCedula()
     };
   }
@@ -244,11 +293,15 @@ export class TitulosComponent {
     this.carrerasService.getCarreras().subscribe(
       carreras => {
         this.carrerasList = carreras;
-
+  
+        // Agregar la opción "Otro" al final de la lista de carreras
+        this.filterService.dropdownLists['careersList'] = [...this.carrerasList.map(carrera => carrera.nombre)];
+  
         // Para inicializar los dropdowns de las diferentes carreras.
-        this.filterService.initializeDropdowns('careersList', this.carrerasList.map(carrera => carrera.nombre), true);
+        this.filterService.initializeDropdowns('careersList', this.filterService.dropdownLists['careersList'], true);
       },
       (error: any) => console.error(error)
     );
   }
+  
 }

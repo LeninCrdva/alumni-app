@@ -68,6 +68,7 @@ header.abajo {
 .logo {
     display: flex;
     align-items: center;
+    /* margin: 8px 0; */
 }
 
 .logo i {

@@ -6,7 +6,7 @@
     position: fixed;
     background-color: #25d366;
     bottom: 50px;
-    right: 10px;
+    right: 20px;
     border-radius: 50px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
     z-index: 20;
@@ -67,7 +67,7 @@
 
 .sticky-chat .chat-content {
     border-radius: 10px;
-    background-color: #fff;
+    background-color: var(--side-bg-color);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25);
     overflow: hidden;
     font-family: "Roboto", sans-serif;
@@ -79,7 +79,7 @@
     display: flex;
     align-items: center;
     padding: 15px 20px;
-    background-color: #25d366;
+    background-color: #17ae00;
     overflow: hidden;
 }
 
@@ -104,33 +104,34 @@
 
 .sticky-chat .chat-header .title {
     padding-left: 15px;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 600;
     font-family: "Roboto", sans-serif;
     color: #fff;
 }
 
 .sticky-chat .chat-header .title span {
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 400;
     display: block;
     line-height: 1.58em;
     margin: 0;
-    color: #f4f4f4;
+    color: #ffffff;
 }
 
 .sticky-chat .chat-text {
     display: flex;
     flex-wrap: wrap;
     margin: 30px 20px;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .sticky-chat .chat-text span {
     display: inline-block;
     margin-right: auto;
     padding: 10px;
-    background-color: #f0f5fb;
+    background-color: var(--body-bg-color);
+    color: var(--text-color);
     border-radius: 0px 15px 15px;
 }
 
@@ -138,8 +139,8 @@
     content: "just now";
     display: inline-block;
     margin-left: 2px;
-    font-size: 9px;
-    color: #989b9f;
+    font-size: 10px;
+    color: var(--text-color);
 }
 
 .sticky-chat .chat-text span.typing {
@@ -163,18 +164,23 @@
     margin-top: 15px;
     padding: 12px 20px;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: var(--body-bg-color);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25);
     overflow: hidden;
-    font-size: 12px;
+    font-size: 15px;
     font-family: "Roboto", sans-serif;
     font-weight: 400;
+}
+
+.sticky-chat .chat-button input {
+    background-color: var(--body-bg-color);
+    color: var(--text-color);
 }
 
 .sticky-chat .chat-button svg {
     width: 20px;
     height: 20px;
-    fill: #505050;
+    fill: var(--text-color);
     margin-left: auto;
     transform: rotate(40deg);
     -webkit-transform: rotate(40deg);
@@ -194,7 +200,7 @@
 }
 
 .chat-menu:checked+.sticky-button+.sticky-chat {
-    bottom: 170px;
+    bottom: 150px;
     opacity: 1;
     visibility: visible;
 }

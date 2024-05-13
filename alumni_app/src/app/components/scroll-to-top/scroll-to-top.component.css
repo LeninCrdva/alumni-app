@@ -1,7 +1,7 @@
 #progress {
     position: fixed;
     bottom: 20px;
-    right: 10px;
+    right: 20px;
     height: 55px;
     width: 55px;
     display: none;

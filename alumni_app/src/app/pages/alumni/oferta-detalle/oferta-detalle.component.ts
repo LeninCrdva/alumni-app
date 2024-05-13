@@ -71,8 +71,16 @@ export class OfertaDetalleComponent implements OnInit {
         if (post) {
 
           this.alertService.mostrarAlertaMomentanea('Postulación realizada correctamente', true);
-
-          this.router.navigate(['system/alumni/postulaciones']);
+          this.alertService.mostrarSweetAlertConfirmacion(`Se abrirá la siguiente página: ${this.ofertaDetail.sitioweb}`)
+          .then(() => {
+           
+            const newTab = window.open(this.ofertaDetail.sitioweb, '_blank');
+         
+            setTimeout(() => {
+              this.router.navigate(['system/alumni/postulaciones']);
+            }, 1000); 
+          });
+         
         }
       }, error => {
         const errorMessages: { [key: string]: string } = {

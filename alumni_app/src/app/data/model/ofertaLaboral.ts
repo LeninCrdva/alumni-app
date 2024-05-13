@@ -14,4 +14,5 @@ export class ofertaLaboral {
     'tipo': string;
     'fotoPortada': string;
     'tiempo'?: string;
+    'sitioweb': string;
 }

@@ -3,7 +3,7 @@ import { AuthService } from '../../../data/service/AuthService';
 import { UserService } from '../../../data/service/UserService';
 import { Persona } from '../../../data/model/persona';
 import { PersonaService } from '../../../data/service/PersonService';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Rol } from '../../../data/model/rol';
 import { Subject } from 'rxjs';
@@ -28,6 +28,7 @@ import { AuditEntryDTO } from '../../../data/model/DTO/AuditEntryDTO';
 import { AdministradorService } from '../../../data/service/administrador.service';
 import { Administrador } from '../../../data/model/administrador';
 import { DataValidationService } from '../../../data/service/data-validation.service';
+import { ValidatorEc } from '../../../data/ValidatorEc.service';
 
 @Component({
   selector: 'app-usuarios-lists',
@@ -96,13 +97,14 @@ export class UsuariosListsComponent implements OnInit {
     public filterService: FiltersService,
     public alertService: AlertsService,
     private AuditService: AuditEntryService,
+    private validatorEc: ValidatorEc,
   ) {
     this.registerNewUserForm = this.fb.group({
       primerNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       segundoNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       primerApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       segundoApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
-      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator()), this.validateIdentityCard()]],
       sexo: ['', Validators.required],
       telefono: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
       fechaNacimiento: ['', [Validators.required, fechaNacimientoValidator()]],
@@ -119,7 +121,7 @@ export class UsuariosListsComponent implements OnInit {
 
     this.formCase2 = this.fb.group({
       ciudad: ['', Validators.required],
-      anioGraduacion: ['', Validators.required],
+      anioGraduacion: ['', [Validators.required, this.validateMinRangeTitledDate(), this.validateMaxRangeTitleDate()]],
       emailPersonal: ['', [Validators.required, Validators.email]],
       estadoCivil: ['', Validators.required],
     });
@@ -150,7 +152,7 @@ export class UsuariosListsComponent implements OnInit {
       segundoNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       primerApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       segundoApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
-      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator()), this.validateIdentityCard()]],
       sexo: ['', Validators.required],
       telefono: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
       fechaNacimiento: ['', [Validators.required, fechaNacimientoValidator()]],
@@ -171,7 +173,7 @@ export class UsuariosListsComponent implements OnInit {
       segundoNombre: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       primerApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
       segundoApellido: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternOnlyLettersValidator())]],
-      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
+      cedula: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator()), this.validateIdentityCard()]],
       sexo: ['', Validators.required],
       telefono: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patterOnlyNumbersValidator())]],
       fechaNacimiento: ['', [Validators.required, fechaNacimientoValidator()]],
@@ -863,7 +865,7 @@ export class UsuariosListsComponent implements OnInit {
 
   validateUsername(): void {
     if (this.registerNewUserForm.get('nombreUsuario')?.valid) {
-     const currentUsername = this.currentUsername;
+      const currentUsername = this.currentUsername;
       const username = this.registerNewUserForm.get('nombreUsuario')?.value.toLowerCase();
       if (username !== currentUsername) {
         this.dataValidationService.validateUsername(username).subscribe(res => {
@@ -908,4 +910,80 @@ export class UsuariosListsComponent implements OnInit {
     return Object.values(this.duplicatedFields).some(value => value);
   }
 
+  validateIdentityCard(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const identityCard = control.value;
+      return !identityCard ? null : this.validatorEc.validarCedula(identityCard) ? null : { invalidIdentityCard: true };
+    };
+  }
+
+  getMinDate(): Date | null {
+    const birthDate = this.registerNewUserForm.get('fechaNacimiento')?.value ?? null;
+    if (!birthDate) return null;
+
+    const yearsToAdd = 20;
+    const newDate = new Date(birthDate);
+    newDate.setFullYear(newDate.getFullYear() + yearsToAdd);
+    return newDate;
+  }
+
+  minFormatDate(): string {
+    const minDate = this.getMinDate();
+    return minDate ? minDate.toISOString().split('T')[0] : '';
+  }
+
+  getCurrentAge(): number {
+    const birthDate = this.registerNewUserForm.get('fechaNacimiento')?.value;
+
+    if (!birthDate) {
+      return 0;
+    }
+
+    const birth = new Date(birthDate);
+    const today = new Date();
+
+    if (isNaN(birth.getTime())) {
+      return 0;
+    }
+
+    if (birth > today) {
+      return 0;
+    }
+
+    let age = today.getFullYear() - birth.getFullYear();
+    const month = today.getMonth() - birth.getMonth();
+
+    if (month < 0 || (month === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+
+  validateMinRangeTitledDate(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const date = new Date(control.value);
+      const minDate = this.getMinDate();
+
+      if (!minDate || !date) {
+        return null;
+      }
+
+      const minDateObj = new Date(minDate);
+
+      return minDateObj <= date ? null : { invalidMinDate: true };
+    };
+  }
+
+  validateMaxRangeTitleDate(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const age = this.getCurrentAge();
+
+      return age <= 55 && age >= 20 ? null : { invalidRangeAge: true };
+    };
+  }
+
+  getCurrentDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
 }

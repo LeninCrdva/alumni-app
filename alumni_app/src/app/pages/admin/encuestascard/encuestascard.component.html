@@ -10,20 +10,20 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h2 class="my-4">Listado de Encuestas</h2>
+      <h2 class="my-4" style="color: var(--text-color);">Listado de Encuestas</h2>
     </div>
   </div>
 
   <div class="row">
     <div class="col-12">
       <div *ngIf="surveys.length === 0" class="text-center">
-        <p>No hay encuestas disponibles.</p>
+        <p style="color: var(--text-color);">No hay encuestas disponibles.</p>
       </div>
 
       <div class="row row-cols-1 row-cols-md-2 g-4">
         <ng-container *ngFor="let survey of surveys">
           <div class="col">
-            <div class="card h-100">
+            <div class="card h-100" style="background: var(--side-bg-color); color: var(--text-color);">
               <div class="card-body d-flex align-items-center">
                 <div class="me-3">
                   <i class="fas fa-poll-h fa-3x text-primary"></i>

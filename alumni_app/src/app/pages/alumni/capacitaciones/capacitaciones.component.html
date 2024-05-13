@@ -28,10 +28,17 @@
                                 <i class="fa-solid fa-signature"></i>
                             </a>
                             <input type="text" class="form-control" id="nombre"
-                                placeholder="Ingrese el nombre." formControlName="nombre" required>
-                            <div class="oaerror danger  invalid-feedback">
-                                <strong>Dato Faltante</strong> - Ingrese el nombre de su Capacitación.
-                            </div>
+                                placeholder="Ingrese el nombre." formControlName="nombre" 
+                                [ngClass]="{ 'is-invalid': validateForm.get('nombre')?.invalid && (validateForm.get('nombre')?.dirty || validateForm.get('nombre')?.touched) }" required>
+                                <div class="oaerror danger invalid-feedback" *ngIf="validateForm.get('nombre')?.invalid && (validateForm.get('nombre')?.dirty || validateForm.get('nombre')?.touched)">
+                                    <ng-container *ngIf="validateForm.get('nombre')?.errors?.['pattern']">
+                                        <strong>Caracteres no permitidos</strong> - Solo se admiten letras  y espacio.
+                                    </ng-container>
+                                    <ng-container *ngIf="!validateForm.get('nombre')?.errors?.['pattern']">
+                                        <strong>Dato Faltante</strong> - Ingrese el nombre de su Capacitación.
+                                    </ng-container>
+                                </div>
+                               
                         </div>
                     </div>
 
@@ -43,28 +50,45 @@
                             </span>
                             <input type="text" class="form-control" id="institucion"
                                 placeholder="Ingrese el nombre de la institucion" formControlName="institucion"
-                                required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución de su
+                                [ngClass]="{ 'is-invalid': validateForm.get('institucion')?.invalid && (validateForm.get('institucion')?.dirty || validateForm.get('institucion')?.touched) }" required>
+                                <div class="oaerror danger invalid-feedback" *ngIf="validateForm.get('institucion')?.invalid && (validateForm.get('institucion')?.dirty || validateForm.get('institucion')?.touched)">
+                                    <ng-container *ngIf="validateForm.get('institucion')?.errors?.['pattern']">
+                                        <strong>Caracteres no permitidos</strong> - Solo se admiten letras  y espacio.
+                                    </ng-container>
+                                    <ng-container *ngIf="!validateForm.get('institucion')?.errors?.['pattern']">
+                                        <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución de su
                                 Capacitación.
-                            </div>
+                                    </ng-container>
+                                </div>
+                            
                         </div>
                     </div>
 
                     <div class="form-group col-lg-6">
                         <label for="tipoCertificado" class="form-label">TIPO DE CERTIFICADO:</label>
                         <div class="input-group has-validation">
-                            <a class="input-group-text">
+                            <span class="input-group-text">
                                 <i class="fa-regular fa-file"></i>
-                            </a>
-                            <input type="text" class="form-control" id="tipoCertificado"
-                                placeholder="Ingrese el tipo de certificado." formControlName="tipoCertificado"
-                                required>
+                            </span>
+                            <select class="form-select" id="tipoCertificado" formControlName="tipoCertificado" required>
+                                <option value="" disabled [selected]="!validateForm.value.tipoCertificado">-- Seleccione el tipo de certificado --</option>
+                                <option value="Certificado de estudios secundarios" [selected]="validateForm.value.tipoCertificado === 'CERTIFICADO DE ESTUDIOS SECUNDARIOS'">Certificado de estudios secundarios</option>
+                                <option value="Certificado de estudios universitarios" [selected]="validateForm.value.tipoCertificado === 'CERTIFICADO DE ESTUDIOS UNIVERSITARIOS'">Certificado de estudios universitarios</option>
+                                <option value="Certificado de posgrado" [selected]="validateForm.value.tipoCertificado === 'CERTIFICADO DE POSGRADO'">Certificado de posgrado</option>
+                                <option value="Certificado de idiomas" [selected]="validateForm.value.tipoCertificado === 'CERTIFICADO DE IDIOMAS'">Certificado de idiomas</option>
+                                <option value="Certificado de cursos de formación profesional" [selected]="validateForm.value.tipoCertificado === 'CERTIFICADO DE CURSOS DE FORMACIÓN PROFESIONAL'">Certificado de cursos de formación profesional</option>
+                                <option value="Certificado de habilidades técnicas o específicas" [selected]="validateForm.value.tipoCertificado === 'CERTIFICADO DE HABILIDADES TÉCNICAS O ESPECÍFICAS'">Certificado de habilidades técnicas o específicas</option>
+                                <option value="Certificado de participación en conferencias o seminarios" [selected]="validateForm.value.tipoCertificado === 'CERTIFICADO DE PARTICIPACIÓN EN CONFERENCIAS O SEMINARIOS'">Certificado de participación en conferencias o seminarios</option>
+                                <option value="Certificado de competencias digitales" [selected]="validateForm.value.tipoCertificado === 'CERTIFICADO DE COMPETENCIAS DIGITALES'">Certificado de competencias digitales</option>
+                                <option value="Certificado de educación continua" [selected]="validateForm.value.tipoCertificado === 'CERTIFICADO DE EDUCACIÓN CONTINUA'">Certificado de educación continua</option>
+                                <option value="Certificado de tutoría o mentoría académica" [selected]="validateForm.value.tipoCertificado === 'CERTIFICADO DE TUTORÍA O MENTORÍA ACADÉMICA'">Certificado de tutoría o mentoría académica</option>
+                            </select>                            
                             <div class="oaerror danger  invalid-feedback">
-                                <strong>Dato Faltante</strong> - Ingrese el tipo de certificado de su Capacitación.
+                                <strong>Dato Faltante</strong> - Seleccione el tipo de certificado de su Capacitación.
                             </div>
                         </div>
                     </div>
+                    
 
                     <div class="form-group col-lg-6">
                         <label for="numHoras" class="form-label">HORAS:</label>
@@ -72,12 +96,23 @@
                             <span class="input-group-text">
                                 <i class="fa-regular fa-clock"></i>
                             </span>
-                            <input type="number" class="form-control" id="numHoras"
-                                placeholder="Ingrese la cantidad de horas" formControlName="numHoras" required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese la cantidad de horas que realizo en su
-                                Capacitación.
-                            </div>
+                            <input type="text" class="form-control" id="numHoras"
+                                placeholder="Ingrese la cantidad de horas" formControlName="numHoras" 
+                                [ngClass]="{ 'is-invalid': validateForm.get('numHoras')?.invalid && (validateForm.get('numHoras')?.dirty || validateForm.get('numHoras')?.touched) }" required>
+                                <div class="oaerror danger invalid-feedback">
+                                    <ng-container *ngIf="validateForm.get('numHoras')?.errors?.['required']">
+                                        <strong>Dato Faltante</strong> - Las horas de su capacitacion es obligatoria.
+                                    </ng-container>
+                                    <ng-container *ngIf="validateForm.get('numHoras')?.errors?.['minlength']">
+                                        <strong>Longitud Mínima Insuficiente</strong> - Las Horas debe tener al menos 2 numeros.
+                                    </ng-container>
+                                    <ng-container *ngIf="validateForm.get('numHoras')?.errors?.['maxlength']">
+                                        <strong>Longitud Máxima Excedida</strong> - Las Horas no puede tener más de 10 numeros.
+                                    </ng-container>
+                                    <ng-container *ngIf="validateForm.get('numHoras')?.errors?.['pattern']">
+                                        <strong>Formato Inválido</strong> - Solo se permiten números.
+                                    </ng-container>
+                                </div>
                         </div>
                     </div>
 
@@ -88,14 +123,19 @@
                                 <i class="fa-regular fa-calendar-days"></i>
                             </span>
                             <input type="date" class="form-control" id="fechaInicio"
-                                placeholder="Ingrese la fecha de inicio" formControlName="fechaInicio" required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de inicio de su
-                                Capacitación.
+                            placeholder="Ingrese la fecha de inicio" formControlName="fechaInicio" required
+                            (change)="onFechaInicioChange()">
+                     
+                            <!-- Mensaje de error para la fecha de inicio -->
+                            <div class="oaerror danger invalid-feedback" *ngIf="validateForm.get('fechaInicio')?.invalid && (validateForm.get('fechaInicio')?.dirty || validateForm.get('fechaInicio')?.touched)">
+                                <ng-container *ngIf="validateForm.get('fechaInicio')?.errors?.['required']">
+                                    <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de inicio de su Capacitación.
+                                </ng-container>
                             </div>
                         </div>
                     </div>
-
+                    
+                    
                     <div class="form-group col-lg-6">
                         <label for="fechaFin" class="form-label">FECHA DE FIN:</label>
                         <div class="input-group has-validation">
@@ -103,13 +143,24 @@
                                 <i class="fa-regular fa-calendar-days"></i>
                             </span>
                             <input type="date" class="form-control" id="fechaFin"
-                                placeholder="Ingrese la fecha de fin" formControlName="fechaFin" required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de fin de su
-                                Capacitación.
+                                placeholder="Ingrese la fecha de fin" formControlName="fechaFin" 
+                                required [min]="validateForm.get('fechaInicio')?.value"
+                                [ngClass]="{ 'is-invalid': !validateFechaFin() && validateForm.get('fechaInicio')?.dirty }"
+                                [disabled]="!validateForm.get('fechaInicio')?.value">
+                            <!-- Mensaje de error para la fecha de fin -->
+                            <div class="oaerror danger invalid-feedback" *ngIf="validateForm.get('fechaFin')?.invalid && (validateForm.get('fechaFin')?.dirty || validateForm.get('fechaFin')?.touched)">
+                                <ng-container *ngIf="validateForm.get('fechaFin')?.errors?.['required']">
+                                    <strong>Dato Faltante</strong> - Por favor, ingrese la fecha de fin de su Capacitación.
+                                </ng-container>
+                                <ng-container *ngIf="!validateForm.get('fechaFin')?.errors?.['required'] && !validateFechaFin()">
+                                    <strong>Fecha Inválida</strong> - La fecha de fin no puede ser anterior a la fecha de inicio.
+                                </ng-container>
                             </div>
                         </div>
                     </div>
+                    
+                    
+                    
                 </form>
             </div>
             <div class="modal-footer">
@@ -130,7 +181,7 @@
 <!-- =====================================================
     *          TABLA DE DATOS
  ======================================================= -->
-<div class="card">
+<div class="card" style="background: var(--side-bg-color);">
     <div class="card-body collapse show">
 
         <!-- =====================================================
@@ -169,8 +220,9 @@
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered table-hover">
                     <tbody>
-                        <tr *ngFor="let item of capacitacionList;">
-                            <th scope="row">{{ item.id }}</th>
+                        <tr *ngFor="let item of capacitacionList; let i = index">
+                            <th scope="row">{{  i + 1 }}</th>
+                            <!--<td>{{ item.id }}</td>-->
                             <td>{{ item.nombre }}</td>
                             <td>{{ item.institucion }}</td>
                             <td>{{ item.numHoras }}</td>

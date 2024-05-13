@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Renderer2 } from '@angular/core';
 import { Empresa } from '../../../data/model/empresa';
 import { Ciudad } from '../../../data/model/ciudad';
 import { sectorempresarial } from '../../../data/model/sectorEmpresarial';
@@ -6,19 +6,24 @@ import { EmpresaService } from '../../../data/service/empresa.service';
 import { CiudadService } from '../../../data/service/ciudad.service';
 import { SectorEmpresarialService } from '../../../data/service/sectorempresarial.service';
 import { EmpresarioService } from '../../../data/service/empresario.service';
-import { Provincia } from '../../../data/model/provincia';
 import Swal from 'sweetalert2';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ChangeDetectorRef } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { PdfHandlerService } from '../../../data/service/pdfHandlerService.service';
 import { AssetService } from '../../../data/service/Asset.service';
 import { HttpEvent, HttpResponse } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
+import { Subject, lastValueFrom } from 'rxjs';
 import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServiceFoto';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ValidatorEc } from '../../../data/ValidatorEc.service';
+import { DataTableDirective } from 'angular-datatables';
+import { AlertsService } from '../../../data/Alerts.service';
+import { ValidatorsUtil } from '../../../components/Validations/ReactiveValidatorsRegEx';
+import { EmpresaDTO } from '../../../data/model/DTO/EmpresaDTO';
+import { FiltersService } from '../../../data/Filters.service';
+import { DataTablesService } from '../../../data/DataTables.service';
 
 @Component({
   selector: 'app-empresas-2',
@@ -26,41 +31,48 @@ import { ValidatorEc } from '../../../data/ValidatorEc.service';
   styleUrls: ['./empresas-2.component.css']
 })
 export class Empresas2Component {
+  // =====================================================
+  //*               DATA TABLE Y FILTROS
+  // =======================================================
 
-  editarClicked = false;
-  idEdit: number = 0;
-  fileName!: string;
-  notActive = true;
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject<any>();
+  initializeTable: boolean = true;
+  dtoptions: DataTables.Settings = {};
 
-  onEditarClick(id: number | undefined = 0): void {
-    this.editarClicked = true;
-    this.idEdit = id || 0;
-    this.getEmpresaById(this.idEdit);
+  // =====================================================
+  //*                   VALIDACIONES
+  // =======================================================
 
-  }
+  @ViewChild('myModalClose') modalClose: any;
 
-  onRegistrarClick(): void {
-    this.pdfHandlerService.pdfUrl = '';
-    this.editarClicked = false;
-  }
-
-  idUser: number = parseInt(localStorage.getItem('idUser') || '0', 10);
-  public empresariouser: string | undefined = '';
-  ciudadSeleccionada: any = {};
-  sectorSeleccionado: any = {};
-  empresass: Empresa[] = [];
-  empresanueva: any = {};
-  empresacargar: any = {};
+  // =====================================================
+  //*                   LISTAS Y OBJETOS
+  // =======================================================
+  empresas: Empresa[] = [];
   ciudades: Ciudad[] = [];
   sectoresEmpresariales: sectorempresarial[] = [];
+  companyForm: FormGroup;
+  // =====================================================
+  //*                   VARIABLES
+  // =======================================================
+  editarClicked = false;
+  showMessage = false;
+  notActive = true;
+  idEdit: number = 0;
+  fileName!: string;
   companyUrl: SafeResourceUrl;
-  ID_Ciudad: number | undefined;
-  ID_Sector: number | undefined;
-
-  @Output() onClose: EventEmitter<string> = new EventEmitter();
-
-
+  empresariouser: string | undefined = '';
+  idUser: number = parseInt(localStorage.getItem('idUser') || '0', 10);
+  accionRealizada: boolean = false;
+  
+  rutaPdf: any;
+  rutaImagen: any;
+  
   constructor(
+    public filterService: FiltersService,
+    public dtService: DataTablesService,
     public bsModalRef: BsModalRef,
     private cd: ChangeDetectorRef,
     public pdfHandlerService: PdfHandlerService,
@@ -71,65 +83,88 @@ export class Empresas2Component {
     private sectorempresarialService: SectorEmpresarialService,
     private serviceempresario: EmpresarioService,
     private sanitizer: DomSanitizer,
-    private validatorEc: ValidatorEc
+    private validatorEc: ValidatorEc,
+    private fb: FormBuilder,
+    private alertService: AlertsService,
+    private renderer: Renderer2
   ) {
-    this.companyUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.empresacargar.rutaPdfRuc ?? '');
-  }
-  closeModal2(modalId: string): void {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
-      if (modalBackdrop) {
-        modalBackdrop.parentNode?.removeChild(modalBackdrop);
-      }
-    }
-  }
+    this.companyForm = this.fb.group({
+      nombre: ['', [Validators.required, this.validateUniqueName()]],
+      ruc: ['', [Validators.required, Validators.pattern(ValidatorsUtil.patternRucValidator()), this.validateRuc(), this.validateUniqueRuc()]],
+      tipoEmpresa: ['', Validators.required],
+      razonSocial: ['', Validators.required],
+      area: ['', Validators.required],
+      ubicacion: ['', Validators.required],
+      sitioWeb: ['', Validators.pattern(ValidatorsUtil.patternWebsiteValidator())],
+      ciudad: [Validators.required],
+      sectorEmpresarial: [Validators.required],
 
+    });
+    this.companyUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
+  }
+  
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+  
   ngOnInit(): void {
-    this.ciudadSeleccionada = {
-      id: 0,
-      nombre: '',
-      provincia: new Provincia(),
-    }
-    this.sectorSeleccionado = {
-      id: 0,
-      nombre: '',
-      descripcion: '',
-    }
-    this.empresanueva = {
-      empresario: '',
-      ciudad: new Ciudad(),
-      sectorEmpresarial: new sectorempresarial(),
-      ruc: '',
-      nombre: '',
-      tipoEmpresa: '',
-      razonSocial: '',
-      area: '',
-      ubicacion: '',
-      sitioWeb: '',
-
-    };
-    this.empresacargar = {
-      empresario: '',
-      ciudad: new Ciudad(),
-      sectorEmpresarial: new sectorempresarial(),
-      ruc: '',
-      nombre: '',
-      tipoEmpresa: '',
-      razonSocial: '',
-      area: '',
-      ubicacion: '',
-      sitioWeb: '',
-
-    };
-
-    this.getCiudadIDName();
+    const columnTitles = ['#', 'Nombre', 'RUC', 'Razón social', 'Ubicación', 'Estado'];
+    this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar empresa....');
+    this.filterService.initializeDropdowns('filterTable', columnTitles);
+    this.getAllCities();
     this.obtenerYAlmacenarUsuarioEmpresario();
     this.getSectoresEmpresariales();
   }
 
+  ngAfterViewInit(): void {
+    this.filterService.setDtElement(this.dtElement);
+  }
+
+  onEditarClick(id: number | undefined = 0): void {
+    this.editarClicked = true;
+
+    this.idEdit = id || 0;
+
+    const dataToEdit = this.empresas.find(empresa => empresa.id === this.idEdit);
+
+    if (dataToEdit) {
+      const ciudad = this.ciudades.find(c => c.id === dataToEdit.ciudad.id);
+      const sectorEmpresarial = this.sectoresEmpresariales.find(s => s.id === dataToEdit.sectorEmpresarial.id);
+
+      this.companyForm.patchValue({
+        nombre: dataToEdit.nombre,
+        ruc: dataToEdit.ruc,
+        tipoEmpresa: dataToEdit.tipoEmpresa,
+        razonSocial: dataToEdit.razonSocial,
+        area: dataToEdit.area,
+        ubicacion: dataToEdit.ubicacion,
+        sitioWeb: dataToEdit.sitioWeb,
+        ciudad: ciudad,
+        sectorEmpresarial: sectorEmpresarial
+      });
+
+      this.pdfHandlerService.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(dataToEdit.urlPdfRuc ?? '');
+    } else {
+      console.error('No se puede obtener la empresa a editar.');
+    }
+
+    this.alertService.resetInputsValidations(this.renderer);
+
+    this.idEdit = id;
+
+    this.notActive = true;
+  }
+
+  onRegistrarClick(): void {
+    this.companyForm.reset();
+
+    this.alertService.resetInputsValidations(this.renderer);
+
+    this.pdfHandlerService.clearPdf();
+
+    this.editarClicked = false;
+  }
+  
   onPdfSelected(event: any): void {
     this.pdfHandlerService.handlePdfFile(event);
     this.pdfHandlerService.pdfUrl;
@@ -159,46 +194,6 @@ export class Empresas2Component {
     );
   }
 
-  accionRealizada: boolean = false;
-  mostrarSweetAlert(esExitoso: boolean, mensaje: string) {
-    const titulo = esExitoso ? 'Completado exitosamente' : 'Se ha producido un error';
-
-    Swal.fire({
-      icon: esExitoso ? 'success' : 'error',
-      title: titulo,
-      text: mensaje,
-      allowOutsideClick: !esExitoso,
-    }).then((result) => {
-      if (esExitoso || result.isConfirmed) {
-        this.onClose.emit(esExitoso ? 'guardadoExitoso' : 'errorGuardado');
-        this.bsModalRef.hide();
-        this.closeModal2('m_modal_4');
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-        this.obtenerYAlmacenarUsuarioEmpresario();
-      }
-    });
-  }
-
-  validateEmpresasPerFields(): boolean {
-    if (!this.empresanueva.ruc || !this.empresanueva.nombre || !this.empresanueva.tipoEmpresa || !this.empresanueva.razonSocial || !this.empresanueva.area || !this.empresanueva.ubicacion || !this.empresanueva.ciudad || !this.empresanueva.sectorEmpresarial) {
-      return false;
-    }
-
-    return true;
-  }
-
-  validateEmpresasPerFieldsEdicion(): boolean {
-    if (!this.empresacargar.ruc || !this.empresacargar.nombre || !this.empresacargar.tipoEmpresa || !this.empresacargar.razonSocial || !this.empresacargar.area || !this.empresacargar.ubicacion || !this.empresacargar.ciudad || !this.empresacargar.sectorEmpresarial) {
-      return false;
-    }
-
-    return true;
-  }
-  rutaPdf: any;
-  rutaImagen: any;
   async uploadAndSetRutaImagen(file: File, type: string = 'image') {
     try {
       const observable = this.assetService.upload(file);
@@ -221,88 +216,80 @@ export class Empresas2Component {
     }
   }
 
+  onSubmit() {
 
-
-  crearEmpresa() {
-    console.log(this.pdfHandlerService.pdfUrl);
-    if (!this.validateEmpresasPerFields()) {
-      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
+    if (!this.companyForm.valid) {
+      this.alertService.mostrarSweetAlert(false, 'Por favor, revise los campos nuevamente antes de enviar.');
+      this.alertService.showInputsValidations(this.renderer);
       return;
     }
-    if (this.imageHandlerService.archivos) {
 
-      this.uploadAndSetRutaImagen(this.pdfHandlerService.pdfFile[0], 'pdf');
+    if (this.editarClicked) {
+      this.editarEmpresa();
+    } else {
+      this.crearEmpresa();
     }
+  }
 
-    if (this.empresanueva) {
-      this.empresanueva.rutaPdfRuc = this.rutaPdf;
-      this.empresanueva.empresario = this.empresariouser;
-      this.empresanueva.urlPdfRuc = '';
-      //console.log(this.empresanueva);
-      if (this.validarCampos()) {
-        this.empresaService.createEmpresa(this.empresanueva).subscribe(
-          empresa => {
-            this.mostrarSweetAlert(true, 'La empresa se ha guardado exitosamente.');
-            this.empresanueva = this.createEmpresaVacia();
-            this.bsModalRef.hide();
-            this.onClose.emit('guardadoExitoso');
-          },
-          error => {
-            this.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la Empresa.');
-          }
-        );
-      } else {
+  getCompanyData(): EmpresaDTO {
+    const formData = this.companyForm.value;
+    let company: EmpresaDTO = {
+      empresario: this.empresariouser ? this.empresariouser : '',
+      ciudad: formData.ciudad,
+      sectorEmpresarial: formData.sectorEmpresarial,
+      ruc: formData.ruc,
+      nombre: formData.nombre,
+      tipoEmpresa: formData.tipoEmpresa,
+      razonSocial: formData.razonSocial,
+      area: formData.area,
+      ubicacion: formData.ubicacion,
+      sitioWeb: formData.sitioWeb,
+      estado: false,
+      rutaPdfRuc: this.fileName,
+    };
 
-        Swal.fire({
-          icon: 'error',
-          title: '¡Upps!',
-          text: 'Hay campos que debe corregir para poder completar la acción.',
-        });
+    return company;
+  }
+
+  async crearEmpresa() {
+
+    if (!this.editarClicked && !this.pdfHandlerService.pdfFile) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Upps!',
+        text: 'Por favor, seleccione un archivo PDF.',
+      });
+      return;
+    }
+    
+    await this.uploadAndSetRutaImagen(this.pdfHandlerService.pdfFile[0], 'pdf');
+
+    let empresa: EmpresaDTO = this.getCompanyData();
+
+    this.empresaService.createEmpresa(empresa).subscribe(
+      empresa => {
+        this.alertService.mostrarSweetAlert(true, 'La empresa se ha guardado exitosamente.');
+        
+        this.buscarEmpresas();
+      },
+      error => {
+        this.alertService.mostrarSweetAlert(false, 'Hubo un error al intentar guardar la Empresa.');
       }
-    }
+    );
   }
 
 
   editarEmpresa() {
-    if (!this.empresacargar) {
-      console.error('Error: this.empresacargar es null o undefined.');
-      return;
-    }
 
-    if (this.idEdit <= 0) {
-      console.error('Error: this.idEdit no es un valor válido.');
-      return;
-    }
-
-    if (!this.validateEmpresasPerFieldsEdicion()) {
-      this.mostrarSweetAlert(false, 'Por favor, completa todos los campos son obligatorios.');
-      return;
-    }
-
-    this.editarClicked = true;
-
-    this.empresacargar.empresario = this.empresariouser;
-    if (this.validarCampos()) {
-      this.empresaService.updateEmpresa(this.idEdit, this.empresacargar).subscribe(
-        empresaActualizada => {
-          this.mostrarSweetAlert(true, 'La empresa se ha actualizado exitosamente.');
-          this.empresacargar = this.createEmpresaVacia();
-
-          this.bsModalRef.hide();
-          this.onClose.emit('actualizacionExitosa');
-          this.obtenerYAlmacenarUsuarioEmpresario();
-          this.editarClicked = false;
-
-        }
-      );
-    } else {
-
-      Swal.fire({
-        icon: 'error',
-        title: '¡Upps!',
-        text: 'Hay campos que debe corregir para poder completar la acción.',
-      });
-    }
+    this.empresaService.updateEmpresa(this.idEdit, this.getCompanyData()).subscribe(
+      empresa => {
+        this.alertService.mostrarSweetAlert(true, 'La empresa se ha actualizado exitosamente.', this.modalClose);
+        this.buscarEmpresas();
+      },
+      error => {
+        this.alertService.mostrarSweetAlert(false, 'Hubo un error al intentar actualizar la Empresa.');
+      }
+    );
   }
 
   deleteEmpresa(id: number | undefined = 0) {
@@ -320,12 +307,9 @@ export class Empresas2Component {
       if (result.isConfirmed) {
         this.empresaService.deleteEmpresa(id).subscribe(
           response => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Eliminado exitosamente',
-              text: response,
-            });
             this.obtenerYAlmacenarUsuarioEmpresario();
+
+            this.alertService.mostrarSweetAlert(true, 'La empresa se ha eliminado exitosamente.');
           },
           error => {
             Swal.fire({
@@ -340,61 +324,15 @@ export class Empresas2Component {
     });
   }
 
-  getCiudadIDName() {
+  getAllCities() {
     this.ciudadService.getCiudades().subscribe(
-      ciudades => this.ciudades = ciudades,
-
-      error => console.error(error)
-
+      (ciudades) => { this.ciudades = ciudades },
     );
   }
-
 
   getSectoresEmpresariales() {
     this.sectorempresarialService.getSectoresEmpresariales().subscribe(
       sectores => this.sectoresEmpresariales = sectores,
-      error => console.error(error)
-    );
-  }
-
-  buscarCiudad(id: number | undefined) {
-    this.ciudadService.getCiudadById(id).subscribe(
-      ciudad => {
-        if (ciudad) {
-
-          if (this.editarClicked) {
-
-            this.empresacargar.ciudad = ciudad;
-
-          } else {
-            this.empresanueva.ciudad = ciudad;
-
-          }
-        } else {
-          console.log('No se puede obtener la ciudad');
-        }
-      },
-      error => console.error(error)
-    );
-  }
-
-
-  buscarSector(id: number | undefined) {
-    this.sectorempresarialService.getSectorEmpresarialById(id).subscribe(
-      sector => {
-        if (sector) {
-
-          if (this.editarClicked) {
-            this.empresacargar.sectorEmpresarial = sector;
-
-          } else {
-            this.empresanueva.sectorEmpresarial = sector;
-
-          }
-        } else {
-          console.log('No se puede obtener el sector');
-        }
-      },
       error => console.error(error)
     );
   }
@@ -408,15 +346,19 @@ export class Empresas2Component {
     this.empresaService.getEmpresasbyUser(this.empresariouser).subscribe(
       empresas => {
         if (Array.isArray(empresas) && empresas.length > 0) {
-          this.empresass = empresas.sort((a, b) => {
+          this.empresas = empresas.sort((a, b) => {
             if (a.id !== undefined && b.id !== undefined) {
               return a.id - b.id;
             }
             return 0;
           });
-          console.log('Empresas obtenidas exitosamente:', empresas);
+        }
+
+        if (this.initializeTable) {
+          this.dtTrigger.next(null);
+          this.initializeTable = false;
         } else {
-          console.error('Error: No se encontraron empresas para el usuario.');
+          this.dtService.rerender(this.dtElement, this.dtTrigger);
         }
       },
       error => {
@@ -425,37 +367,27 @@ export class Empresas2Component {
           console.error('Error 400: La solicitud es incorrecta.');
         } else if (error.status === 500) {
           console.error('Error 500: Error interno del servidor.');
-        } // Agrega más casos según sea necesario
+        }
       }
     );
   }
-  // Método para sanitizar la URL
+
   public sanitizeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  getEmpresaById(id: number) {
-    this.empresaService.getEmpresaById(id).subscribe(
-      empresa => {
-        this.empresacargar = empresa;
-        let urlPdf = this.sanitizer.bypassSecurityTrustResourceUrl(empresa.urlPdfRuc ?? '');
-        console.log('URL PDF:', urlPdf);
-        this.pdfHandlerService.pdfUrl = urlPdf;
-        this.companyUrl = this.sanitizer.bypassSecurityTrustResourceUrl(empresa.rutaPdfRuc ?? '');
-        this.ID_Sector = empresa.sectorEmpresarial.id;
-        this.ID_Ciudad = empresa.ciudad.id;
-      });
-  }
-
   async updatePdfRuc() {
+    this.notActive = false;
     if (this.imageHandlerService.archivos) {
-      this.notActive = false;
       await this.uploadAndSetRutaImagen(this.pdfHandlerService.pdfFile[0], 'pdf');
       if (this.rutaPdf) {
         this.empresaService.updatePdfRuc(this.idEdit, this.fileName).subscribe(
           empresa => {
-            this.mostrarSweetAlert(true, 'El PDF se ha actualizado exitosamente.');
-            console.log('PDF actualizado:', empresa);
+            this.alertService.mostrarSweetAlert(true, 'El PDF se ha actualizado exitosamente.');
+            
+            this.buscarEmpresas();
+            
+            this.pdfHandlerService.clearPdf();
           }
         );
       }
@@ -466,114 +398,45 @@ export class Empresas2Component {
     this.notActive = true;
   }
 
-  private createEmpresaVacia(): Empresa {
-    return {
-      id: 0,
-      empresario: '',
-      ciudad: new Ciudad(),
-      sectorEmpresarial: new sectorempresarial(),
-      ruc: '',
-      nombre: '',
-      tipoEmpresa: '',
-      razonSocial: '',
-      area: '',
-      ubicacion: '',
-      sitioWeb: ''
+  validateRuc(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const ruc = control.value;
+      return !ruc ? null: this.validatorEc.validarRucSociedadPrivada(ruc) || this.validatorEc.validarRucPersonaNatural(ruc) || this.validatorEc.validarRucSociedadPublica(ruc) ? null : { invalidRuc: true };
     };
   }
 
-  @ViewChild('nombreInput', { read: NgModel }) nombreInput!: NgModel;
-  @ViewChild('rucInput', { read: NgModel }) rucInput!: NgModel;
-  @ViewChild('TipoEmpresaInput', { read: NgModel }) TipoEmpresaInput!: NgModel;
-  @ViewChild('razonSocialInput', { read: NgModel }) razonSocialInput!: NgModel;
-  @ViewChild('areaInput', { read: NgModel }) areaInput!: NgModel;
-  @ViewChild('ubicacionInput', { read: NgModel }) ubicacionInput!: NgModel;
-  //@ViewChild('sitioWebInput', { read: NgModel }) sitioWebInput!: NgModel;
-  @ViewChild('ciudadInput', { read: NgModel }) ciudadInput!: NgModel;
-  @ViewChild('sectorInput', { read: NgModel }) sectorInput!: NgModel;
-  validarCampos(): boolean {
-    const isNombreValido =
-      !(
-        this.nombreInput?.invalid &&
-        (this.nombreInput?.dirty || this.nombreInput?.touched)
-      );
+  validateUniqueRuc(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const ruc = control.value;
 
-    //console.log("¿Nombre válido?", isNombreValido ? "Sí" : "No");
-
-    const isRucValido =
-      !(
-        this.rucInput?.invalid &&
-        (this.rucInput?.dirty || this.rucInput?.touched)
-      );
-
-    //console.log("¿RUC válido?", isRucValido ? "Sí" : "No");
-
-    const isTipoEmpresaValido =
-      !(
-        this.TipoEmpresaInput?.invalid &&
-        (this.TipoEmpresaInput?.dirty || this.TipoEmpresaInput?.touched)
-      );
-
-    //console.log("¿Tipo de Empresa válido?", isTipoEmpresaValido ? "Sí" : "No");
-
-    const isRazonSocialValida =
-      !(
-        this.razonSocialInput?.invalid &&
-        (this.razonSocialInput?.dirty || this.razonSocialInput?.touched)
-      );
-
-    //console.log("¿Razón Social válida?", isRazonSocialValida ? "Sí" : "No");
-
-    const isAreaValida =
-      !(
-        this.areaInput?.invalid &&
-        (this.areaInput?.dirty || this.areaInput?.touched)
-      );
-
-    //console.log("¿Área válida?", isAreaValida ? "Sí" : "No");
-
-    const isUbicacionValida =
-      !(
-        this.ubicacionInput?.invalid &&
-        (this.ubicacionInput?.dirty || this.ubicacionInput?.touched)
-      );
-
-    //console.log("¿Ubicación válida?", isUbicacionValida ? "Sí" : "No");
-
-    /* const isSitioWebValido =
-       !(
-         this.sitioWebInput?.invalid &&
-         (this.sitioWebInput?.dirty || this.sitioWebInput?.touched)
-       );*/
-
-    //console.log("¿Sitio Web válido?", isSitioWebValido ? "Sí" : "No");
-
-    const isCiudadValida =
-      !(
-        this.ciudadInput?.invalid &&
-        (this.ciudadInput?.dirty || this.ciudadInput?.touched)
-      );
-
-    //console.log("¿Ciudad válida?", isCiudadValida ? "Sí" : "No");
-
-    const isSectorValido =
-      !(
-        this.sectorInput?.invalid &&
-        (this.sectorInput?.dirty || this.sectorInput?.touched)
-      );
-
-    //console.log("¿Sector válido?", isSectorValido ? "Sí" : "No");
-
-    const isValid = isNombreValido && isRucValido && isTipoEmpresaValido && isRazonSocialValida && isAreaValida && isUbicacionValida && isCiudadValida && isSectorValido;
-
-    console.log("¿Campos válidos?", isValid ? "Sí" : "No");
-
-    return isValid;
+      if (this.editarClicked) {
+        if (ruc) {
+          let empresa = this.empresas.find(e => e.ruc === ruc);
+          if (empresa?.ruc === ruc){
+            return null;
+          } else {
+            return !ruc ? null: this.empresas.find(e => e.ruc === ruc) ? { rucExists: true } : null;
+          }
+        }
+      }
+      return !ruc ? null: this.empresas.find(e => e.ruc === ruc) ? { rucExists: true } : null;
+    };
   }
 
-  validateRuc(ruc: string): boolean {
-    return this.validatorEc.validarRucSociedadPrivada(ruc) || 
-           this.validatorEc.validarRucPersonaNatural(ruc) || 
-           this.validatorEc.validarRucSociedadPublica(ruc);
+  validateUniqueName(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const name = control.value;
+      if (this.editarClicked) {
+        if (name) {
+          let empresa = this.empresas.find(e => e.nombre === name);
+          if (empresa?.nombre === name){
+            return null;
+          } else {
+            return !name ? null: this.empresas.find(e => e.nombre === name) ? { nameExists: true } : null;
+          }
+        }
+      }
+      return !name ? null: this.empresas.find(e => e.nombre === name.toUpperCase()) ? { nameExists: true } : null;
+    };
   }
 }

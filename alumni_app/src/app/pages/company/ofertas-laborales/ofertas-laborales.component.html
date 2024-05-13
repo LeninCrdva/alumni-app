@@ -82,7 +82,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div *ngIf="!this.showThirdStyle" class="form-group col-lg-6">
                         <label class="form-label active">TIEMPO:</label>
                         <div class="input-group has-validation">
@@ -105,10 +105,10 @@
                         </div>
                     </div>
 
-                    <div *ngIf="!showThirdStyle" class="form-group col-lg-6">
-                        <label *ngIf="!showSecondStyle && !showThirdStyle" class="form-label active">FECHA
-                            APERTURA:</label>
-                        <div *ngIf="!showSecondStyle && !showThirdStyle" class="input-group has-validation mb-2">
+
+                    <div class="form-group col-lg-6" *ngIf="!showSecondStyle && !showThirdStyle">
+                        <label class="form-label active">FECHA APERTURA:</label>
+                        <div class="input-group has-validation">
                             <a class="input-group-text">
                                 <i class="fa-solid fa-calendar-check"></i>
                             </a>
@@ -120,7 +120,9 @@
                                 la fecha de publicación.
                             </div>
                         </div>
+                    </div>
 
+                    <div class="form-group col-lg-6" *ngIf="!showThirdStyle">
                         <label class="form-label active">FECHA CIERRE:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
@@ -134,9 +136,49 @@
                                 la fecha de publicación o la fecha de apertura.
                             </div>
                         </div>
-
                     </div>
-                    <div *ngIf="!showThirdStyle" class="form-group col-lg-6">
+
+                    <div class="form-group col-lg-6">
+                        <label class="form-label active">ESTADO:</label>
+                        <div class="input-group has-validation">
+                            <a class="input-group-text">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </a>
+                            <input class="form-select wd-250" type="text" name="estado" formControlName="estado"
+                                readonly required>
+                            <div class="oaerror danger invalid-feedback">
+                                <strong>Dato Faltante</strong> - El estado es obligatorio.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="form-label active" for="sitioweb">LINK:</label>
+                        <div class="input-group has-validation">
+
+                            <a class="input-group-text">
+                                <i class="fas fa-link"></i>
+                            </a>
+                            <input class="form-control" type="text" name="sitioweb" placeholder="Ingrese el sitioweb"
+                                id="sitioweb" formControlName="sitioweb"
+                                [ngClass]="{ 'is-invalid': validateForm.get('sitioweb')?.invalid && (validateForm.get('sitioweb')?.dirty || validateForm.get('sitioweb')?.touched) }"
+                                required>
+                            <div class="oaerror danger invalid-feedback">
+                                <ng-container *ngIf="validateForm.get('sitioweb')?.errors?.['required']">
+                                    <strong>Dato Faltante</strong> - El sitio web de su capacitación es obligatorio.
+                                </ng-container>
+
+                                <ng-container
+                                    *ngIf="validateForm.get('sitioweb')?.errors?.['pattern'] && validateForm.get('sitioweb')?.touched">
+                                    <strong>Formato Inválido</strong> - Solo se permite un sitio web válido con https.
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div *ngIf="!showThirdStyle" class="form-group col-lg-12">
                         <label class="form-label active">ÁREA CONOCIMIENTO:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
@@ -151,38 +193,19 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-lg-6">
-                        <label class="form-label active">ESTADO:</label>
-                        <div class="input-group has-validation">
-                            <a class="input-group-text">
-                                <i class="fa-solid fa-briefcase"></i>
-                            </a>
-                            <input class="form-control wd-250" type="text" name="estado" formControlName="estado"
-                                readonly required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - El estado es obligatorio.
-                            </div>
-                        </div>
-                    </div>
                     <div *ngIf="!showSecondStyle && !showThirdStyle" class="form-group col-lg-6">
                         <label class="form-label active" for="salario">SALARIO:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
                                 <i class="fa-solid fa-dollar-sign"></i>
                             </a>
-                            <input class="form-control" 
-                                   type="number" 
-                                   name="salario" 
-                                   placeholder="Ingrese el Salario"
-                                   id="salario" 
-                                   formControlName="salario" 
-                                   required
-                                   min="1">
+                            <input class="form-control" type="number" name="salario" placeholder="Ingrese el Salario"
+                                id="salario" formControlName="salario" required min="1">
                             <div class="oaerror danger invalid-feedback">
                                 <strong>Dato Faltante</strong> - El salario es obligatorio.
                             </div>
                         </div>
-                    </div>                    
+                    </div>
 
                     <div *ngIf="!showSecondStyle && !showThirdStyle" class="form-group col-lg-6 mb-3">
                         <label class="form-label active">EXPERIENCIA:</label>
@@ -213,7 +236,7 @@
                             <label class="form-label">Subir Foto De La Portada</label>
 
                             <div class="card mg-b-20 form-group flex-grow-1 mr-3">
-                                <div class="card-header">
+                                <div class="card-header" style="background: var(--side-bg-color);">
                                     <div class="preview-img"
                                         *ngIf="imageHandlerService.previsualizacion || (editarClicked && imageHandlerService.previsualizacion)">
                                         <div class="image-container text-center" style="margin: 2rem;">
@@ -230,7 +253,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body collapse show" id="collapse8">
+                                <div class="card-body collapse show" id="collapse8"
+                                    style="background: var(--side-bg-color);">
                                     <input type="file" max-file-size="1024" class="form-control"
                                         aria-label="file example"
                                         [required]="(showSecondStyle && !showThirdStyle) || (showThirdStyle && !showSecondStyle)"
@@ -262,7 +286,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="card" style="background: var(--side-bg-color);">
     <div class="card-body collapse show">
 
         <!-- =====================================================
@@ -304,36 +328,39 @@
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered table-hover">
                     <tbody>
-                        <tr *ngFor="let oferta of ofertaslaboraleslist; let i ">
-                            <th scope="row">{{oferta.id}}</th>
+                        <tr *ngFor="let oferta of ofertaslaboraleslist; let i=index ">
+                            <th scope="row">{{i+1}}</th>
+                            <!-- <td>{{oferta.id}}</td>-->
                             <td>{{oferta.salario > 0 ? '$ ' + oferta.salario : 'ADJUNTADO EN LA IMAGEN'}}</td>
                             <td>{{oferta.fechaPublicacion | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
                             <td>{{ oferta.estado }} </td>
                             <td>{{ oferta.nombreEmpresa}}</td>
+                            <td>
+                                <a href="{{ oferta.sitioweb }}" target="_blank">{{ oferta.sitioweb }}</a>
+                            </td>
+
                             <td>{{ oferta.tipo === 'estilo1' ? 'ESTILO 1' : oferta.tipo === 'estilo2' ? 'ESTILO 2' :
-                                'ESTILO 3'
-                                }}</td>
-                            <td class="text-center table-actions d-flex justify-content-center">
-                                <a *ngIf="showEditDeleteButtons(oferta)" (click)="onEditarClick(oferta.id)"
-                                    data-bs-toggle="modal" data-bs-target="#modalData"
-                                    class="btn btn-label-primary btn-sm mg-y-5">
-                                    <i class="fa fa-pencil"></i> Editar
-                                </a>
-                                <a *ngIf="(oferta.estado === 'EN_CONVOCATORIA' || oferta.estado === 'REACTIVADA' ) && showEditDeleteButtons(oferta)"
-                                    (click)="deleteOfertaLaboral(oferta.id, 'CANCELADA')"
-                                    class="btn btn-label-danger btn-sm mg-y-5 ms-2">
-                                    <i class="fa fa-trash"></i> Eliminar
-                                </a>
-                                <a *ngIf="oferta.estado === 'CANCELADA'  && showEditDeleteButtons(oferta)"
-                                    (click)="deleteOfertaLaboral(oferta.id, 'REACTIVADA')"
-                                    class="btn btn-label-secondary btn-sm mg-y-5 ms-2">
-                                    <i class="fas fa-undo-alt"></i> Reactivar
-                                </a>
-                                <a (click)="listPostulantesActivos(oferta.id)" data-bs-toggle="modal"
-                                    data-bs-target="#modalPostulantes" class="btn btn-label-info btn-sm mg-y-5 ms-2"
-                                    style="cursor: pointer;">
-                                    <i class="fa fa-eye"></i> Ver postulantes
-                                </a>
+                                'ESTILO 3'}}
+                            </td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <a *ngIf="showEditDeleteButtons(oferta)" (click)="onEditarClick(oferta.id)" data-bs-toggle="modal"
+                                        data-bs-target="#modalData" class="btn btn-label-primary btn-sm mx-1 my-1">
+                                        <i class="fa fa-pencil"></i> Editar
+                                    </a>
+                                    <a *ngIf="(oferta.estado === 'EN_CONVOCATORIA' || oferta.estado === 'REACTIVADA' ) && showEditDeleteButtons(oferta)"
+                                        (click)="deleteOfertaLaboral(oferta.id, 'CANCELADA')" class="btn btn-label-danger btn-sm mx-1 my-1">
+                                        <i class="fa fa-trash"></i> Eliminar
+                                    </a>
+                                    <a *ngIf="oferta.estado === 'CANCELADA'  && showEditDeleteButtons(oferta)"
+                                        (click)="deleteOfertaLaboral(oferta.id, 'REACTIVADA')" class="btn btn-label-secondary btn-sm mx-1 my-1">
+                                        <i class="fas fa-undo-alt"></i> Reactivar
+                                    </a>
+                                    <a (click)="listPostulantesActivos(oferta.id)" data-bs-toggle="modal" data-bs-target="#modalPostulantes"
+                                        class="btn btn-label-info btn-sm mx-1 my-1" style="cursor: pointer;">
+                                        <i class="fa fa-eye"></i> Ver postulantes
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     </tbody>

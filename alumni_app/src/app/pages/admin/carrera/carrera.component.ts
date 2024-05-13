@@ -20,8 +20,8 @@ export class CarreraComponent {
   constructor(private formBuilder: FormBuilder,
     private careerService: CarreraService) {
     this.registerCareerForm = formBuilder.group({
-      nombreCarrera: ['', Validators.required],
-      descripcionCarrera: ['',]
+      nombreCarrera: ['', [Validators.required,Validators.pattern(/^[a-zA-Z0-9\s.,-]*$/)]],
+      descripcionCarrera: ['', [Validators.pattern(/^[a-zA-Z0-9\s.,-]*$/)]]
     })
   }
 

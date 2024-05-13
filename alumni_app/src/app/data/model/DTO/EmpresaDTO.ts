@@ -15,6 +15,6 @@ export class EmpresaDTO {
     'sitioWeb': string;
     'ubicacion': string;
     'estado': boolean;
-    'rutaPdfRuc': string;
-    'urlPdfRuc': SafeResourceUrl;
+    'rutaPdfRuc'?: string;
+    'urlPdfRuc'?: string;
 }

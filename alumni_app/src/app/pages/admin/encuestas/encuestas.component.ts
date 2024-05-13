@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SurveyService } from '../../../data/service/SurveyService';
 import { Survey } from '../../../data/model/Survey';
 import { QuestionType, Question } from '../../../data/model/Question';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-encuestas',
   templateUrl: './encuestas.component.html',
@@ -83,7 +84,7 @@ export class EncuestasComponent {
       const response = await this.surveyService.saveOrUpdateSurvey(newSurvey).toPromise();
 
       if (response) {
-        console.log('Respuesta del servicio:', response);
+       // console.log('Respuesta del servicio:', response);
         alert('Encuesta creada exitosamente.');
       } else {
         alert('Error: Respuesta del servicio no válida.');
@@ -99,10 +100,15 @@ export class EncuestasComponent {
 
   addQuestion() {
     const questions: FormArray = this.form.get('questions') as FormArray
-    if (questions.length >= 20) {
-      alert('Ya has alcanzado el límite máximo de preguntas.');
+    if (questions.length >= 100) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Límite máximo de preguntas alcanzado!',
+        text: 'Ya has alcanzado el límite máximo de preguntas.',
+      });
       return;
     }
+    
     questions.push(this.fb.group({
       title: [null, [Validators.required]],
       type: [1, [Validators.required]],

@@ -5,7 +5,8 @@
     <div *ngIf="graduado" class="container">
         <div class="row">
             <div class="col-12">
-                <div class="candidate-detail text-center text-md-left p-4 rounded shadow bg-white">
+                <div class="candidate-detail text-center text-md-left p-4 rounded shadow"
+                    style="background: var(--side-bg-color); color: var(--text-color);">
                     <div class="row align-items-end">
                         <div class="col-md-8">
                             <div class="candidate-detail-top align-items-center">
@@ -35,7 +36,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-                <div class="sticky-bar rounded bg-white shadow">
+                <div class="sticky-bar rounded shadow"
+                    style="background: var(--side-bg-color); color: var(--text-color);">
                     <div class="border-bottom p-4">
                         <h5 class="mb-0">Información personal</h5>
                     </div>
@@ -84,12 +86,12 @@
             </div><!--end col-->
 
             <div class="col-lg-8 col-md-6 col-12 mt-4 pt-2">
-                <div class="rounded shadow bg-white p-4">
+                <div class="rounded shadow p-4" style="background: var(--side-bg-color); color: var(--text-color);">
                     <div class="border-bottom pb-4">
                         <h5 class="mt-4">Hoja de vida: </h5>
                     </div>
                     <div class="embed-responsive embed-responsive-19by9">
-                        <iframe [src]="pdfUrl" width="100%" height="600px" frameborder="0">"No es posible visualizar el
+                        <iframe [src]="pdfUrl" width="100%" height="850px" frameborder="0">"No es posible visualizar el
                             contenido"</iframe>
                     </div>
                 </div>

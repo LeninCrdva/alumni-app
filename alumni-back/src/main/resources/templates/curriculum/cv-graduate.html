@@ -2,197 +2,367 @@
 <html lang="es" xmlns:th="https://www.thymeleaf.org/">
 
 <head>
-    <link rel="stylesheet" th:href="@{src/main/resources/static/css/style.css}">
+    <style>
+        .mt-6 {
+            color: white;
+            font-weight: bold;
+            align-items: first baseline;
+            margin-top: 1.5rem !important;
+        }
+
+        .title {
+            color: #215cb9;
+            font-weight: normal;
+        }
+
+        .image {
+            width: 150px;
+            max-width: 150px;
+            position: fixed;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .container,
+        .container-lg,
+        .container-md,
+        .container-sm,
+        .container-xl {
+            max-width: 1140px;
+        }
+
+        .container,
+        .container-fluid,
+        .container-lg,
+        .container-md,
+        .container-sm,
+        .container-xl,
+        .container-xxl {
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-md-2 {
+            flex: 0 0 auto;
+            width: 16.66666667%;
+        }
+
+        .row>* {
+            max-width: 100%;
+        }
+
+        .mt-5 {
+            margin-top: 3rem !important;
+        }
+
+        .h6,
+        h6 {
+            font-size: 1rem;
+        }
+
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin-top: 0;
+            margin-bottom: .5rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .pt-2 {
+            padding-top: .5rem !important;
+        }
+
+        .col-md-8 {
+            flex: 0 0 auto;
+            width: 66.66666667%;
+        }
+
+        .mt-5 {
+            margin-top: 3rem !important;
+        }
+
+        .ms-5 {
+            margin-left: 3rem !important;
+        }
+
+        .d-flex {
+            display: flex !important;
+        }
+
+        .text-start {
+            text-align: left !important;
+        }
+
+        .col-sm-2 {
+            flex: 0 0 auto;
+            width: 16.66666667%;
+        }
+
+        .col-sm-4 {
+            flex: 0 0 auto;
+            width: 33.33333333%;
+        }
+
+        .col-md-4 {
+            flex: 0 0 auto;
+            width: 33.33333333%;
+        }
+
+        h5 {
+            font-size: 1.25rem;
+        }
+
+        .ml-2 {
+            margin-left: 2.5rem !important;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            caption-side: bottom;
+            border-collapse: collapse;
+        }
+
+        tbody,
+        td,
+        tfoot,
+        th,
+        thead,
+        tr {
+            border-color: inherit;
+            border-style: solid;
+            border-width: 0;
+        }
+
+        .p-2 {
+            padding: .5rem !important;
+        }
+
+        .text-start {
+            text-align: left !important;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        * {
+            font-family: "Roboto Light", sans-serif;
+        }
+    </style>
 </head>
 
 <body>
-<section class="text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-8 col-md-4" style="margin-top: auto;">
-                <img th:src="@{src/main/resources/static/images/logo-ista-large.png}" alt="logo-ista-large" height="50px">
-            </div>
-            <div class="col-8 col-md-8 pt-2">
-                <h3 class="mt-5 title" th:text="${fullName}"></h3>
-            </div>
-        </div>
-    </div>
-
-    <div class="container mt-5">
-        <div class="d-flex">
-            <h5 class="text-secondary">Datos Personales</h5>
-        </div>
-        <hr>
-        <div class="d-flex">
-            <div class="text-start col-sm-2 titles">
-                <h6>Email:</h6>
-                <h6>Teléfono:</h6>
-                <h6>Cédula:</h6>
-                <h6>Dirección:</h6>
-            </div>
-            <div class="ms-5 text-start col-sm-4 contents">
-                <h6 th:text="${graduado.emailPersonal}"></h6>
-                <h6 th:text="${graduado.usuario.persona.telefono}"></h6>
-                <h6 th:text="${graduado.usuario.persona.cedula}"></h6>
-                <h6 th:text="${graduado.ciudad.nombre} + ', ' + ${graduado.ciudad.provincia.nombre}"></h6>
-            </div>
-            <div class="ms-5 col-md-4">
-                <img class="image" th:src="@{${graduado.usuario.urlImagen}}"
-                     alt="foto-usuario">
+    <section class="text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-8 col-md-4" style="margin-top: auto;">
+                    <a href='#'><img src="static/images/logo-ista-large.png" border='0' alt='logo-ista-large' height="50px"/></a>
+                </div>
+                <div class="col-8 col-md-8 pt-2">
+                    <h3 class="mt-5 title" th:text="${fullName}"></h3>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="container mt-5">
-        <div class="d-flex">
-            <h5 class="text-secondary mt-4">Perfil</h5>
+        <div class="container mt-5">
+            <div class="d-flex">
+                <h5 class="text-secondary">Datos Personales</h5>
+            </div>
+            <hr>
+            <div class="d-flex">
+                <div class="text-start col-sm-2 titles">
+                    <h6>Email:</h6>
+                    <h6>Teléfono:</h6>
+                    <h6>Cédula:</h6>
+                    <h6>Dirección:</h6>
+                </div>
+                <div class="ms-5 text-start col-sm-4 contents">
+                    <h6 th:text="${graduado.emailPersonal}"></h6>
+                    <h6 th:text="${graduado.usuario.persona.telefono}"></h6>
+                    <h6 th:text="${graduado.usuario.persona.cedula}"></h6>
+                    <h6 th:text="${graduado.ciudad.nombre} + ', ' + ${graduado.ciudad.provincia.nombre}"></h6>
+                </div>
+                <div class="ms-5 col-md-4">
+                    <img class="image" th:src="@{${graduado.usuario.urlImagen}}" alt="foto-usuario">
+                </div>
+            </div>
         </div>
-        <hr>
-        <table class="table">
-            <tr th:each="titulo: ${titulos}">
-                <div>
-                    <th class="p-2">Institucion</th>
-                </div>
-                <td class="col-md-8">
-                    <div class="text-start">
-                        <ol class="text-start ">
-                            <li><h6 th:text="${titulo.institucion}"></h6></li>
-                            <li th:text="'Título: ' + ${titulo.nombreTitulo}">
-                            <li th:text="'Número registro: ' + ${titulo.numRegistro}"></li>
-                            <li th:text="'Carrera: ' + ${titulo.carrera.nombre}"></li>
-                        </ol>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
 
-    <!--Experiencia-->
-    <div th:if="${#lists.size(experiencias) > 0}" class="container mt-5">
-        <div class="d-flex">
-            <h5 class="text-secondary mt-4">Experiencia</h5>
+        <div class="container mt-5">
+            <div class="d-flex">
+                <h5 class="text-secondary mt-4">Perfil</h5>
+            </div>
+            <hr>
+            <table class="table">
+                <tr th:each="titulo: ${titulos}">
+                    <div>
+                        <th class="p-2">Institucion</th>
+                    </div>
+                    <td class="col-md-8">
+                        <div class="text-start">
+                            <ol class="text-start ">
+                                <li>
+                                    <h6 th:text="${titulo.institucion}"></h6>
+                                </li>
+                                <li th:text="'Título: ' + ${titulo.nombreTitulo}">
+                                <li th:text="'Número registro: ' + ${titulo.numRegistro}"></li>
+                                <li th:text="'Carrera: ' + ${titulo.carrera.nombre}"></li>
+                            </ol>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
-        <hr>
-        <table class="table">
-            <tr th:each="experiencia: ${experiencias}">
-                <div>
-                    <th class="p-2">
-                        <ol>
-                            <li>Institucion</li>
-                            <li>Oficio</li>
-                            <li>Descripción</li>
-                        </ol>
-                    </th>
-                </div>
-                <td class="col-md-8">
-                    <div class="text-start">
-                        <ol class="text-start ">
-                            <li th:text="${experiencia.nombreInstitucion}"></li>
-                            <li th:text="${experiencia.cargo}"></li>
-                            <li th:text="${experiencia.areaTrabajo}">
-                        </ol>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
 
-    <!--Logro-->
-    <div th:if="${#lists.size(logros) > 0}" class="container mt-5">
-        <div class="d-flex">
-            <h5 class="text-secondary mt-4">Logros</h5>
+        <!--Experiencia-->
+        <div th:if="${#lists.size(experiencias) > 0}" class="container mt-5">
+            <div class="d-flex">
+                <h5 class="text-secondary mt-4">Experiencia</h5>
+            </div>
+            <hr>
+            <table class="table">
+                <tr th:each="experiencia: ${experiencias}">
+                    <div>
+                        <th class="p-2">
+                            <ol>
+                                <li>Institucion</li>
+                                <li>Oficio</li>
+                                <li>Descripción</li>
+                            </ol>
+                        </th>
+                    </div>
+                    <td class="col-md-8">
+                        <div class="text-start">
+                            <ol class="text-start ">
+                                <li th:text="${experiencia.nombreInstitucion}"></li>
+                                <li th:text="${experiencia.cargo}"></li>
+                                <li th:text="${experiencia.areaTrabajo}">
+                            </ol>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
-        <hr>
-        <table class="table">
-            <tr th:each="logro: ${logros}">
-                <div>
-                    <th class="p-2">
-                        <ol>
-                            <li>Tipo</li>
-                            <li>Descripcion</li>
-                        </ol>
-                    </th>
-                </div>
-                <td class="col-md-8">
-                    <div class="text-start">
-                        <ol class="text-start ">
-                            <li th:text="${logro.tipo}"></li>
-                            <li th:text="${logro.descripcion}"></li>
-                        </ol>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
 
-    <!--Capacitacion-->
-    <div th:if="${#lists.size(capacitaciones) > 0}" class="container mt-5">
-        <div class="d-flex">
-            <h5 class="text-secondary mt-4">Capacitaciones</h5>
+        <!--Logro-->
+        <div th:if="${#lists.size(logros) > 0}" class="container mt-5">
+            <div class="d-flex">
+                <h5 class="text-secondary mt-4">Logros</h5>
+            </div>
+            <hr>
+            <table class="table">
+                <tr th:each="logro: ${logros}">
+                    <div>
+                        <th class="p-2">
+                            <ol>
+                                <li>Tipo</li>
+                                <li>Descripcion</li>
+                            </ol>
+                        </th>
+                    </div>
+                    <td class="col-md-8">
+                        <div class="text-start">
+                            <ol class="text-start ">
+                                <li th:text="${logro.tipo}"></li>
+                                <li th:text="${logro.descripcion}"></li>
+                            </ol>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
-        <hr>
-        <table class="table">
-            <tr th:each="cap: ${capacitaciones}">
-                <div>
-                    <th class="p-2">
-                        <ol>
-                            <li th:text="${cap.tipoCertificado}"></li>
-                            <li th:text="'(' + ${cap.horas} + 'horas)'">Institucion</li>
-                        </ol>
-                    </th>
-                </div>
-                <td class="col-md-8">
-                    <div class="text-start">
-                        <ol class="text-start ">
-                            <li th:text="${cap.nombre}"></li>
-                            <li th:text="${cap.institucion}"></li>
-                            <li th:text="${cap.fechaFin}"></li>
-                        </ol>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
 
-    <!--  Referencias  -->
-    <div class="container mt-2">
-        <div class="d-flex">
-            <h5 class="text-secondary">Referencias</h5>
+        <!--Capacitacion-->
+        <div th:if="${#lists.size(capacitaciones) > 0}" class="container mt-5">
+            <div class="d-flex">
+                <h5 class="text-secondary mt-4">Capacitaciones</h5>
+            </div>
+            <hr>
+            <table class="table">
+                <tr th:each="cap: ${capacitaciones}">
+                    <div>
+                        <th class="p-2">
+                            <ol>
+                                <li th:text="${cap.tipoCertificado}"></li>
+                                <li th:text="'(' + ${cap.horas} + 'horas)'">Institucion</li>
+                            </ol>
+                        </th>
+                    </div>
+                    <td class="col-md-8">
+                        <div class="text-start">
+                            <ol class="text-start ">
+                                <li th:text="${cap.nombre}"></li>
+                                <li th:text="${cap.institucion}"></li>
+                                <li th:text="${cap.fechaFin}"></li>
+                            </ol>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
-        <hr>
-        <table class="table">
-            <tr th:each="personal: ${referencias}">
-                <div>
-                    <th class="p-2">Referencia Personal</th>
-                </div>
-                <td class="col-md-8">
-                    <div class="text-start">
-                        <ol class="text-start ">
-                            <li th:text="${personal.nombreReferencia}"></li>
-                            <li th:text="${personal.telefono}"></li>
-                            <li th:text="${personal.email}"></li>
-                        </ol>
-                    </div>
-                </td>
-            </tr>
 
-            <tr th:each="profesional: ${referenciasProfesionales}">
-                <div>
-                    <th class="p-2">Referencia Profesional</th>
-                </div>
-                <td class="col-md-8">
-                    <div class="text-start">
-                        <ul class="text-start ">
-                            <li th:text="${profesional.nombre}"></li>
-                            <li th:text="${profesional.institucion}"></li>
-                            <li th:text="${profesional.email}"></li>
-                        </ul>
+        <!--  Referencias  -->
+        <div class="container mt-2">
+            <div class="d-flex">
+                <h5 class="text-secondary">Referencias</h5>
+            </div>
+            <hr>
+            <table class="table">
+                <tr th:each="personal: ${referencias}">
+                    <div>
+                        <th class="p-2">Referencia Personal</th>
                     </div>
-                </td>
-            </tr>
-        </table>
-        <hr>
-</section>
+                    <td class="col-md-8">
+                        <div class="text-start">
+                            <ol class="text-start ">
+                                <li th:text="${personal.nombreReferencia}"></li>
+                                <li th:text="${personal.telefono}"></li>
+                                <li th:text="${personal.email}"></li>
+                            </ol>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:each="profesional: ${referenciasProfesionales}">
+                    <div>
+                        <th class="p-2">Referencia Profesional</th>
+                    </div>
+                    <td class="col-md-8">
+                        <div class="text-start">
+                            <ul class="text-start ">
+                                <li th:text="${profesional.nombre}"></li>
+                                <li th:text="${profesional.institucion}"></li>
+                                <li th:text="${profesional.email}"></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <hr>
+    </section>
 </body>
 
 </html>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Carrera } from '../model/carrera';
-
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -30,5 +30,10 @@ export class CarreraService {
   updateCarrera(id: number, carrera: Carrera): Observable<Carrera> {
     const url = `${this.urlEndPoint}/${id}`;
     return this.http.put<Carrera>(url, carrera, { headers: this.httpHeaders });
+  }
+  getCarrerasNombres(): Observable<string[]> {
+    return this.http.get<Carrera[]>(this.urlEndPoint).pipe(
+      map(carreras => carreras.map(carrera => carrera.nombre))
+    );
   }
 }

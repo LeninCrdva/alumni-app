@@ -52,7 +52,7 @@
     pointer-events: none;
     transition: all .2s;
     font-weight: 500;
-    background-color: #fff;
+    background-color: var(--side-bg-color);
     color: #888;
 }
 
@@ -60,7 +60,7 @@
 .form-group:focus-within .form-label {
     top: -2px;
     font-size: 14px;
-    box-shadow: 8px 0 0 #fff, -8px 0 0 #fff;
+    /* box-shadow: 8px 0 0 #fff, -8px 0 0 #fff; */
 }
 
 .form-group:focus-within .form-label,

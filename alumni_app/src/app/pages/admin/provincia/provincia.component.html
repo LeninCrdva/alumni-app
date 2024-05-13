@@ -7,7 +7,7 @@
     </div>
 </section>
 
-<div class="card">
+<div class="card" style="background-color: var(--side-bg-color)">
     <div class="card-body collapse show" id="collapse1">
         <!-- Modal -->
         <div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
@@ -30,20 +30,38 @@
                                         <div class="form-group">
                                             <label class="form-control-label active">Nombre: <span
                                                     class="tx-danger">*</span></label>
-                                            <input type="text" placeholder="Azuay" formControlName="nombre">
-                                            <div class="text-danger"
-                                                *ngIf="registerProvinceForm.get('nombre')?.hasError('required') && registerProvinceForm.get('nombre')?.touched">
-                                                El nombre de la provincia es obligatorio.
+                                            <input type="text" placeholder="Azuay" formControlName="nombre"  style="text-transform: uppercase;"
+                                            [ngClass]="{ 'is-invalid': registerProvinceForm.get('nombre')?.invalid && (registerProvinceForm.get('nombre')?.dirty || registerProvinceForm.get('nombre')?.touched) }" required>
+                                            <div class="oaerror danger invalid-feedback">
+                                                <ng-container *ngIf="registerProvinceForm.get('nombre')?.errors?.['required']">
+                                                    <strong>Dato Faltante</strong> -  El nombre de la provincia es obligatorio.
+                                                </ng-container>
+                                               
+                                               
+                                                <ng-container *ngIf="registerProvinceForm.get('nombre')?.errors?.['pattern']">
+                                                    <strong>Formato Inválido</strong> -    Solo se permiten letras y espacios.
+                                                </ng-container>
                                             </div>
+                                            
+                                           
                                         </div>
                                         <div class="form-group mt-2">
                                             <label class="form-control-label active">País: <span
                                                     class="tx-danger">*</span></label>
-                                                    <input type="text" placeholder="Ecuador" formControlName="pais" style="text-transform: uppercase;">
-                                            <div class="text-danger"
-                                                *ngIf="registerProvinceForm.get('pais')?.hasError('required') && registerProvinceForm.get('pais')?.touched">
-                                                El nombre del país es obligatorio.
-                                            </div>
+                                            <input type="text" placeholder="Ecuador" formControlName="pais"
+                                                style="text-transform: uppercase;"
+                                                [ngClass]="{ 'is-invalid': registerProvinceForm.get('pais')?.invalid && (registerProvinceForm.get('pais')?.dirty || registerProvinceForm.get('pais')?.touched) }" required>
+                                                <div class="oaerror danger invalid-feedback">
+                                                    <ng-container *ngIf="registerProvinceForm.get('pais')?.errors?.['required']">
+                                                        <strong>Dato Faltante</strong> -  El nombre del país es obligatorio.
+                                                    </ng-container>
+                                                   
+                                                   
+                                                    <ng-container *ngIf="registerProvinceForm.get('pais')?.errors?.['pattern']">
+                                                        <strong>Formato Inválido</strong> -    Solo se permiten letras y espacios.
+                                                    </ng-container>
+                                                </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -52,10 +70,14 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button (click)="editModeProvince ? UpdateProv(): createProvince()" type="submit"
+                        <!--<button (click)="editModeProvince ? UpdateProv(): createProvince()" type="submit"
                             data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong btn-primary">
                             {{!editModeProvince ? 'Registrar Provincia' : 'Editar Provincia'}}
-                        </button>
+                        </button>-->
+                          <button (click)="editModeProvince ? UpdateProv(): createProvince()" type="button"
+                    class="btn btn-oblong btn-primary">
+                    {{!editModeProvince ? 'Registrar Provincia' : 'Editar Provincia'}}
+                </button>
                         <button data-bs-dismiss="modal" id="close-button"
                             class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
                     </div>
@@ -86,24 +108,36 @@
                                         <div class="form-group">
                                             <label class="form-control-label active">Provincia: <span
                                                     class="tx-danger">*</span></label>
-                                            <select formControlName="provinciaNombre" [ariaPlaceholder]="'Seleccione'">
+                                            <select formControlName="provinciaNombre" [ariaPlaceholder]="'Seleccione una provincia'"  
+                                            [ngClass]="{ 'is-invalid': registerCityForm.get('provinciaNombre')?.invalid && (registerCityForm.get('provinciaNombre')?.dirty || registerCityForm.get('provinciaNombre')?.touched) }" required>
                                                 <option *ngFor="let province of provincesList"
                                                     value="{{province.nombre}}">{{province.nombre}}</option>
                                             </select>
-                                            <div class="text-danger"
-                                                *ngIf="registerCityForm.get('provinciaNombre')?.hasError('required') && registerCityForm.get('provinciaNombre')?.touched">
-                                                Elija la provincia.
+                                            <div class="oaerror danger invalid-feedback">
+                                                <ng-container *ngIf="registerCityForm.get('provinciaNombre')?.errors?.['required']">
+                                                    <strong>Dato Faltante</strong> -    Elija la provincia.
+                                                </ng-container>
+                                               
                                             </div>
+                                            
                                         </div>
 
                                         <div class="form-group mt-2">
                                             <label class="form-control-label active">Ciudad: <span
                                                     class="tx-danger">*</span></label>
-                                            <input type="text" placeholder="Cuenca" formControlName="nombreCiudad">
-                                            <div class="text-danger"
-                                                *ngIf="registerProvinceForm.get('nombreCiudad')?.hasError('required') && registerProvinceForm.get('nombreCiudad')?.touched">
-                                                El nombre de la cuidad es obligatorio.
+                                            <input type="text" placeholder="Cuenca" formControlName="nombreCiudad"  style="text-transform: uppercase;"
+                                            [ngClass]="{ 'is-invalid': registerCityForm.get('nombreCiudad')?.invalid && (registerCityForm.get('nombreCiudad')?.dirty || registerCityForm.get('nombreCiudad')?.touched) }" required>
+                                            <div class="oaerror danger invalid-feedback">
+                                                <ng-container *ngIf="registerCityForm.get('nombreCiudad')?.errors?.['required']">
+                                                    <strong>Dato Faltante</strong> -  El nombre de la Ciudad es obligatorio.
+                                                </ng-container>
+                                               
+                                               
+                                                <ng-container *ngIf="registerCityForm.get('nombreCiudad')?.errors?.['pattern']">
+                                                    <strong>Formato Inválido</strong> -    Solo se permiten letras y espacios.
+                                                </ng-container>
                                             </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -112,10 +146,15 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button (click)="!editModeCity ? createCity() : UpdateCity()" type="submit"
+                        <!--<button (click)="!editModeCity ? createCity() : UpdateCity()" type="submit"
                             data-bs-toggle="modal" data-bs-target="#m_modal_5" class="btn btn-oblong btn-primary">
                             {{editModeCity ? "Editar Ciudad" : "Registrar Ciudad"}}
+                        </button>-->
+                        <button (click)="!editModeCity ? createCity() : UpdateCity()" type="button"
+                            class="btn btn-oblong btn-primary">
+                            {{editModeCity ? 'Editar Ciudad' : 'Registrar Ciudad'}}
                         </button>
+
                         <button data-bs-dismiss="modal" id="close-button"
                             class="btn btn-oblong btn-outline-danger btn-block" (click)="closeModal()">Cancelar</button>
                     </div>
@@ -161,8 +200,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let city of citiesListDTO">
-                            <th scope="row">{{city?.id}}</th>
+                        <tr *ngFor="let city of citiesListDTO;let i=index">
+                           <!-- <th scope="row">{{city?.id}}</th>-->
+                           <th scope="row">{{i+1}}</th>
                             <td>{{ city?.nombre }}</td>
                             <td>{{ city?.provincia }}</td>
 

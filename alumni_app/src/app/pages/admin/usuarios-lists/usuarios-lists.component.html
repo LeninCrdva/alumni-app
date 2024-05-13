@@ -7,7 +7,7 @@
   </div>
 </section>
 
-<div class="card">
+<div class="card" style="background-color: var(--side-bg-color)">
   <div class="card-body collapse show" id="collapse1">
     <!-- Modal -->
     <div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
@@ -31,11 +31,11 @@
                         <i class="ri-user-smile-line form-icon"></i>
                       </div>
 
-                      <div class="text-danger mb-4"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('primerNombre')?.hasError('required') && registerNewUserForm.get('primerNombre')?.touched">
                         El primer nombre es obligatorio.
                       </div>
-                      <div class="text-danger"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('primerNombre')?.hasError('pattern') && registerNewUserForm.get('primerNombre')?.touched">
                         Solo letras y mínimo 2 caracteres.
                       </div>
@@ -49,11 +49,11 @@
                         <i class="ri-user-smile-line form-icon"></i>
                       </div>
 
-                      <div class="text-danger mb-4"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('segundoNombre')?.hasError('required') && registerNewUserForm.get('segundoNombre')?.touched">
                         El segundo nombre es obligatorio.
                       </div>
-                      <div class="text-danger"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('segundoNombre')?.hasError('pattern') && registerNewUserForm.get('segundoNombre')?.touched">
                         Solo letras y mínimo 2 caracteres.
                       </div>
@@ -68,11 +68,11 @@
                         <label for="" class="form-label">Ingrese su Primer Apellido</label>
                         <i class="ri-user-smile-line form-icon"></i>
                       </div>
-                      <div class="text-danger mb-4"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('primerApellido')?.hasError('required') && registerNewUserForm.get('primerApellido')?.touched">
                         El primer apellido es obligatorio.
                       </div>
-                      <div class="text-danger"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('primerApellido')?.hasError('pattern') && registerNewUserForm.get('primerApellido')?.touched">
                         Solo letras y mínimo 2 caracteres.
                       </div>
@@ -86,11 +86,11 @@
                         <i class="ri-user-smile-line form-icon"></i>
                       </div>
 
-                      <div class="text-danger mb-4"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('segundoApellido')?.hasError('required') && registerNewUserForm.get('segundoApellido')?.touched">
                         El segundo apellido es obligatorio.
                       </div>
-                      <div class="text-danger"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('segundoApellido')?.hasError('pattern') && registerNewUserForm.get('segundoApellido')?.touched">
                         Solo letras y mínimo 2 caracteres.
                       </div>
@@ -105,16 +105,20 @@
                       <i class="fa-solid fa-id-card form-icon"></i>
                     </div>
 
-                    <div class="text-danger"
+                    <div class="oaerror danger mb-4"
                       *ngIf="registerNewUserForm.get('cedula')?.hasError('required') && registerNewUserForm.get('cedula')?.touched">
                       La cédula es obligatoria.
                     </div>
-                    <div class="text-danger"
+                    <div class="oaerror danger mb-4"
                       *ngIf="registerNewUserForm.get('cedula')?.hasError('pattern') && registerNewUserForm.get('cedula')?.touched">
                       La cédula debe tener 10 dígitos.
                     </div>
-                    <div class="text-danger" *ngIf="duplicatedFields['identityCard']">
+                    <div class="oaerror danger mb-4" *ngIf="duplicatedFields['identityCard']">
                       La cédula ya se encuentra registrada.
+                    </div>
+                    <div class="oaerror danger mb-4"
+                      *ngIf="registerNewUserForm.get('cedula')?.hasError('invalidIdentityCard') && registerNewUserForm.get('cedula')?.dirty">
+                      <strong>Cédula Inválida</strong> - La cédula ingresada no es válida.
                     </div>
                   </div>
                   <div class="d-flex">
@@ -129,21 +133,25 @@
                         </select>
                         <i class="ri-user-smile-line form-icon"></i>
                       </div>
+                      <div class="oaerror danger mb-4"
+                        *ngIf="registerNewUserForm.get('sexo')?.hasError('required') && registerNewUserForm.get('sexo')?.touched">
+                        Seleccione el sexo.
+                      </div>
                     </div>
 
                     <div class="mx-2 flex-grow-1">
                       <div class="form-group">
                         <input type="date" class="form-input" placeholder=" " formControlName="fechaNacimiento"
-                          id="InputFechaNacimiento">
+                          id="InputFechaNacimiento" min="1960-01-01" max="2005-12-31">
                         <label for="fechaNacimiento" class="form-label">Ingrese la fecha de nacimiento</label>
                         <i class="ri-user-smile-line form-icon"></i>
                       </div>
 
-                      <div class="text-danger"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('fechaNacimiento')?.hasError('required') && registerNewUserForm.get('fechaNacimiento')?.touched">
                         La fecha de nacimiento es obligatoria.
                       </div>
-                      <div class="text-danger"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('fechaNacimiento')?.hasError('fechaNacimientoInvalida') && registerNewUserForm.get('fechaNacimiento')?.touched">
                         La fecha de nacimiento debe ser posterior a 1950-01-01 e inferior a 2005-01-01.
                       </div>
@@ -158,15 +166,15 @@
                       <i class="fa-solid fa-phone-volume form-icon"></i>
                     </div>
 
-                    <div class="text-danger"
+                    <div class="oaerror danger mb-4"
                       *ngIf="registerNewUserForm.get('telefono')?.hasError('required') && registerNewUserForm.get('telefono')?.touched">
                       El número de teléfono es obligatorio.
                     </div>
-                    <div class="text-danger"
+                    <div class="oaerror danger mb-4"
                       *ngIf="registerNewUserForm.get('telefono')?.hasError('pattern') && registerNewUserForm.get('telefono')?.touched">
                       El número de teléfono debe tener 10 dígitos.
                     </div>
-                    <div class="text-danger" *ngIf="duplicatedFields['phone']">
+                    <div class="oaerror danger mb-4" *ngIf="duplicatedFields['phone']">
                       El número de teléfono ya se encuentra registrado.
                     </div>
                   </div>
@@ -182,16 +190,15 @@
                         <i class="ri-at-line form-icon"></i>
                       </div>
 
-                      <div class="text-danger"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('nombreUsuario')?.hasError('required') && registerNewUserForm.get('nombreUsuario')?.touched">
                         El nombre de usuario es obligatorio.
                       </div>
-                      <div class="text-danger"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('nombreUsuario')?.hasError('pattern') && registerNewUserForm.get('nombreUsuario')?.touched">
                         Solo letras y números y de 2 a 10 caracteres.
                       </div>
-                      <div class="text-danger"
-                      *ngIf="duplicatedFields['username']">
+                      <div class="oaerror danger mb-4" *ngIf="duplicatedFields['username']">
                         El nombre de usuario ya existe.
                       </div>
                     </div>
@@ -208,11 +215,11 @@
                         </span>
                       </div>
 
-                      <div class="text-danger"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('clave')?.hasError('required') && registerNewUserForm.get('clave')?.touched">
                         La contraseña es obligatoria.
                       </div>
-                      <div class="text-danger"
+                      <div class="oaerror danger mb-4"
                         *ngIf="registerNewUserForm.get('clave')?.hasError('pattern') && registerNewUserForm.get('clave')?.touched">
                         La contraseña debe cumplir con:
                         <li>Al menos 8 caracteres de longitud.</li>
@@ -237,7 +244,7 @@
                             <i class="ri-user-smile-line form-icon"></i>
                           </div>
 
-                          <div class="text-danger mb-4"
+                          <div class="oaerror danger mb-4"
                             *ngIf="formCase1.get('descripcion')?.hasError('required') && formCase1.get('descripcion')?.touched">
                             La descripción es obligatoria.
                           </div>
@@ -250,7 +257,7 @@
                             <i class="ri-user-smile-line form-icon"></i>
                           </div>
 
-                          <div class="text-danger mb-4"
+                          <div class="oaerror danger mb-4"
                             *ngIf="formCase1.get('puesto')?.hasError('required') && formCase1.get('puesto')?.touched">
                             El puesto es obligatorio.
                           </div>
@@ -264,15 +271,15 @@
                             <label for="email" class="form-label">Ingrese su Email</label>
                             <i class="ri-user-smile-line form-icon"></i>
                           </div>
-                          <div class="text-danger"
+                          <div class="oaerror danger mb-4"
                             *ngIf="formCase1.get('email')?.hasError('required') && formCase1.get('email')?.touched">
                             El email es obligatorio.
                           </div>
-                          <div class="text-danger"
+                          <div class="oaerror danger mb-4"
                             *ngIf="formCase1.get('email')?.hasError('email') && formCase1.get('email')?.touched">
                             El email no es válido.
                           </div>
-                          <div class="text-danger" *ngIf="duplicatedFields['businessManEmail']">
+                          <div class="oaerror danger mb-4" *ngIf="duplicatedFields['businessManEmail']">
                             Este correo electrónico ya está en uso.
                           </div>
                         </div>
@@ -283,7 +290,7 @@
                             <label for="anios" class="form-label">Años</label>
                             <i class="ri-user-smile-line form-icon"></i>
                           </div>
-                          <div class="text-danger mb-4"
+                          <div class="oaerror danger mb-4"
                             *ngIf="formCase1.get('anios')?.hasError('required') && formCase1.get('anios')?.touched">
                             Los años son obligatorios.
                           </div>
@@ -306,15 +313,15 @@
                             <label for="emailPersonal" class="form-label">Ingrese su Email Personal</label>
                             <i class="ri-user-smile-line form-icon"></i>
                           </div>
-                          <div class="text-danger mb-4"
+                          <div class="oaerror danger mb-4"
                             *ngIf="formCase2.get('emailPersonal')?.hasError('required') && formCase2.get('emailPersonal')?.touched">
                             El email personal es obligatorio.
                           </div>
-                          <div class="text-danger"
+                          <div class="oaerror danger mb-4"
                             *ngIf="formCase2.get('emailPersonal')?.hasError('email') && formCase2.get('emailPersonal')?.touched">
                             El email no es válido.
                           </div>
-                          <div class="text-danger" *ngIf="duplicatedFields['graduateEmail']">
+                          <div class="oaerror danger mb-4" *ngIf="duplicatedFields['graduateEmail']">
                             Este correo electrónico ya está en uso.
                           </div>
                         </div>
@@ -328,7 +335,7 @@
                             <label for="ciudad" class="form-label">Seleccione una ciudad</label>
                             <i class="ri-user-smile-line form-icon"></i>
                           </div>
-                          <div class="text-danger mb-4"
+                          <div class="oaerror danger mb-4"
                             *ngIf="formCase2.get('ciudad')?.hasError('required') && formCase2.get('ciudad')?.touched">
                             La ciudad es obligatoria.
                           </div>
@@ -340,14 +347,16 @@
                           <div class="form-group mr-3 mt-4">
                             <select class="form-input" id="estadoCivil" formControlName="estadoCivil">
                               <option value="" disabled selected>Seleccionar</option>
-                              <option value="SOLTERO/A">Soltero/a</option>
-                              <option value="CASADO/A">Casado/a</option>
-                              <option value="VIUDO/A">Viudo/a</option>
+                              <option value="Soltero/a">Soltero/a</option>
+                              <option value="Casado/a">Casado/a</option>
+                              <option value="Viudo/a">Viudo/a</option>
+                              <option value="Divorciado/a">Divorciado/a</option>
+                              <option value="Union Libre">Union Libre</option>
                             </select>
                             <label for="estadoCivil" class="form-label">Seleccione su estado civil</label>
                             <i class="ri-user-smile-line form-icon"></i>
                           </div>
-                          <div class="text-danger mb-4"
+                          <div class="oaerror danger mb-4"
                             *ngIf="formCase2.get('estadoCivil')?.hasError('required') && formCase2.get('estadoCivil')?.touched">
                             El estado civil es obligatorio.
                           </div>
@@ -355,15 +364,23 @@
 
                         <div class="mx-2 flex-grow-1 mt-4">
                           <div class="form-group">
-                            <input type="date" class="form-input" placeholder=" " formControlName="anioGraduacion"
+                            <input type="date" class="form-input" placeholder=" " formControlName="anioGraduacion" [min]="minFormatDate()" [max]="getCurrentDate()"
                               id="anioGraduacion">
                             <label for="anioGraduacion" class="form-label">Ingrese la fecha de graduación</label>
                             <i class="ri-user-smile-line form-icon"></i>
                           </div>
 
-                          <div class="text-danger mb-4"
+                          <div class="oaerror danger mb-4"
                             *ngIf="formCase2.get('anioGraduacion')?.hasError('required') && formCase2.get('anioGraduacion')?.touched">
                             La fecha de graduación es obligatoria.
+                          </div>
+                          <div class="oaerror danger mb-4"
+                            *ngIf="formCase2.get('anioGraduacion')?.hasError('invalidMinDate') && formCase2.get('anioGraduacion')?.touched">
+                            Para registrarte se debe haber graduado antes de la fecha actual y tener al menos 20 años.
+                          </div>
+                          <div class="oaerror danger mb-4"
+                            *ngIf="formCase2.get('anioGraduacion')?.hasError('invalidRangeAge') && formCase2.get('anioGraduacion')?.touched">
+                            Para registrarte debes haber graduado antes de la fecha actual y tener menos de 55 años.
                           </div>
                         </div>
                       </div>
@@ -383,7 +400,7 @@
                           <i class="ri-user-smile-line form-icon"></i>
                         </div>
 
-                        <div class="text-danger mb-4"
+                        <div class="oaerror danger mb-4"
                           *ngIf="formCase3.get('cargo')?.hasError('required') && formCase3.get('cargo')?.touched">
                           El cargo es obligatorio.
                         </div>
@@ -391,20 +408,21 @@
 
                       <div class="mx-2 flex-grow-1">
                         <div class="form-group">
-                          <input type="email" class="form-input" placeholder=" " formControlName="email" id="email" (blur)="validateAdminEmail()">
+                          <input type="email" class="form-input" placeholder=" " formControlName="email" id="email"
+                            (blur)="validateAdminEmail()">
                           <label for="email" class="form-label">Email</label>
                           <i class="ri-user-smile-line form-icon"></i>
                         </div>
 
-                        <div class="text-danger mb-4"
+                        <div class="oaerror danger mb-4"
                           *ngIf="formCase3.get('email')?.hasError('required') && formCase3.get('email')?.touched">
                           El email es obligatorio.
                         </div>
-                        <div class="text-danger"
+                        <div class="oaerror danger mb-4"
                           *ngIf="formCase3.get('email')?.hasError('email') && formCase3.get('email')?.touched">
                           El email no es válido.
                         </div>
-                        <div class="text-danger" *ngIf="duplicatedFields['adminEmail']">
+                        <div class="oaerror danger mb-4" *ngIf="duplicatedFields['adminEmail']">
                           Este correo electrónico ya está en uso.
                         </div>
                       </div>
@@ -419,7 +437,7 @@
           <div class="modal-footer">
             <button (click)="!editMode ? register() : updateUserData()" type="submit" [disabled]="isButtonDisabled()"
               class="btn btn-oblong btn-primary">
-              {{ editMode ? 'Actualizar' : 'Enviar Formulario' }} 
+              {{ editMode ? 'Actualizar' : 'Enviar Formulario' }}
             </button>
 
             <button data-bs-dismiss="modal" (click)="closeModal()" id="close-button"
@@ -454,8 +472,8 @@
 
         <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered table-hover">
           <tbody>
-            <tr *ngFor="let user of usersList;">
-              <th scope="row">{{ user.id }}</th>
+            <tr *ngFor="let user of usersList; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
               <td>{{ user.nombreUsuario }}</td>
               <td>{{ user.cedula }}</td>
               <td>{{ user.rol }}</td>
@@ -471,7 +489,8 @@
                   (click)="showUserData(user.cedula, user.id)">
                   <i class="fa-regular fa-eye"></i>
                 </a>
-                <button style="background-color: transparent; border: none;" *ngIf="user.rol !== 'ADMINISTRADOR'" [attr.data-bs-toggle]="user.estado ? 'modal' : null"
+                <button style="background-color: transparent; border: none;" *ngIf="user.rol !== 'ADMINISTRADOR'"
+                  [attr.data-bs-toggle]="user.estado ? 'modal' : null"
                   [attr.data-bs-target]="user.estado ? '#m_modal_4' : null" class="mg-r-10 ms-1 text-secondary"
                   (click)="handleClick(user.cedula, user.id, user.estado, user.rol)">
                   <i class="fa-regular fa-pen-to-square"></i>
@@ -485,7 +504,7 @@
   </div>
 </div>
 
-<div class="card">
+<div class="card" style="background-color: var(--side-bg-color)">
   <div class="modal fade" id="user_data_modal" tabindex="-1" role="dialog" aria-labelledby="user_data_modal"
     aria-hidden="true">
 

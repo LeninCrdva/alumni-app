@@ -53,14 +53,46 @@ export class CapacitacionesComponent {
     private renderer: Renderer2
   ) {
     this.validateForm = this.fb.group({
-      nombre: ['', Validators.required],
-      institucion: ['', Validators.required],
+      nombre:  ['', [Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
+      institucion:  ['', [Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
       tipoCertificado: ['', Validators.required],
-      numHoras: ['', Validators.required],
+      numHoras: ['', [
+        Validators.required, 
+        Validators.minLength(2), 
+        Validators.maxLength(10),
+        Validators.pattern(/^[0-9]+$/) 
+      ]],
       fechaInicio: ['', Validators.required],
       fechaFin: ['', Validators.required]
     });
   }
+
+  validateFechaFin() {
+    const fechaInicio = this.validateForm.get('fechaInicio')?.value;
+    const fechaFin = this.validateForm.get('fechaFin')?.value;
+    if (fechaInicio && fechaFin) {
+      const fechaInicioObj = new Date(fechaInicio);
+      const fechaFinObj = new Date(fechaFin);
+      return fechaFinObj >= fechaInicioObj;
+    }
+    return false;
+  }
+  
+  onFechaInicioChange() {
+    const fechaInicioControl = this.validateForm.get('fechaInicio');
+    const fechaFinControl = this.validateForm.get('fechaFin');
+  
+    if (fechaInicioControl && fechaFinControl) {
+        if (fechaInicioControl.value) {
+            fechaFinControl.enable();
+        } else {
+            fechaFinControl.disable();
+            fechaFinControl.setValue(''); // Reiniciar el valor del campo de fecha de fin
+        }
+    }
+}
+
+
 
   // Note: Desuscribirse del evento para evitar fugas de memoria
   ngOnDestroy(): void {
@@ -74,6 +106,9 @@ export class CapacitacionesComponent {
     // Para inicializar los dropdowns de los filtros de la tabla.
     this.filterService.initializeDropdowns('filterTable', columnTitles,);
     this.loadData();
+    this.validateForm.get('fechaInicio')?.valueChanges.subscribe(() => {
+      this.onFechaInicioChange();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -124,6 +159,7 @@ export class CapacitacionesComponent {
         fechaInicio: dataToEdit.fechaInicio,
         fechaFin: dataToEdit.fechaFin,
       });
+      //this.validateForm.get('tipoCertificado')?.setValue(dataToEdit.tipoCertificado);
     } else {
       console.error(`Elemento con id ${id} no encontrado en la lista.`);
     }

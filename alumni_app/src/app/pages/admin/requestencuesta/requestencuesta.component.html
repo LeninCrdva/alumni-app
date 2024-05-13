@@ -19,7 +19,7 @@
 
               <div *ngFor="let question of survey.questionsWithAnswers">
                 <h6 class="card-subtitle mb-3"><b>Pregunta: </b>{{ question.questionText }}</h6>
-                
+
                 <div class="table-responsive">
                   <table class="table table-bordered">
                     <thead>
@@ -50,12 +50,15 @@
                   </table>
                 </div> <!-- Cierre de div.table-responsive -->
               </div>
-              <button title="Descargar Excel" (click)="downloadAsExcel(survey)" class="btn btn-success ms-2">
-                <i class="fa-solid fa-file-excel"></i>
-              </button>
-              <button title="Descargar PDF" (click)="downloadAsPDF2(survey)" class="btn btn-label-danger ms-2">
-                <i class="fa-solid fa-file-pdf"></i>
-              </button>
+              <div class="d-flex justify-content-center align-items-center">
+                <button title="Descargar Excel" (click)="downloadAsExcel(survey)" class="btn btn-success ms-2 mt-3">
+                  <i class="fa-solid fa-file-excel"></i> Descargar Excel
+                </button>
+                <button title="Descargar PDF" (click)="downloadAsPDF2(survey)" class="btn btn-label-danger ms-2 mt-3">
+                  <i class="fa-solid fa-file-pdf"></i> Descargar PDF
+                </button>
+              </div>
+
             </div>
           </div>
         </div>

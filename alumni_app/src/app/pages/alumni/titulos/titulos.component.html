@@ -28,60 +28,98 @@
                                 <i class="fa-solid fa-signature"></i>
                             </a>
                             <input type="text" class="form-control" id="nombre_titulo"
-                                placeholder="Ingrese el nombre del título." formControlName="nombreTitulo" required>
-                            <div class="oaerror danger  invalid-feedback">
-                                <strong>Dato Faltante</strong> - Ingrese el nombre de su Título.
+                                placeholder="Ingrese el nombre del título." formControlName="nombreTitulo"    
+                                [ngClass]="{ 'is-invalid': validateForm.get('nombreTitulo')?.invalid && (validateForm.get('nombreTitulo')?.dirty || validateForm.get('nombreTitulo')?.touched) }" required>
+                           
+                            <div class="oaerror danger invalid-feedback" *ngIf="validateForm.get('nombreTitulo')?.invalid && (validateForm.get('nombreTitulo')?.dirty || validateForm.get('nombreTitulo')?.touched)">
+                                <ng-container *ngIf="validateForm.get('nombreTitulo')?.errors?.['pattern']">
+                                    <strong>Caracteres no permitidos</strong> - Solo se admiten letras y espacio.
+                                </ng-container>
+                                <ng-container *ngIf="!validateForm.get('nombreTitulo')?.errors?.['pattern']">
+                                    <strong>Dato Faltante</strong> - Ingrese el nombre de su Título.
+                                </ng-container>
                             </div>
+                            
                         </div>
                     </div>
 
                     <div class="col-lg-6">
-                        <label for="nombrecarrera" class="form-label">CARRERA:</label>
-
+                        <label for="nombreCarrera" class="form-label">CARRERA:</label>
                         <div class="input-group has-validation">
                             <a class="input-group-text">
                                 <i class="fa-solid fa-building-columns"></i>
                             </a>
-
                             <ng-multiselect-dropdown style="width: 20rem;" [placeholder]="'-- Seleccione una opción --'"
                                 [settings]="filterService.dropdownSettings['careersList']"
                                 [data]="filterService.dropdownLists['careersList']"
                                 [(ngModel)]="filterService.selectedItems['careersList']" formControlName="nombreCarrera">
                             </ng-multiselect-dropdown>
-                            <div class="oaerror danger" *ngIf="validateForm.get('nombrecarrera')?.invalid">
+                            <div class="oaerror danger" *ngIf="validateForm.get('nombreCarrera')?.invalid && (validateForm.get('nombreCarrera')?.touched || validateForm.get('nombreCarrera')?.dirty)">
                                 <strong>Dato Faltante</strong> - Seleccione el nombre de la carrera.
                             </div>
                         </div>
                     </div>
-
-                    <div class="form-group col-lg-6">
-                        <label for="tipo" class="form-label">TIPO DE TÍTULO:</label>
+                    
+                    <div class="col-lg-6" *ngIf="filterService.selectedItems['careersList'] && filterService.selectedItems['careersList'][0]?.item_text === 'OTRO'">
+                        <label for="otro" class="form-label">Ingrese el nombre de la carrera:</label>
                         <div class="input-group has-validation">
-                            <span class="input-group-text">
-                                <i class="fa-solid fa-clipboard"></i>
-                            </span>
-                            <input type="text" class="form-control" id="tipo" placeholder="Ingrese el tipo del título."
-                                formControlName="tipo" required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el tipo de título que usted posee.
+                            <input type="text" class="form-control" id="otro" placeholder="Ingrese el nombre de la carrera" formControlName="otro">
+                            <div class="oaerror danger" *ngIf="validateForm.get('otro')?.invalid && (validateForm.get('otraCarrera')?.touched || validateForm.get('otro')?.dirty)">
+                                <strong>Formato incorrecto</strong> - Ingrese solo letras y tildes.
                             </div>
                         </div>
                     </div>
-
+                    
+                    
+                    
                     <div class="form-group col-lg-6">
-                        <label for="num_registro" class="form-label">NÚMERO DE REGISTRO:</label>
+                        <label for="tipo" class="form-label">TIPO DE TÍTULO:</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text">
+                            <i class="fa-solid fa-clipboard"></i>
+                          </span>
+                          <select class="form-select" id="tipo" formControlName="tipo" required>
+                            <option value="default" disabled [selected]="!validateForm.value.tipo">-- Seleccione un tipo de título --</option>
+                            <option value="Técnico" [selected]="validateForm.value.tipo === 'TÉCNICO'">Técnico</option>
+                            <option value="Técnico superior" [selected]="validateForm.value.tipo === 'TÉCNICO SUPERIOR'">Técnico Superior</option>
+                            <option value="Tecnologo Universitario" [selected]="validateForm.value.tipo === 'TECNOLOGO UNIVERSITARIO'">Tecnólogo Universitario</option>
+                            <option value="Universitario" [selected]="validateForm.value.tipo === 'UNIVERSITARIO'">Universitario</option>
+                            <option value="Maestría Tecnologica" [selected]="validateForm.value.tipo === 'MAESTRÍA TECNOLOGICA'">Maestría Tecnológica</option>
+                            <option value="Maestría" [selected]="validateForm.value.tipo === 'MAESTRÍA'">Maestría</option>
+                          </select>
+                          <div class="oaerror danger invalid-feedback" *ngIf="validateForm.get('tipo')?.invalid && validateForm.get('tipo')?.touched">
+                            <strong>Dato Faltante</strong> - Por favor, ingrese el tipo de título.
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group col-lg-6">
+                        <label for="numRegistro" class="form-label">NÚMERO DE REGISTRO:</label>
                         <div class="input-group has-validation">
                             <span class="input-group-text">
                                 <i class="fa-solid fa-hashtag"></i>
                             </span>
-                            <input type="number" class="form-control" id="num_registro"
-                                placeholder="XXXX-XXXX-XXXX-XXXX" formControlName="numRegistro" required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del título.
+                            <input type="text" class="form-control" id="numRegistro"
+                                placeholder="XXXX-XXXX-XXXX-XXXX" formControlName="numRegistro" 
+                                [ngClass]="{ 'is-invalid': validateForm.get('numRegistro')?.invalid && (validateForm.get('numRegistro')?.dirty || validateForm.get('numRegistro')?.touched) }"required>
+                            <div class="oaerror danger invalid-feedback" *ngIf="validateForm.get('numRegistro')?.invalid && (validateForm.get('numRegistro')?.dirty || validateForm.get('numRegistro')?.touched)">
+                                <ng-container *ngIf="validateForm.get('numRegistro')?.errors?.['minlength']">
+                                    <strong>Longitud Mínima Insuficiente</strong> - El número de registro debe tener al menos 5 caracteres numéricos.
+                                </ng-container>
+                                <ng-container *ngIf="validateForm.get('numRegistro')?.errors?.['maxlength']">
+                                    <strong>Longitud Máxima Excedida</strong> - El número de registro no puede ser superior a 20 caracteres.
+                                </ng-container>
+                                <ng-container *ngIf="validateForm.get('numRegistro')?.errors?.['pattern']">
+                                    <strong>Formato Inválido</strong> - Solo se permiten números.
+                                </ng-container>
+                                <ng-container *ngIf="validateForm.get('numRegistro')?.errors?.['required']">
+                                    <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del título.
+                                </ng-container>
                             </div>
                         </div>
                     </div>
-
+                         
+                    
                     <div class="form-group col-lg-6">
                         <label for="fecha_emision" class="form-label">FECHA DE EMISIÓN:</label>
                         <div class="input-group has-validation">
@@ -89,14 +127,17 @@
                                 <i class="fa-regular fa-calendar-days"></i>
                             </span>
                             <input type="date" class="form-control" id="fecha_emision"
-                                placeholder="Ingrese el número de registro del título." formControlName="fechaEmision"
-                                required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el número de registro del título.
-                            </div>
+                            placeholder="Ingrese el número de registro del título." formControlName="fechaEmision"
+                            required [min]="validateForm.get('fechaRegistro')?.value"
+                            [ngClass]="{ 'is-invalid': !validarFechaEmision() && validateForm.get('fechaEmision')?.dirty }"
+                            [disabled]="!validateForm.get('fechaRegistro')?.value">
+                            <div class="oaerror danger invalid-feedback" *ngIf="!validarFechaEmision() && validateForm.get('fechaEmision')?.dirty">
+                                <strong>Fecha de emisión inválida</strong> - La fecha de emisión debe ser posterior o igual a la fecha de registro.
+                            </div>                        
                         </div>
                     </div>
-
+                    
+                    
                     <div class="form-group col-lg-6">
                         <label for="fecha_registro" class="form-label">FECHA DE REGISTRO:</label>
                         <div class="input-group has-validation">
@@ -110,20 +151,27 @@
                             </div>
                         </div>
                     </div>
+                    
 
                     <div class="form-group col-lg-6">
                         <label for="nivel" class="form-label">NIVEL DE TÍTULO:</label>
                         <div class="input-group has-validation">
-                            <span class="input-group-text">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                            </span>
-                            <input type="text" class="form-control" id="nivel" placeholder="Ingrese el nivel de título"
-                                formControlName="nivel" required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el nivel de título.
-                            </div>
+                          <span class="input-group-text">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                          </span>
+                          <select class="form-select" id="nivel" formControlName="nivel" required>
+                            <option value="default" disabled [selected]="!validateForm.value.nivel">-- Seleccione un nivel --</option>
+                            <option value="Tercer Nivel" [selected]="validateForm.value.nivel === 'TERCER NIVEL'">Tercer Nivel</option>
+                            <option value="Cuarto Nivel" [selected]="validateForm.value.nivel === 'CUARTO NIVEL'">Cuarto Nivel</option>
+                            <option value="Quinto Nivel" [selected]="validateForm.value.nivel === 'QUINTO NIVEL'">Quinto Nivel</option>
+                          </select>
+                          <div class="oaerror danger invalid-feedback" *ngIf="validateForm.get('nivel')?.invalid && validateForm.get('nivel')?.touched">
+                            <strong>Dato Faltante</strong> - Por favor, seleccione el nivel de título.
+                          </div>
                         </div>
-                    </div>
+                      </div>
+                      
+                    
 
                     <div class="form-group col-lg-6">
                         <label for="institucion" class="form-label">INSTITUCIÓN:</label>
@@ -133,12 +181,18 @@
                             </span>
                             <input type="text" class="form-control" id="institucion"
                                 placeholder="Ingrese el nombre de la institución." formControlName="institucion"
-                                required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución.
-                            </div>
+                                [ngClass]="{ 'is-invalid': validateForm.get('institucion')?.invalid && (validateForm.get('institucion')?.dirty || validateForm.get('institucion')?.touched) }" required>
+                                <div class="oaerror danger invalid-feedback" *ngIf="validateForm.get('institucion')?.invalid && (validateForm.get('institucion')?.dirty || validateForm.get('institucion')?.touched)">
+                                    <ng-container *ngIf="validateForm.get('institucion')?.errors?.['pattern']">
+                                        <strong>Caracteres no permitidos</strong> - Solo se admiten letras, coma (,), punto y coma (;) y espacio.
+                                    </ng-container>
+                                    <ng-container *ngIf="!validateForm.get('institucion')?.errors?.['pattern']">
+                                        <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución.
+                                    </ng-container>
+                                </div>
+                                
                         </div>
-                    </div>
+                    </div>                    
                 </form>
             </div>
             <div class="modal-footer">
@@ -159,7 +213,7 @@
 <!-- =====================================================
     *          TABLA DE DATOS
  ======================================================= -->
-<div class="card">
+<div class="card" style="background: var(--side-bg-color);">
     <div class="card-body collapse show">
 
         <!-- =====================================================
@@ -199,8 +253,9 @@
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered table-hover">
                     <tbody>
-                        <tr *ngFor="let item of titulosList;">
-                            <th scope="row">{{ item.id }}</th>
+                        <tr *ngFor="let item of titulosList; let i = index">
+                            <th scope="row">{{ i + 1 }}</th>
+                            <!--<td>{{ item.id }}</td>--> 
                             <td>{{ item.nombreTitulo }}</td>
                             <td>{{ item.tipo }}</td>
                             <td>{{ item.nivel }}</td>

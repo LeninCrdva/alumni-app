@@ -166,7 +166,7 @@
                   <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
 
                   <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento" class="form-input"
-                    id="InputFechaNacimiento" min="1960-01-01" max="2005-01-01"
+                    id="InputFechaNacimiento" min="1960-01-01" max="2005-12-31"
                     placeholder="Ingresa tu fecha de nacimiento">
                 </div>
 
@@ -574,11 +574,13 @@
                         <option value="Soltero/a">Soltero/a</option>
                         <option value="Casado/a">Casado/a</option>
                         <option value="Viudo/a">Viudo/a</option>
+                        <option value="Divorciado/a">Divorciado/a</option>
+                        <option value="Union Libre">Union Libre</option>
                       </select>
                       <label for="estadoCivil" class="form-label">Seleccione su estado civil</label>
                       <i class="ri-user-smile-line form-icon"></i>
                     </div>
-                    <div class="text-danger mb-4"
+                    <div class="oaerror danger mb-4"
                       *ngIf="(isSubmit && formCase2.get('estadoCivil')?.invalid) || formCase2.get('estadoCivil')?.hasError('required') && formCase2.get('estadoCivil')?.touched">
                       El estado civil es obligatorio.
                     </div>
@@ -586,14 +588,22 @@
 
                   <div class="mx-1 flex-grow-1">
                     <div class="form-group has-validation">
-                      <input class="form-input" required type="date" formControlName="anioGraduacion" [min]="getMinDate()" [max]="getCurrentDate()"
+                      <input class="form-input" required type="date" formControlName="anioGraduacion" [min]="minFormatDate()" [max]="getCurrentDate()"
                       id="anioGraduacion">
                       <label for="anioGraduacion" style="color: var(--alumni-color)">Fecha de Graduación</label>
                     </div>
 
-                    <div class="text-danger mb-4"
+                    <div class="oaerror danger mb-4"
                       *ngIf="formCase2.get('anioGraduacion')?.hasError('required') && formCase2.get('anioGraduacion')?.touched">
                       La fecha de graduación es obligatoria.
+                    </div>
+                    <div class="oaerror danger mb-4"
+                      *ngIf="formCase2.get('anioGraduacion')?.hasError('invalidMinDate') && formCase2.get('anioGraduacion')?.touched">
+                      Para registrarte debes haber graduado antes de la fecha actual y tener al menos 20 años.
+                    </div>
+                    <div class="oaerror danger mb-4"
+                      *ngIf="formCase2.get('anioGraduacion')?.hasError('invalidRangeAge') && formCase2.get('anioGraduacion')?.touched">
+                      Para registrarte debes haber graduado antes de la fecha actual y tener menos de 55 años.
                     </div>
                   </div>
                 </div>

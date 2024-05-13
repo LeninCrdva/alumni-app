@@ -8,18 +8,58 @@
     --alumni-dark: hsl(224, 82%, 47%);
     --white-color: hsl(0, 0%, 100%);
 
-    --dark: hsl(210, 12%, 10%);
-    --dark-x: hsl(217, 12%, 13%);
-
     /*========== Font y tipografia ==========*/
     --body-font: 'Poppins', sans-serif;
-    --normal-font-size: .85rem;
 
     /*========== Font weight ==========*/
     --font-regular: 400;
     --font-semi-bold: 600;
 
     --animate-duration: 2s;
+
+    /*========== Light Mode Colors ==========*/
+    --body-bg-color: #f0f3f6;
+    --card-comunity: linear-gradient(to right bottom, #fff6eb, #f1f2ff);
+    --filter-bg: linear-gradient(to right bottom, #fffbf6, #f4f9ff);
+    --side-bg-color: #ffffff;
+    --title-text-color: #212121;
+    --text-editor-color: #12205f;
+    --text-color: #000000;
+    --slide-hover-color: #F1F0F6;
+    --text-place-color: #888;
+    --indicator-color: #f0f2ff;
+    --indicator-bar-color: #2b57f7;
+    --scroll-bar-color: linear-gradient(to right bottom, #7d99ff, #2261ff);
+}
+
+.dark-mode {
+    --body-bg-color: #222527;
+    --card-comunity: #222527;
+    --side-bg-color: #121212;
+    --title-text-color: #e6e6e6;
+    --text-color: #ffffff;
+    --text-place-color: #b4b4b4;
+    --slide-hover-color: #26252a;
+    --indicator-color: linear-gradient(to right bottom, #1775f1, #7722ff);
+    --scroll-bar-color: linear-gradient(to right bottom, #7517f1, #1775f1);
+    --filter-bg: linear-gradient(to right bottom, #212121, #1d1d1d);
+    --indicator-bar-color: #ffffff;
+    --text-editor-color: #ffb300;
+}
+
+.dark-mode input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar {
+    width: 9px;
+    height: 8px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scroll-bar-color);
+    border-radius: 1rem;
 }
 
 * {
@@ -27,6 +67,9 @@
     scroll-behavior: smooth;
 }
 
+body {
+    background: var(--side-bg-color);
+}
 
 /** =============== PARTE DEL FONDO PARALLAX EN EL INICIO DE CADA PAGINA ===============*/
 
@@ -256,10 +299,85 @@ table.dataTable thead th:hover {
     box-shadow: 0 0 8px rgb(0, 111, 201);
 }
 
-
 .form-label {
     font-weight: bold;
     font-size: 15px;
+}
+
+/* Modo oscuro */
+
+.dark-mode .modal-content {
+    background-color: var(--side-bg-color);
+    color: white;
+}
+
+.dark-mode td,
+.dark-mode th {
+    background: var(--side-bg-color);
+    color: var(--text-color);
+}
+
+.dark-mode .table-responsive {
+    color: white;
+}
+
+.dark-mode .form-select {
+    background-color: var(--side-bg-color);
+    color: white;
+}
+
+.dark-mode .form-select::placeholder {
+    color: #5b5b5b;
+}
+
+.dark-mode .form-control {
+    background-color: var(--side-bg-color);
+    color: white;
+}
+
+.dark-mode .form-control::placeholder {
+    color: #5b5b5b;
+}
+
+.dark-mode .form-input {
+    background-color: var(--side-bg-color);
+    color: #ffffff;
+}
+
+.dark-mode .form-label {
+    color: #ffffff;
+}
+
+.dark-mode select {
+    background-color: var(--side-bg-color);
+    color: #ffffff;
+}
+
+.dark-mode .input-group-text {
+    background-color: var(--side-bg-color);
+    color: #ffffff;
+}
+
+.dark-mode .dataTables_filter input {
+    border-color: rgb(63, 63, 63);
+}
+
+.dark-mode .disabled>.page-link,
+.dark-mode .page-link.disabled {
+    background-color: #272a2c;
+    color: var(--text-color);
+}
+
+.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.dark-mode input[type="month"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.dark-mode input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }
 
 /** =============== Modificar el color de fondo del dropdown =============== */
@@ -273,7 +391,7 @@ table.dataTable thead th:hover {
     background-color: #1ca010 !important;
     border: none !important;
     border-radius: 7px !important;
-    max-width: 350px !important;
+    max-width: 575px !important;
     padding: 0 10px !important;
     transition: 250ms all ease-in-out;
 }
@@ -289,6 +407,29 @@ table.dataTable thead th:hover {
     font-weight: 600;
     text-align: center;
     padding: 10px;
+}
+
+.multiselect-dropdown .dropdown-list {
+    background: var(--side-bg-color) !important;
+    color: var(--text-color) !important;
+}
+
+.multiselect-dropdown .dropdown-list .item1 input {
+    background: var(--side-bg-color);
+    color: var(--text-color);
+}
+
+.multiselect-dropdown .dropdown-list .item2 li div {
+    color: var(--text-color) !important;
+}
+
+.multiselect-dropdown .dropdown-list .item2 li div::before {
+    border: 2px solid #1098ff !important;
+    border-radius: 8px;
+}
+
+.multiselect-dropdown .dropdown-list .item2 .multiselect-item-checkbox:hover {
+    background: var(--body-bg-color) !important;
 }
 
 .multiselect-dropdown .dropdown-list .no-data h5 {

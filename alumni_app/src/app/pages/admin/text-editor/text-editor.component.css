@@ -1,5 +1,5 @@
 .container_Editor {
-    background: #fff;
+    background: var(--side-bg-color);
     width: 100%;
     padding: 20px 20px;
     box-sizing: border-box;
@@ -24,9 +24,9 @@
     place-items: center;
     border-radius: 3px;
     border: none;
-    background-color: #fff;
+    background-color: var(--body-bg-color);
     outline: none;
-    color: #12205f;
+    color: var(--text-editor-color);
     cursor: pointer;
 }
 

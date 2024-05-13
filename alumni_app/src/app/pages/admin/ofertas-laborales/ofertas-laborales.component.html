@@ -38,7 +38,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="card" style="background: var(--side-bg-color);">
     <div class="card-body collapse show">
         <div class="d-flex">
             <button title="Actualizar datos de la tabla" (click)="loadData()" class="btn btn-success">
@@ -51,8 +51,9 @@
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered table-hover">
                     <tbody>
-                        <tr *ngFor="let ofert of ofertasLaboralesList;">
-                            <th scope="row">{{ ofert.id }}</th>
+                        <tr *ngFor="let ofert of ofertasLaboralesList;let i=index">
+                            <!--<th scope="row">{{ ofert.id }}</th>-->
+                            <th scope="row">{{ i+1}}</th>
                             <td>{{ ofert.areaConocimiento ? ofert.areaConocimiento : 'ADJUNTO EN LA IMAGEN' }}</td>
                             <td>{{ ofert.cargo ? ofert.cargo : 'ADJUNTO EN LA IMAGEN' }}</td>
                             <td>{{ ofert.experiencia ? ofert.experiencia : 'ADJUNTO EN LA IMAGEN' }}</td>
@@ -61,6 +62,9 @@
                             <td>{{ ofert.fechaPublicacion | date: 'dd/MM/yyyy HH:mm' }}</td>
                             <td> {{ ofert.estado }}</td>
                             <td>{{ ofert.nombreEmpresa }}</td>
+                            <td>
+                                <a href="{{ ofert.sitioweb }}" target="_blank">{{ ofert.sitioweb }}</a>
+                            </td>
                             <td class="text-center">
                                 <a data-bs-toggle="modal" data-bs-target="#m_modal_5" class="table-action mg-r-10"
                                     (click)="viewOfertaLaboral(ofert.id)">
@@ -187,9 +191,10 @@
                                                             <select class="form-input" formControlName="state"
                                                                 id="state">
                                                                 <option value="EN_EVALUACION">En evaluación</option>
-                                                                <option value="EN_CONVOCATORIA">Aprobar</option>
+                                                                <option value="EN_CONVOCATORIA" [disabled]="estadoSeleccionado === 'OTHER_STATE'">Aprobar</option>
                                                                 <option value="RECHAZADA_POR_ADMINISTRADOR">Rechazar
                                                                 </option>
+                                                                <option value="OTHER_STATE" disabled>Aprobada</option>
                                                             </select>
                                                             <label for="" class="form-label">Estado</label>
                                                             <i class="ri-user-smile-line form-icon"></i>
@@ -197,6 +202,15 @@
                                                     </form>
                                                 </div>
                                             </div>
+                                            <div class="flex-grow-1">
+                                                <div class="form-group mr-3">
+                                                    <!-- Utilizamos la etiqueta <a> para mostrar el enlace -->
+                                                    <a href="{{ ofertaLaboralDTO.sitioweb }}" target="_blank" class="form-input">{{ ofertaLaboralDTO.sitioweb }}</a>
+                                                    <label for="" class="form-label">Sitio Web</label>
+                                                    <i class="ri-user-smile-line form-icon"></i>
+                                                </div>
+                                            </div>
+                                            
                                             <div class="m-lg-2 text-center"
                                                 *ngIf="ofertaLaboralDTO.tipo === 'estilo3' || ofertaLaboralDTO.tipo === 'estilo2'">
                                                 <img src="{{ofertaLaboralDTO.fotoPortada}}" id="foto-portada"

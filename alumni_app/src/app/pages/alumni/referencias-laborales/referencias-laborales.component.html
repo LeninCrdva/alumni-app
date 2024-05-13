@@ -28,13 +28,23 @@
                                 <i class="fa-solid fa-signature"></i>
                             </a>
                             <input type="text" class="form-control" id="nombre" name="nombre"
-                                placeholder="Ingrese el nombre." formControlName="nombre" required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Ingrese el nombre de su capacitación.
+                                placeholder="Ingrese el nombre." formControlName="nombre" 
+                                [ngClass]="{ 'is-invalid': validateForm.get('nombre')?.invalid && (validateForm.get('nombre')?.dirty || validateForm.get('nombre')?.touched) }"
+                                required>
+                            <!-- Mensaje de error para el nombre de la institucion laboral -->
+                            <div class="oaerror danger invalid-feedback"
+                                *ngIf="validateForm.get('nombre')?.invalid && (validateForm.get('nombre')?.dirty || validateForm.get('nombre')?.touched)">
+                                <ng-container *ngIf="validateForm.get('nombre')?.errors?.['required']">
+                                    <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la persona de su
+                                    referencia laboral.
+                                </ng-container>
+                                <ng-container *ngIf="validateForm.get('nombre')?.errors?.['pattern']">
+                                    <strong>Formato Inválido</strong> - El nombre de la persona  debe contener solo letras y tildes.
+                                </ng-container>
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="form-group col-lg-6">
                         <label for="institucion" class="form-label">INSTITUCIÓN:</label>
                         <div class="input-group has-validation">
@@ -43,11 +53,20 @@
                             </span>
                             <input type="text" class="form-control" id="institucion" name="institucion"
                                 placeholder="Ingrese el nombre de la institucion." formControlName="institucion"
+                                [ngClass]="{ 'is-invalid': validateForm.get('institucion')?.invalid && (validateForm.get('institucion')?.dirty || validateForm.get('institucion')?.touched) }"
                                 required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución de su
-                                referencia laboral.
+                            <!-- Mensaje de error para el nombre de la institucion laboral -->
+                            <div class="oaerror danger invalid-feedback"
+                                *ngIf="validateForm.get('institucion')?.invalid && (validateForm.get('institucion')?.dirty || validateForm.get('nombreReferencia')?.touched)">
+                                <ng-container *ngIf="validateForm.get('institucion')?.errors?.['required']">
+                                    <strong>Dato Faltante</strong> - Por favor, ingrese el nombre de la institución de su
+                                    referencia laboral.
+                                </ng-container>
+                                <ng-container *ngIf="validateForm.get('institucion')?.errors?.['pattern']">
+                                    <strong>Formato Inválido</strong> - El nombre debe contener solo letras, espacios y tildes.
+                                </ng-container>
                             </div>
+                    
                         </div>
                     </div>
 
@@ -58,10 +77,19 @@
                                 <i class="fa-solid fa-envelope-open-text"></i>
                             </a>
                             <input type="text" class="form-control" id="email" name="email"
-                                placeholder="Ingrese el correo electrónico." formControlName="email" required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, ingrese el correo electrónico.
-                            </div>
+                                placeholder="Ingrese el correo electrónico." formControlName="email" 
+                                [ngClass]="{ 'is-invalid': validateForm.get('email')?.invalid && (validateForm.get('email')?.dirty || validateForm.get('email')?.touched) }" required>
+                                <!-- Mensaje de error para el correo electrónico -->
+                                <div class="oaerror danger invalid-feedback"
+                                    *ngIf="validateForm.get('email')?.invalid && (validateForm.get('email')?.dirty || validateForm.get('email')?.touched)">
+                                    <ng-container *ngIf="validateForm.get('email')?.errors?.['required']">
+                                        <strong>Dato Faltante</strong> - Por favor, especifique el correo electrónico.
+                                    </ng-container>
+                                    <ng-container *ngIf="validateForm.get('email')?.errors?.['email']">
+                                        <strong>Formato Inválido</strong> - Por favor, introduzca un correo electrónico válido.
+                                    </ng-container>
+                                    
+                                </div>
                         </div>
                     </div>
                 </form>
@@ -84,7 +112,7 @@
 <!-- =====================================================
     *          TABLA DE DATOS
  ======================================================= -->
-<div class="card">
+<div class="card" style="background: var(--side-bg-color);">
     <div class="card-body collapse show">
 
         <!-- =====================================================
@@ -123,11 +151,12 @@
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered table-hover">
                     <tbody>
-                        <tr *ngFor="let item of referenciaProfesionalList;">
-                            <th scope="row">{{ item.id }}</th>
+                        <tr *ngFor="let item of referenciaProfesionalList;let i = index">
+                            <th scope="row">{{ i+1 }}</th>
+                            <!--<td>{{ item.id}}</td>-->
                             <td>{{ item.nombre }}</td>
-                            <td>{{ item.email }}</td>
                             <td>{{ item.institucion }}</td>
+                            <td>{{ item.email }}</td>
                             <td class="text-right text-center">
                                 <button (click)="onEditarClick(item.id)" data-bs-toggle="modal"
                                     data-bs-target="#modalData" class="btn btn-label-primary btn-sm mg-y-5">

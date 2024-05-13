@@ -8,7 +8,7 @@
 </section>
 
 <div class="col-md-12 col-lg-12">
-    <div class="card">
+    <div class="card" style="background-color: var(--side-bg-color)">
         <div class="card-body collapse show" id="collapse1">
             <!-- Modal -->
             <div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
@@ -34,23 +34,41 @@
                                                     *ngIf="registerPeriodForm.get('nombrePeriodo')?.hasError('required') && registerPeriodForm.get('nombrePeriodo')?.touched">
                                                     El nombre del período es obligatorio.
                                                 </div>
+                                                <div class="text-danger"
+                                                    *ngIf="registerPeriodForm.get('nombrePeriodo')?.hasError('uniquePeriodName') && registerPeriodForm.get('nombrePeriodo')?.touched">
+                                                    El nombre del período ya existe.
+                                                </div>
+
+                                                <div class="text-danger"
+                                                *ngIf="registerPeriodForm.get('nombrePeriodo')?.hasError('pattern') && registerPeriodForm.get('nombrePeriodo')?.touched">
+                                                El nombre del período no puede contener caracteres especiales y debe tener un mínimo de 5 caracteres y un máximo de 50.
+                                            </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-control-label active">Fecha Inicio: <span
                                                         class="tx-danger">*</span></label>
-                                                <input type="date" formControlName="fecha_inicio">
+                                                <input type="date" formControlName="fecha_inicio" [min]="getMinStartDate()"[max]="getTodayDate()">
                                                 <div class="text-danger"
                                                     *ngIf="registerPeriodForm.get('fecha_inicio')?.hasError('required') && registerPeriodForm.get('fecha_inicio')?.touched">
                                                     Elija una fecha de apertura.
+                                                </div>
+                                                <div class="text-danger"
+                                                    *ngIf="registerPeriodForm.get('fecha_inicio')?.hasError('invalidDate') && registerPeriodForm.get('fecha_inicio')?.touched">
+                                                    La fecha de apertura no puede ser mayor a la fecha de cierre.
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-control-label active">Fecha Fin: <span
                                                         class="tx-danger">*</span></label>
-                                                <input type="date" formControlName="fecha_fin">
+                                                <input type="date" formControlName="fecha_fin" [min]="getMinEndDate()"
+                                                    [max]="getMaxEndDate()" [readOnly]="activeDatePicker">
                                                 <div class="text-danger"
                                                     *ngIf="registerPeriodForm.get('fecha_fin')?.hasError('required') && registerPeriodForm.get('fecha_fin')?.touched">
                                                     Elija una fecha de cierre.
+                                                </div>
+                                                <div class="text-danger"
+                                                    *ngIf="registerPeriodForm.get('fecha_fin')?.hasError('invalidDate') && registerPeriodForm.get('fecha_fin')?.touched">
+                                                    La fecha de cierre no puede ser menor a la fecha de apertura.
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -58,8 +76,7 @@
                                                         class="tx-danger">*</span></label>
                                                 <ng-multiselect-dropdown name="carreras"
                                                     [placeholder]="'Seleccione las carreras'" [data]="careerList"
-                                                    formControlName="carreras" [disabled]="disabled"
-                                                    [settings]="dropdownSettings">
+                                                    formControlName="carreras" [settings]="dropdownSettings">
                                                 </ng-multiselect-dropdown>
                                             </div>
                                         </div>
@@ -70,7 +87,7 @@
 
                         <div class="modal-footer">
                             <button (click)="!editMode ? createPeriod() : UpdatePeriod()" type="submit"
-                                data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong btn-primary">
+                                class="btn btn-oblong btn-primary" [disabled]="!registerPeriodForm.valid">
                                 {{editMode ? 'Guardar Cambios' : 'Crear'}}
                             </button>
                             <button data-bs-dismiss="modal" id="close-button"

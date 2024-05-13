@@ -9,8 +9,9 @@ export class Persona {
     'apellidoMaterno': string;
     'sexo'?: Sexo;
 }
+
 export enum Sexo {
     MASCULINO = 'MASCULINO',
     FEMENINO = 'FEMENINO',
     OTRO = 'OTRO'
-  }
+}

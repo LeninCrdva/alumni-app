@@ -133,7 +133,7 @@
                     routerLinkActive="router-link-active" (click)="setActiveMenuItem('Ciudades y Provincia')"
                     href="javascript:void(0)"><i class='fa-solid fa-tree-city icon'></i>Ciudades y Provincia
                 </a>
-               
+
                 <a [class.active]="activeMenuItem === 'Empresas'" [routerLink]="['admin/empresas']"
                     routerLinkActive="router-link-active" (click)="setActiveMenuItem('Empresas')"
                     href="javascript:void(0)"><i class='fa-solid fas fa-building icon'></i>Empresas
@@ -142,7 +142,7 @@
                     routerLinkActive="router-link-active" (click)="setActiveMenuItem('OfertasLaborales')"
                     href="javascript:void(0)"><i class='fa-solid fas fa-briefcase icon'></i>Ofertas Laborales
                 </a>
-               
+
             </li>
 
             <li class="divider" data-text="Analitica y Reportes">Analítica y Reportes</li>
@@ -157,7 +157,8 @@
                     <li><a [routerLink]="['/system/admin/documentos']" routerLinkActive="router-link-active">Informes
                             Graduado</a>
                     </li>
-                    <li><a [routerLink]="['/system/admin/graduado-carrera-document']" routerLinkActive="router-link-active">Informes
+                    <li><a [routerLink]="['/system/admin/graduado-carrera-document']"
+                            routerLinkActive="router-link-active">Informes
                             Graduado por Carrera</a>
                     </li>
                     <li><a [routerLink]="['/system/admin/empresa-document']"
@@ -186,41 +187,43 @@
             <li class="divider" data-text="Encuestas">Encuestas</li>
 
             <li>
-                
                 <a href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i>Encuestas<i
                         class='bx bx-chevron-right icon-right'></i></a>
                 <ul class="side-dropdown">
-                   
-                
-                    <li> 
+
+                    <li>
                         <a [class.active]="activeMenuItem === 'Encuestas'" [routerLink]="['admin/encuestas']"
-                        routerLinkActive="router-link-active" (click)="setActiveMenuItem('Encuestas')"
-                        href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i>Encuestas
-                    </a>
+                            routerLinkActive="router-link-active" (click)="setActiveMenuItem('Encuestas')"
+                            href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i>Encuestas
+                        </a>
                     </li>
-                    <li><a [class.active]="activeMenuItem === 'Ver Encuestas creadas'" [routerLink]="['admin/encuestascard']"
-                        routerLinkActive="router-link-active" (click)="setActiveMenuItem('Ver Encuestas creadas')"
-                        href="javascript:void(0)"><i class='fa-solid fas fa-poll icon'></i> Ver Encuestas Creadas
-                    </a>
+                    <li><a [class.active]="activeMenuItem === 'Ver Encuestas creadas'"
+                            [routerLink]="['admin/encuestascard']" routerLinkActive="router-link-active"
+                            (click)="setActiveMenuItem('Ver Encuestas creadas')" href="javascript:void(0)"><i
+                                class='fa-solid fas fa-poll icon'></i> Ver Encuestas Creadas
+                        </a>
                     </li>
 
-                    <li> <a [class.active]="activeMenuItem === 'Respuestas de Encuestas'" [routerLink]="['admin/respuestas']"
-                        routerLinkActive="router-link-active" (click)="setActiveMenuItem('Respuestas de Encuestas')"
-                        href="javascript:void(0)"> <i class='fa-solid fas fa-chart-pie icon'></i> Respuestas de Encuestas
-                    </a>
-                </li>
+                    <li> <a [class.active]="activeMenuItem === 'Respuestas de Encuestas'"
+                            [routerLink]="['admin/respuestas']" routerLinkActive="router-link-active"
+                            (click)="setActiveMenuItem('Respuestas de Encuestas')" href="javascript:void(0)"> <i
+                                class='fa-solid fas fa-chart-pie icon'></i> Respuestas de Encuestas
+                        </a>
+                    </li>
 
-                <li> <a [class.active]="activeMenuItem === 'Seguimiento a Graduados'" [routerLink]="['admin/seguimiento']"
-                    routerLinkActive="router-link-active" (click)="setActiveMenuItem('Seguimiento a Graduados')"
-                    href="javascript:void(0)"> <i class='fa-solid fas fa-user-graduate icon'></i> Seguimiento
-                </a>
-            </li>
-                
-            <li> <a [class.active]="activeMenuItem === 'Respuestas Encuestas Carrera'" [routerLink]="['admin/respuestas-carrera']"
-                routerLinkActive="router-link-active" (click)="setActiveMenuItem('Respuestas Encuestas Carrera')"
-                href="javascript:void(0)"> <i class='fas fa-comment-alt icon'></i> Respuestas Encuestas Carrera
-            </a>
-        </li>
+                    <li> <a [class.active]="activeMenuItem === 'Seguimiento a Graduados'"
+                            [routerLink]="['admin/seguimiento']" routerLinkActive="router-link-active"
+                            (click)="setActiveMenuItem('Seguimiento a Graduados')" href="javascript:void(0)"> <i
+                                class='fa-solid fas fa-user-graduate icon'></i> Seguimiento
+                        </a>
+                    </li>
+
+                    <li> <a [class.active]="activeMenuItem === 'Respuestas Encuestas Carrera'"
+                            [routerLink]="['admin/respuestas-carrera']" routerLinkActive="router-link-active"
+                            (click)="setActiveMenuItem('Respuestas Encuestas Carrera')" href="javascript:void(0)"> <i
+                                class='fas fa-comment-alt icon'></i> Respuestas Encuestas Carrera
+                        </a>
+                    </li>
 
                 </ul>
             </li>
@@ -233,7 +236,8 @@
         <ul class="side-menu" [class.hidden]="!showEmpresarioOptions">
 
             <li>
-                <a [class.active]="activeMenuItem === 'Inicio'" [routerLink]="['/system/company']" (click)="setActiveMenuItem('Inicio')">
+                <a [class.active]="activeMenuItem === 'Inicio'" [routerLink]="['/system/company']"
+                    (click)="setActiveMenuItem('Inicio')">
                     <i class='bx bxs-dashboard icon'></i> Inicio
                 </a>
             </li>
@@ -289,17 +293,19 @@
                         class='fa-solid fas fa-chart-pie icon'></i> Respuestas de Encuestas
                 </a>
             </li>
-            <li> <a [class.active]="activeMenuItem === 'Seguimiento a Graduados'" [routerLink]="['career-manager/seguimiento']"
-                routerLinkActive="router-link-active" (click)="setActiveMenuItem('Seguimiento a Graduados')"
-                href="javascript:void(0)"> <i class='fa-solid fas fa-user-graduate icon'></i> Seguimiento
-            </a>
-        </li>
-            
-        <li> <a [class.active]="activeMenuItem === 'Respuestas Encuestas Carrera'" [routerLink]="['career-manager/respuestas-carrera']"
-            routerLinkActive="router-link-active" (click)="setActiveMenuItem('Respuestas Encuestas Carrera')"
-            href="javascript:void(0)"> <i class='fas fa-comment-alt icon'></i> Respuestas Encuestas Carrera
-        </a>
-    </li>
+            <li> <a [class.active]="activeMenuItem === 'Seguimiento a Graduados'"
+                    [routerLink]="['career-manager/seguimiento']" routerLinkActive="router-link-active"
+                    (click)="setActiveMenuItem('Seguimiento a Graduados')" href="javascript:void(0)"> <i
+                        class='fa-solid fas fa-user-graduate icon'></i> Seguimiento
+                </a>
+            </li>
+
+            <li> <a [class.active]="activeMenuItem === 'Respuestas Encuestas Carrera'"
+                    [routerLink]="['career-manager/respuestas-carrera']" routerLinkActive="router-link-active"
+                    (click)="setActiveMenuItem('Respuestas Encuestas Carrera')" href="javascript:void(0)"> <i
+                        class='fas fa-comment-alt icon'></i> Respuestas Encuestas Carrera
+                </a>
+            </li>
 
         </ul>
 
@@ -312,7 +318,7 @@
         <nav>
             <i class='bx bx-menu toggle-sidebar'></i>
             <form action="#">
-                <a style="font-weight: 700; font-size: 22px;">{{activeMenuItem}}</a>
+                <a class="title-page">{{activeMenuItem}}</a>
             </form>
             <div class="profile dropdown-toggle">
                 <a>Bienvenido "{{ name }}"</a>
@@ -326,6 +332,12 @@
                     <li><a [routerLink]="['/inicio']" routerLinkActive="router-link-active"
                             (click)="cerrarSesionconclick()"><i class='bx bx-exit icon'></i> Cerrar Sesion</a></li>
                 </ul>
+            </div>
+            <div class="light-btn-icon" (click)="toggleDarkMode()" [class.dark-btn-icon]="darkMode">
+                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                </svg>
             </div>
         </nav>
         <!-- NAVBAR -->

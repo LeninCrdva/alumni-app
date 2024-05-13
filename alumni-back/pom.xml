@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ec.edu.ista</groupId>
-    <artifactId>springgc1</artifactId>
+    <artifactId>alumni</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springgc1</name>
     <description>API to manage a job portal</description>

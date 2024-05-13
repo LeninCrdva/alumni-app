@@ -2,7 +2,7 @@
   max-width: 1300px;
   margin: 10px auto;
   padding: 20px;
-  background-color: #fff;
+  background-color: var(--side-bg-color);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -64,11 +64,11 @@ textarea.form-control {
 }
 
 .card-body {
-  background-color: #fff;
+  background-color: var(--side-bg-color);
 }
 
 .card-footer {
-  background-color: #f8f9fa;
+  background-color: var(--side-bg-color);
   padding: 10px 20px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;

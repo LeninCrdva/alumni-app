@@ -25,6 +25,7 @@ export class OfertasLaboralesComponent implements OnInit {
   stateForm: FormGroup;
   ofertasLaboralesList: ofertaLaboralDTO[] = [];
   ofertaLaboralDTO: ofertaLaboralDTO = new ofertaLaboralDTO();
+  estadoSeleccionado: string = '';
 
   idEdit: number = 0;
 
@@ -45,7 +46,7 @@ export class OfertasLaboralesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
-    const columnTitles = ['#', 'Área de conocimiento', 'Cargo', 'Experiencia', 'Salario', 'Fecha de cierre', 'Fecha de publicación', 'Estado', 'Nombre de la empresa'];
+    const columnTitles = ['#', 'Área de conocimiento', 'Cargo', 'Experiencia', 'Salario', 'Fecha de cierre', 'Fecha de publicación', 'Estado', 'Nombre de la empresa','Sitio Web'];
     this.dtoptions = this.dtService.setupDtOptions(columnTitles, 'Buscar ofertas...');
     this.filterService.initializeDropdowns('filterTable', columnTitles,);
   }
@@ -106,8 +107,11 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   patchStateForm(estado: string) {
+    const estadosPermitidos = ['EN_EVALUACION', 'EN_CONVOCATORIA', 'RECHAZADA_POR_ADMINISTRADOR'];
+    this.estadoSeleccionado = estadosPermitidos.includes(estado) ? estado : 'OTHER_STATE';
+  
     this.stateForm.patchValue({
-      state: estado
+      state: this.estadoSeleccionado
     });
   }
 

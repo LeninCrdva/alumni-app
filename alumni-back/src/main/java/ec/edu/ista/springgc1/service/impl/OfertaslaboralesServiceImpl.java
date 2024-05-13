@@ -91,7 +91,7 @@ public class OfertaslaboralesServiceImpl extends GenericServiceImpl<OfertasLabor
         ofertaLaboral.setTipo(dto.getTipo());
         ofertaLaboral.setFotoPortada(dto.getFotoPortada());
         ofertaLaboral.setTiempo(dto.getTiempo());
-
+        ofertaLaboral.setSitioweb(dto.getSitioweb());
         return ofertaLaboral;
     }
 
@@ -111,7 +111,7 @@ public class OfertaslaboralesServiceImpl extends GenericServiceImpl<OfertasLabor
         dto.setTipo(entity.getTipo());
         dto.setFotoPortada(entity.getFotoPortada());
         dto.setTiempo(entity.getTiempo());
-
+        dto.setSitioweb(entity.getSitioweb());
         return dto;
     }
 
@@ -167,6 +167,7 @@ public class OfertaslaboralesServiceImpl extends GenericServiceImpl<OfertasLabor
         existingOfertaLaboral.setFotoPortada(updatedOfertaLaboralDTO.getFotoPortada());
         existingOfertaLaboral.setTipo(updatedOfertaLaboralDTO.getTipo());
         existingOfertaLaboral.setTiempo(ObjectUtils.isEmpty(updatedOfertaLaboralDTO.getTiempo()) ? existingOfertaLaboral.getTiempo() : updatedOfertaLaboralDTO.getTiempo());
+        existingOfertaLaboral.setSitioweb(ObjectUtils.isEmpty(updatedOfertaLaboralDTO.getSitioweb()) ? existingOfertaLaboral.getSitioweb() : updatedOfertaLaboralDTO.getSitioweb());
         Empresa empresa = empresarepository.findByNombre(updatedOfertaLaboralDTO.getNombreEmpresa()).orElseThrow(
                 () -> new ResourceNotFoundException("Empresa", updatedOfertaLaboralDTO.getNombreEmpresa()));
 

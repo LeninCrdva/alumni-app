@@ -28,9 +28,18 @@
                                 <i class="fa-solid fa-spell-check"></i>
                             </a>
                             <input type="text" class="form-control" id="cargo"
-                                placeholder="Ingrese el cargo que desempeño" formControlName="cargo" required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - El cargo es obligatorio.
+                                placeholder="Ingrese el cargo que desempeño" formControlName="cargo"
+                                [ngClass]="{ 'is-invalid': validateForm.get('cargo')?.invalid && (validateForm.get('cargo')?.dirty || validateForm.get('cargo')?.touched) }"
+                                required>
+
+                            <div class="oaerror danger invalid-feedback"
+                                *ngIf="validateForm.get('cargo')?.invalid && (validateForm.get('cargo')?.dirty || validateForm.get('cargo')?.touched)">
+                                <ng-container *ngIf="validateForm.get('cargo')?.errors?.['pattern']">
+                                    <strong>Caracteres no permitidos</strong> - Solo se admiten letras y espacio.
+                                </ng-container>
+                                <ng-container *ngIf="!validateForm.get('cargo')?.errors?.['pattern']">
+                                    <strong>Dato Faltante</strong> - El cargo es obligatorio.
+                                </ng-container>
                             </div>
                         </div>
                     </div>
@@ -41,9 +50,24 @@
                                 <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <input type="text" class="form-control" id="duracion"
-                                placeholder="Ingrese la duracion de su experiencia" formControlName="duracion" required>
+                                placeholder="Ingrese la duracion de su experiencia" formControlName="duracion"
+                                [ngClass]="{ 'is-invalid': validateForm.get('duracion')?.invalid && (validateForm.get('duracion')?.dirty || validateForm.get('duracion')?.touched) }"
+                                required>
                             <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - La duración de su experiencia es obligatorio.
+                                <ng-container *ngIf="validateForm.get('duracion')?.errors?.['required']">
+                                    <strong>Dato Faltante</strong> - La duración de su experiencia es obligatoria.
+                                </ng-container>
+                                <ng-container *ngIf="validateForm.get('duracion')?.errors?.['minlength']">
+                                    <strong>Longitud Mínima Insuficiente</strong> - La duración debe tener al menos 2
+                                    numeros.
+                                </ng-container>
+                                <ng-container *ngIf="validateForm.get('duracion')?.errors?.['maxlength']">
+                                    <strong>Longitud Máxima Excedida</strong> - La duración no puede tener más de 10
+                                    numeros.
+                                </ng-container>
+                                <ng-container *ngIf="validateForm.get('duracion')?.errors?.['pattern']">
+                                    <strong>Formato Inválido</strong> - Solo se permiten números.
+                                </ng-container>
                             </div>
                         </div>
                     </div>
@@ -55,9 +79,17 @@
                             </a>
                             <input type="text" class="form-control" id="institucionNombre"
                                 placeholder="Ingrese el nombre de la institución." formControlName="institucionNombre"
+                                [ngClass]="{ 'is-invalid': validateForm.get('institucionNombre')?.invalid && (validateForm.get('institucionNombre')?.dirty || validateForm.get('institucionNombre')?.touched) }"
                                 required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - El nombre de la institución es obligatorio.
+
+                            <div class="oaerror danger invalid-feedback"
+                                *ngIf="validateForm.get('institucionNombre')?.invalid && (validateForm.get('institucionNombre')?.dirty || validateForm.get('institucionNombre')?.touched)">
+                                <ng-container *ngIf="validateForm.get('institucionNombre')?.errors?.['pattern']">
+                                    <strong>Caracteres no permitidos</strong> - Solo se admiten letras y espacio.
+                                </ng-container>
+                                <ng-container *ngIf="!validateForm.get('institucionNombre')?.errors?.['pattern']">
+                                    <strong>Dato Faltante</strong> - El nombre de la institución es obligatorio.
+                                </ng-container>
                             </div>
                         </div>
                     </div>
@@ -68,10 +100,20 @@
                                 <i class="fa-solid fa-person-digging"></i>
                             </span>
                             <input type="text" class="form-control" id="actividad"
-                                placeholder="Ingrese la actividad que desempeño" formControlName="actividad" required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, indique cual fue La actividad que desempeño.
+                                placeholder="Ingrese la actividad que desempeño" formControlName="actividad"
+                                [ngClass]="{ 'is-invalid': validateForm.get('actividad')?.invalid && (validateForm.get('actividad')?.dirty || validateForm.get('actividad')?.touched) }"
+                                required>
+                            <div class="oaerror danger invalid-feedback"
+                                *ngIf="validateForm.get('actividad')?.invalid && (validateForm.get('actividad')?.dirty || validateForm.get('actividad')?.touched)">
+                                <ng-container *ngIf="validateForm.get('actividad')?.errors?.['pattern']">
+                                    <strong>Caracteres no permitidos</strong> - Solo se admiten letras y espacio.
+                                </ng-container>
+                                <ng-container *ngIf="!validateForm.get('actividad')?.errors?.['pattern']">
+                                    <strong>Dato Faltante</strong> - Por favor, indique cual fue La actividad que
+                                    desempeño.
+                                </ng-container>
                             </div>
+
                         </div>
                     </div>
                     <div class="form-group col-lg-12">
@@ -82,10 +124,19 @@
                             </a>
                             <input type="text" class="form-control" id="area_trabajo"
                                 placeholder="Ingrese el área de trabajo que desempeño" formControlName="area_trabajo"
+                                [ngClass]="{ 'is-invalid': validateForm.get('area_trabajo')?.invalid && (validateForm.get('area_trabajo')?.dirty || validateForm.get('area_trabajo')?.touched) }"
                                 required>
-                            <div class="oaerror danger invalid-feedback">
-                                <strong>Dato Faltante</strong> - Por favor, especifique el área de trabajo que desempeño.
+                            <div class="oaerror danger invalid-feedback"
+                                *ngIf="validateForm.get('area_trabajo')?.invalid && (validateForm.get('area_trabajo')?.dirty || validateForm.get('area_trabajo')?.touched)">
+                                <ng-container *ngIf="validateForm.get('area_trabajo')?.errors?.['pattern']">
+                                    <strong>Caracteres no permitidos</strong> - Solo se admiten letras y espacio.
+                                </ng-container>
+                                <ng-container *ngIf="!validateForm.get('area_trabajo')?.errors?.['pattern']">
+                                    <strong>Dato Faltante</strong> - Por favor, especifique el área de trabajo que
+                                    desempeño.
+                                </ng-container>
                             </div>
+
                         </div>
                     </div>
                 </form>
@@ -108,7 +159,7 @@
 <!-- =====================================================
     *          TABLA DE DATOS
  ======================================================= -->
-<div class="card">
+<div class="card" style="background: var(--side-bg-color);">
     <div class="card-body collapse show">
 
         <!-- =====================================================
@@ -127,7 +178,8 @@
 
                 <ng-multiselect-dropdown style="width: 25rem;" *ngIf="filterService.editFilterTabs['filterTable']"
                     [placeholder]="'Act / Desc elementos'" [settings]="filterService.dropdownSettings['filterTable']"
-                    [data]="filterService.dropdownLists['filterTable']" [(ngModel)]="filterService.selectedItems['filterTable']"
+                    [data]="filterService.dropdownLists['filterTable']"
+                    [(ngModel)]="filterService.selectedItems['filterTable']"
                     (onSelect)="filterService.onItemSelect($event)"
                     (onSelectAll)="filterService.onSelectAll('filterTable')"
                     (onDeSelect)="filterService.onItemDeSelect($event)"
@@ -149,8 +201,9 @@
                 <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger"
                     class="table table-bordered table-hover">
                     <tbody>
-                        <tr *ngFor="let item of experienciaList;">
-                            <th scope="row">{{ item.id }}</th>
+                        <tr *ngFor="let item of experienciaList; let i = index">
+                            <th scope="row">{{ i+1 }}</th>
+                            <!--<td>{{ item.id }}</td>-->
                             <td>{{ item.cargo }}</td>
                             <td>{{ item.duracion }}</td>
                             <td>{{ item.areaTrabajo }}</td>

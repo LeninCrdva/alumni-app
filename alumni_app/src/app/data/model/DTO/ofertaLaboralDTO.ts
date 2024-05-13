@@ -12,5 +12,6 @@ export class ofertaLaboralDTO {
     'tipo'?: string;
     'tiempo'?: string;
     'fotoPortada'?: string;
+    'sitioweb': string;
     [key: string]: any;
 }

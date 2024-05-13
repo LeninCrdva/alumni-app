@@ -22,6 +22,7 @@ import { ImageHandlerServiceFoto } from '../../../data/service/ImageHandlerServi
 import { PdfHandlerService } from '../../../data/service/pdfHandlerService.service';
 import { DataValidationService } from '../../../data/service/data-validation.service';
 import { ValidatorEc } from '../../../data/ValidatorEc.service';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -106,7 +107,7 @@ export class RegisterComponent implements OnInit {
 
     this.formCase2 = this.fb.group({
       ciudad: ['', Validators.required],
-      anioGraduacion: ['', Validators.required],
+      anioGraduacion: ['', [Validators.required, this.validateMinRangeTitledDate(), this.validateMaxRangeTitleDate()]],
       emailPersonal: ['', [Validators.required, Validators.email]],
       estadoCivil: ['', Validators.required],
     });
@@ -478,8 +479,73 @@ export class RegisterComponent implements OnInit {
     };
   }
 
-  getMinDate(): string {
-    return new Date(2000, 0, 1).toISOString().split('T')[0];
+  getMinDate(): Date | null {
+    const birthDate = this.registerForm.get('fechaNacimiento')?.value ?? null;
+    if (!birthDate) return null;
+
+    const yearsToAdd = 20;
+    const newDate = new Date(birthDate);
+    newDate.setFullYear(newDate.getFullYear() + yearsToAdd);
+    return newDate;
+  }
+
+  minFormatDate(): string {
+    const minDate = this.getMinDate();
+    return minDate ? minDate.toISOString().split('T')[0] : '';
+  }
+
+  getCurrentAge(): number {
+    const birthDate = this.registerForm.get('fechaNacimiento')?.value;
+
+    if (!birthDate) {
+      return 0;
+    }
+
+    const birth = new Date(birthDate);
+    const today = new Date();
+
+    if (isNaN(birth.getTime())) {
+      return 0;
+    }
+
+    if (birth > today) {
+      return 0;
+    }
+
+    let age = today.getFullYear() - birth.getFullYear();
+    const month = today.getMonth() - birth.getMonth();
+
+    if (month < 0 || (month === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+
+
+  validateMinRangeTitledDate(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const date = new Date(control.value);
+      const minDate = this.getMinDate();
+
+      if (!minDate || !date) {
+        return null;
+      }
+
+      const minDateObj = new Date(minDate);
+
+      return minDateObj <= date ? null : { invalidMinDate: true };
+    };
+  }
+
+  validateMaxRangeTitleDate(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const age = this.getCurrentAge();
+
+      console.log('age', age);
+
+      return age <= 55 && age >= 20 ? null : { invalidRangeAge: true };
+    };
   }
 
   getCurrentDate(): string {

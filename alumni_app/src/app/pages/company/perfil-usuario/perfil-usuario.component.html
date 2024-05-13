@@ -1,17 +1,20 @@
 <!-- Hero Start -->
-<section class="bg-half-260 pb-4 d-table w-100" style="background: url('../../../../assets/imgs/bg/Isuta_bg.jpg'); background-repeat: no-repeat; background-size: cover;">
+<section class="bg-half-260 pb-4 d-table w-100"
+    style="background: url('../../../../assets/imgs/bg/Isuta_bg.jpg'); background-repeat: no-repeat; background-size: cover;">
     <div class="bg-overlay"></div>
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="candidate-detail text-center text-md-left p-4 rounded shadow bg-white">
+                <div class="candidate-detail text-center text-md-left p-4 rounded shadow"
+                    style="background-color: var(--side-bg-color); color: var(--text-color);">
                     <div class="row align-items-end">
                         <div class="col-md-8">
                             <div class="candidate-detail-top align-items-center">
                                 <img src="{{usuarios.urlImagen}}"
                                     class="avatar avatar-medium rounded-circle shadow mr-md-3" alt="">
                                 <div class="content mt-4 mt-sm-0">
-                                    <h4 class="mb-0" style="padding-left: 30px;">{{usuarios?.persona?.primerNombre}} {{ usuarios?.persona?.segundoNombre}}</h4>
+                                    <h4 class="mb-0" style="padding-left: 30px;">{{usuarios?.persona?.primerNombre}} {{
+                                        usuarios?.persona?.segundoNombre}}</h4>
                                     <h6 class="text-muted">{{usuarios?.rol?.descripcion}}</h6>
                                 </div>
                             </div>
@@ -19,7 +22,9 @@
 
                         <div class="col-md-4 mt-4 mt-sm-0">
                             <div class="text-md-right">
-                                <a routerLinkActive="router-link-active" class="btn btn-outline-primary mt-2 ml-2" data-bs-toggle="modal" data-bs-target="#m_modal_4" style="border: 0cap;">Completar Perfil</a>
+                                <a routerLinkActive="router-link-active" class="btn btn-outline-primary mt-2 ml-2"
+                                    data-bs-toggle="modal" data-bs-target="#m_modal_4" style="border: 0cap;">Completar
+                                    Perfil</a>
 
                             </div>
                         </div><!--end col-->
@@ -37,13 +42,14 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-                <div class="sticky-bar rounded bg-white shadow">
+                <div class="sticky-bar rounded shadow"
+                    style="background-color: var(--side-bg-color); color: var(--text-color);">
                     <div class="border-bottom p-4">
-                        <h5 class="mb-0">Información personal</h5>
+                        <h5 class="mb-0"><i class="fa-regular fa-id-card fa-lg"></i> Información personal</h5>
                     </div>
 
                     <div class="p-4">
-                        <div class="d-flex align-items-center mt-3">
+                        <div class="d-flex align-items-center">
                             <i data-feather="map-pin" class="float-left mr-3"></i>
                             <div class="overflow-hidden d-block">
                                 <h6 class="mb-0">Estado :</h6>
@@ -64,15 +70,21 @@
                                 <p class="text-muted mb-0">{{usuarios?.persona?.telefono}}</p>
                             </div>
                         </div>
-                        </div>
+                    </div>
                 </div>
             </div><!--end col-->
 
             <div class="col-lg-8 col-md-6 col-12 mt-4 pt-2">
-                <div class="rounded shadow bg-white p-4">
+                <div class="rounded shadow p-4"
+                    style="background-color: var(--side-bg-color); color: var(--text-color);">
                     <div>
-                        <h5 class="mb-0">Información de la empresa</h5>
-                        <p> Pequeña Emprendedora S.A. es una empresa de servicios de consultoría especializada en asesorar a pequeños negocios y emprendedores locales. Nos dedicamos a proporcionar soluciones personalizadas para ayudar a nuestros clientes a alcanzar sus objetivos comerciales. Con un enfoque centrado en el cliente, nuestro equipo altamente calificado trabaja de cerca con cada cliente para brindar asesoramiento estratégico y apoyo en áreas clave como planificación empresarial, marketing y gestión financiera.</p>
+                        <p style="font-size: 22px;"><strong>INFORMACIÓN DE LA EMPRESA</strong></p>
+                        <p> Pequeña Emprendedora S.A. es una empresa de servicios de consultoría especializada en
+                            asesorar a pequeños negocios y emprendedores locales. Nos dedicamos a proporcionar
+                            soluciones personalizadas para ayudar a nuestros clientes a alcanzar sus objetivos
+                            comerciales. Con un enfoque centrado en el cliente, nuestro equipo altamente calificado
+                            trabaja de cerca con cada cliente para brindar asesoramiento estratégico y apoyo en áreas
+                            clave como planificación empresarial, marketing y gestión financiera.</p>
                     </div>
 
                 </div>
@@ -83,135 +95,138 @@
 <!-- Hero End -->
 
 
-<div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary">
-                        <h4 class="modal-title" style="color: var(--white-color)">Editar informacion De Empresario</h4>
-                    </div>
-
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-layout form-layout-1">
-                                    <div class="row mg-b-25">
-                                        <div class="col-lg-6 mb-3">
-                                            <div class="form-group">
-                                                <label class="form-control-label active">Estado: <span
-                                                        class="tx-danger">*</span></label>
-                                                        <input class="form-control wd-250" type="text" name="estado" id="estado"
-                                                        [(ngModel)]="nuevoEmpresarioCarga.estado" value="{{usuarios.estado}}"  [readonly]="true">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-3">
-                                            <div class="form-group">
-                                                <label class="form-control-label active">Puesto: <span
-                                                        class="tx-danger">*</span></label>
-                                                <input class="form-control wd-250" type="text" name="puesto"
-                                                    placeholder="Ingrese el Puesto" [(ngModel)] = "nuevoEmpresarioCarga.puesto" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mg-b-25">
-                                        <div class="col-lg-6 mb-3">
-                                            <div class="form-group">
-                                                <label class="form-control-label active">Edad: <span
-                                                        class="tx-danger">*</span></label>
-                                                        <input class="form-control wd-250" type="text" name="edad"
-                                                        [(ngModel)]="nuevoEmpresarioCarga.anios" value="{{calcularEdad()}}" [readonly]="true">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-3">
-                                            <div class="form-group">
-                                                <label class="form-control-label active">Email: <span
-                                                        class="tx-danger">*</span></label>
-                                                        <input class="form-control wd-250" type="text" name="Email"
-                                                        placeholder="Ingrese el email" [(ngModel)]="nuevoEmpresarioCarga.email" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                        
-                         <!-- Botón para editar -->
-                         <button  data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                         class="btn btn-oblong btn-success" (click)="updateEmpresario()">
-                         Editar
-                     </button>
-
-                        <button data-bs-dismiss="modal"
-                            class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
-                    </div>
-                </div>
+<div class="modal" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title" style="color: var(--white-color)">Editar informacion De Empresario</h4>
             </div>
-</div>  <!--/ Modal4 -->
 
-<div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_5"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h4 class="modal-title" style="color: var(--white-color)">Editar informacion De Empresario</h4>
-                </div>
-
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-layout form-layout-1">
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Estado: <span
-                                                    class="tx-danger">*</span></label>
-                                                    <input class="form-control wd-250" type="text" name="estado" id="estado"
-                                                    [(ngModel)]="nuevoEmpresarioCarga.estado" value="{{usuarios.estado}}"  [readonly]="true">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Puesto: <span
-                                                    class="tx-danger">*</span></label>
-                                            <input class="form-control wd-250" type="text" name="puesto"
-                                                placeholder="Ingrese el Puesto" [(ngModel)] = "nuevoEmpresarioCarga.puesto" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mg-b-25">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Edad: <span
-                                                    class="tx-danger">*</span></label>
-                                                    <input class="form-control wd-250" type="text" name="edad"
-                                                    [(ngModel)]="nuevoEmpresarioCarga.anios" value="{{calcularEdad()}}" [readonly]="true">
-
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="form-group">
-                                            <label class="form-control-label active">Email: <span
-                                                    class="tx-danger">*</span></label>
-                                                    <input class="form-control wd-250" type="text" name="Email"
-                                                    placeholder="Ingrese el email" [(ngModel)]="nuevoEmpresarioCarga.email" required>
-                                        </div>
-                                    </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-layout form-layout-1">
+                        <div class="row mg-b-25">
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">Estado: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control wd-250" type="text" name="estado" id="estado"
+                                        [(ngModel)]="nuevoEmpresarioCarga.estado" value="{{usuarios.estado}}"
+                                        [readonly]="true">
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                    
-                     <!-- Botón para editar -->
-                     <button  data-bs-toggle="modal" data-bs-target="#m_modal_4"
-                     class="btn btn-oblong btn-success" (click)="updateEmpresario()">
-                     Editar
-                 </button>
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">Puesto: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control wd-250" type="text" name="puesto"
+                                        placeholder="Ingrese el Puesto" [(ngModel)]="nuevoEmpresarioCarga.puesto"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mg-b-25">
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">Edad: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control wd-250" type="text" name="edad"
+                                        [(ngModel)]="nuevoEmpresarioCarga.anios" value="{{calcularEdad()}}"
+                                        [readonly]="true">
 
-                    <button data-bs-dismiss="modal"
-                        class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
-                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">Email: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control wd-250" type="text" name="Email"
+                                        placeholder="Ingrese el email" [(ngModel)]="nuevoEmpresarioCarga.email"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <!-- Botón para editar -->
+                <button data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong btn-success"
+                    (click)="updateEmpresario()">
+                    Editar
+                </button>
+
+                <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
             </div>
         </div>
+    </div>
+</div> <!--/ Modal4 -->
+
+<div class="modal" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_5" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title" style="color: var(--white-color)">Editar informacion De Empresario</h4>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-layout form-layout-1">
+                        <div class="row mg-b-25">
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">Estado: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control wd-250" type="text" name="estado" id="estado"
+                                        [(ngModel)]="nuevoEmpresarioCarga.estado" value="{{usuarios.estado}}"
+                                        [readonly]="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">Puesto: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control wd-250" type="text" name="puesto"
+                                        placeholder="Ingrese el Puesto" [(ngModel)]="nuevoEmpresarioCarga.puesto"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mg-b-25">
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">Edad: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control wd-250" type="text" name="edad"
+                                        [(ngModel)]="nuevoEmpresarioCarga.anios" value="{{calcularEdad()}}"
+                                        [readonly]="true">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-control-label active">Email: <span
+                                            class="tx-danger">*</span></label>
+                                    <input class="form-control wd-250" type="text" name="Email"
+                                        placeholder="Ingrese el email" [(ngModel)]="nuevoEmpresarioCarga.email"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <!-- Botón para editar -->
+                <button data-bs-toggle="modal" data-bs-target="#m_modal_4" class="btn btn-oblong btn-success"
+                    (click)="updateEmpresario()">
+                    Editar
+                </button>
+
+                <button data-bs-dismiss="modal" class="btn btn-oblong btn-outline-danger btn-block">Cancelar</button>
+            </div>
+        </div>
+    </div>
 </div> <!--/ Modal5 -->
-    

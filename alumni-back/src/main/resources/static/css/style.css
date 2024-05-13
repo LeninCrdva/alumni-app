@@ -101,10 +101,6 @@
     width: 33.33333333%;
 }
 
-img {
-    vertical-align: middle;
-}
-
 h5 {
     font-size: 1.25rem;
 }
@@ -116,13 +112,8 @@ h5 {
 .table {
     width: 100%;
     margin-bottom: 1rem;
-    vertical-align: top;
     caption-side: bottom;
     border-collapse: collapse;
-}
-
-.table>tbody {
-    vertical-align: inherit;
 }
 
 tbody, td, tfoot, th, thead, tr {

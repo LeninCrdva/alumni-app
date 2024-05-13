@@ -54,9 +54,9 @@ export class ReferenciasLaboralesComponent {
     private renderer: Renderer2
   ) {
     this.validateForm = this.fb.group({
-      institucion: ['', Validators.required],
-      email: ['', Validators.required],
-      nombre: ['', Validators.required]
+      institucion:['', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
+      email: ['', [Validators.required, Validators.email]],
+      nombre: ['', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+$')]],
     });
   }
 

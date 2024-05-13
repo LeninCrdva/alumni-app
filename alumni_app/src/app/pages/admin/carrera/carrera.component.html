@@ -7,7 +7,7 @@
     </div>
 </section>
 
-<div class="card">
+<div class="card" style="background-color: var(--side-bg-color)">
     <div class="card-body collapse show" id="collapse1">
         <!-- Modal -->
         <div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_4"
@@ -29,18 +29,34 @@
                                         <div class="form-group">
                                             <label class="form-control-label active">Nombre de carrera: <span
                                                     class="tx-danger">*</span></label>
-                                            <input type="text" placeholder="Software" formControlName="nombreCarrera">
-                                            <div class="text-danger"
-                                                *ngIf="registerCareerForm.get('nombreCarrera')?.hasError('required') && registerCareerForm.get('nombreCarrera')?.touched">
-                                                El nombre de la carrera es obligatorio.
+                                            <input type="text" placeholder="Software" formControlName="nombreCarrera"
+                                            [ngClass]="{ 'is-invalid': registerCareerForm.get('nombreCarrera')?.invalid && (registerCareerForm.get('nombreCarrera')?.dirty || registerCareerForm.get('nombreCarrera')?.touched) }" required>
+                                            <div class="oaerror danger invalid-feedback">
+                                                <ng-container *ngIf="registerCareerForm.get('nombreCarrera')?.errors?.['required']">
+                                                    <strong>Dato Faltante</strong> - El nombre de la carrera es obligatorio.
+                                                </ng-container>
+                                               
+                                               
+                                                <ng-container *ngIf="registerCareerForm.get('nombreCarrera')?.errors?.['pattern']">
+                                                    <strong>Formato Inválido</strong> -   El nombre de la carrera solo puede contener letras, números, espacios, comas, puntos y guiones.
+                                                </ng-container>
                                             </div>
+                                           
                                         </div>
 
                                         <div class="form-group">
                                             <label class="form-control-label active">Descripción de la Carrera: <span
                                                     class="tx-danger"></span></label>
                                             <input type="text" placeholder="Ejem: Carrera de tecnología..."
-                                                formControlName="descripcionCarrera">
+                                                formControlName="descripcionCarrera"
+                                                [ngClass]="{ 'is-invalid': registerCareerForm.get('descripcionCarrera')?.invalid && (registerCareerForm.get('descripcionCarrera')?.dirty || registerCareerForm.get('descripcionCarrera')?.touched) }" >
+                                                <div class="oaerror danger invalid-feedback">
+
+                                                    <ng-container *ngIf="registerCareerForm.get('descripcionCarrera')?.errors?.['pattern']">
+                                                        <strong>Formato Inválido</strong> -   La descripción de la carrera solo puede contener letras, números, espacios, comas, puntos y guiones.
+                                                    </ng-container>
+                                                </div>
+                                              
                                         </div>
                                     </div>
                                 </div>
@@ -86,8 +102,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let career of careerList;">
-                            <td>{{career.id}}</td>
+                        <tr *ngFor="let career of careerList;let i=index">
+                            <td>{{i+1}}</td>
+                            <!--<td>{{career.id}}</td>-->
                             <td>{{career.nombre}}</td>
                             <td>{{career.descripcion}}</td>
                             <td class="text-center">

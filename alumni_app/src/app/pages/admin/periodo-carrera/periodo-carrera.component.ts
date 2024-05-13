@@ -3,8 +3,9 @@ import { PeriodoService } from '../../../data/service/periodo.service';
 import { CarreraService } from '../../../data/service/carrera.service';
 import { Periodo } from '../../../data/model/periodo';
 import { Carrera } from '../../../data/model/carrera';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { ValidatorsUtil } from '../../../components/Validations/ReactiveValidatorsRegEx';
 
 @Component({
   selector: 'app-periodo-carrera',
@@ -45,14 +46,14 @@ export class PeriodoCarreraComponent implements OnInit {
 
   registerPeriodForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(formBuilder: FormBuilder,
     private periodService: PeriodoService,
     private careerService: CarreraService) {
 
     this.registerPeriodForm = formBuilder.group({
-      nombrePeriodo: ['', Validators.required],
-      fecha_inicio: ['', Validators.required],
-      fecha_fin: ['', Validators.required],
+      nombrePeriodo: ['', [Validators.required, this.validateUniquePeriodName(), Validators.pattern(ValidatorsUtil.patternPeriodNameValidator())]],
+      fecha_inicio: ['', [Validators.required, this.validateDates()]],
+      fecha_fin: ['', [Validators.required, this.validateDates()]],
       carreras: [this.selectedItems, Validators.required],
     });
   }
@@ -86,7 +87,7 @@ export class PeriodoCarreraComponent implements OnInit {
       this.careerList = data;
     });
   }
- 
+
   ngAfterViewInit(): void {
     this.searchInput.nativeElement.addEventListener('input', () => {
       const filterText = this.searchInput.nativeElement.value;
@@ -102,7 +103,7 @@ export class PeriodoCarreraComponent implements OnInit {
       this.periodList = this.filteredPeriodList(filterText);
     }
   }
-  
+
   filteredPeriodList(filterText: string): Periodo[] {
     return this.periodList.filter(period =>
       period.nombre.toLowerCase().includes(filterText.toLowerCase())
@@ -233,6 +234,85 @@ export class PeriodoCarreraComponent implements OnInit {
     } else {
       this.dropdownSettings = Object.assign({}, this.dropdownSettings, { limitSelection: null });
     }
+  }
+
+  validateUniquePeriodName(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (this.editMode) {
+        return null;
+      }
+      const periodName = control.value;
+      if (periodName) {
+        const period = this.periodList.find(period => period.nombre.toUpperCase() === periodName.toUpperCase());
+        return period ? { uniquePeriodName: true } : null;
+      }
+      return null;
+    };
+  }
+
+  validateDates(): ValidatorFn {
+    return (): ValidationErrors | null => {
+      if (this.registerPeriodForm) {
+        const startDate = this.registerPeriodForm.get('fecha_inicio')?.value;
+        const endDate = this.registerPeriodForm.get('fecha_fin')?.value;
+        if (startDate && endDate) {
+          if (startDate > endDate) {
+            this.registerPeriodForm.get('fecha_fin')?.setErrors({ invalidDate: true });
+            return { invalidDate: true };
+          } else {
+            this.registerPeriodForm.get('fecha_fin')?.setErrors(null);
+            return null;
+          }
+        }
+      }
+      return null;
+    };
+  }
+
+  activeDatePicker: boolean = true;
+  getMinEndDate(): string {
+    const startDate = this.registerPeriodForm.get('fecha_inicio')?.value;
+  
+    if (startDate) {
+      this.activeDatePicker = false;
+      const minEndDate = new Date(startDate);
+      minEndDate.setMonth(minEndDate.getMonth() + 2);
+  
+      const year = minEndDate.getFullYear();
+      const month = String(minEndDate.getMonth() + 1).padStart(2, '0');
+      const day = String(minEndDate.getDate()).padStart(2, '0');
+      const formattedMinEndDate = `${year}-${month}-${day}`;
+  
+      return formattedMinEndDate;
+    }
+  
+    return '';
+  }
+
+  getMaxEndDate(): string {
+    const startDate = this.registerPeriodForm.get('fecha_inicio')?.value;
+  
+    if (startDate) {
+      const minEndDate = new Date(startDate);
+      minEndDate.setMonth(minEndDate.getMonth() + 8); 
+  
+      const year = minEndDate.getFullYear();
+      const month = String(minEndDate.getMonth() + 1).padStart(2, '0');
+      const day = String(minEndDate.getDate()).padStart(2, '0');
+      const formattedMinEndDate = `${year}-${month}-${day}`;
+  
+      return formattedMinEndDate;
+    }
+  
+    return '';
+  }
+
+  getMinStartDate(): string {
+    return new Date(1990, 0, 1).toISOString().split('T')[0];
+  }
+
+  getTodayDate(): string {
+    return new Date().toISOString().split('T')[0];
   }
 
 }

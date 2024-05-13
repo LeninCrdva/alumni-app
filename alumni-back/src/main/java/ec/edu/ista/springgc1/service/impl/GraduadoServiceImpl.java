@@ -263,4 +263,9 @@ public class GraduadoServiceImpl extends GenericServiceImpl<Graduado> implements
     public List<Graduado> findGraduadosSinExperiencia() {
         return graduadoRepository.findAllGraduadosSinExperiencia();
     }
+
+    @Transactional
+    public Object[] findCarrerasByGraduado(Long idGraduado) {
+        return graduadoRepository.findCarrerasByGraduado(idGraduado);
+    }
 }

@@ -88,7 +88,7 @@
                     <div class="mb-4">
                         <div class="form-group flex-grow-1 mr-3">
                             <input type="text" class="form-input" placeholder=" " formControlName="cedula"
-                                id="InputCedula">
+                                id="InputCedula" readonly>
                             <label for="" class="form-label">Ingresa tu Cédula</label>
                             <i class="fa-solid fa-id-card form-icon"></i>
                         </div>
@@ -118,7 +118,7 @@
                         <label for="InputFechaNacimiento" style="color: var(--alumni-color)">Fecha de Nacimiento</label>
 
                         <input style="padding: 1rem 1rem;" type="date" formControlName="fechaNacimiento"
-                            class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento">
+                            class="form-control" id="InputFechaNacimiento" placeholder="Ingresa tu fecha de nacimiento" min="1960-01-01" max="2005-12-31">
                         <!-- Mostrar mensaje de error para el campo fechaNacimiento -->
                         <div class="text-danger"
                             *ngIf="updateEmpresarioForm.get('fechaNacimiento')?.hasError('required') && updateEmpresarioForm.get('fechaNacimiento')?.touched">
@@ -143,9 +143,8 @@
                 <div>
                     <form [formGroup]="photoForm" class="mb-5">
                         <div class="mb-4">
-                            <label style="color: var(--alumni-color)">Foto</label>
                             <div class="card mg-b-20 form-group flex-grow-1 mr-3">
-                                <div class="card-header">
+                                <div class="card-header" style="background-color: var(--side-bg-color)">
                                     <div class="text-center">
                                         <button class="btn btn-oblong btn-primary btn-block mg-b-10" type="button"
                                             (click)="imageHandlerService.clearImage()">
@@ -159,7 +158,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body collapse show" id="collapse8">
+                                <div class="card-body collapse show" id="collapse8" style="background-color: var(--side-bg-color)">
                                     <div>
                                         <input class="form-control" type="file" (change)="onFileSelected($event)"
                                             id="formFile" data-show-remove="false" accept=".jpg, .jpeg, .png">
@@ -171,7 +170,7 @@
                             </div>
                         </div>
                         <button class="btn btn-oblong btn-primary btn-block mg-b-10" (click)="updatePhoto()"
-                        [disabled]="!imageHandlerService.previsualizacion">Guardar</button>
+                            [disabled]="!imageHandlerService.previsualizacion">Guardar</button>
                     </form>
                 </div>
             </li>

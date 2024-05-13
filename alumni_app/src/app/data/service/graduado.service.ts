@@ -47,6 +47,10 @@ export class GraduadoService {
     return this.http.get<Graduado3[]>(this.urlEndPoint);
   }
 
+  getCareerListByGraduateId(id: any): Observable<any> {
+    return this.http.get<any>(`${this.urlEndPoint}/mis-carreras/${id}`);
+  }
+
   createGraduado2(graduado2: Graduado3): Observable<Graduado3> {
     return this.http.post<Graduado3>(this.urlEndPoint, graduado2, { headers: this.httpHeaders })
   }

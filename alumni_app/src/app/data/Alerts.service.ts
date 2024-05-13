@@ -67,6 +67,17 @@ export class AlertsService {
             timer: 1500
         });
     }
+    mostrarSweetAlertConfirmacion(mensaje: string): Promise<any> {
+        return Swal.fire({
+            icon: 'info',
+            title: 'Confirmación',
+            text: mensaje,
+           
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        });
+    }
 
     public adjustFieldValidators(form: FormGroup, fieldName: string, requiresValidation: boolean): void {
         if (requiresValidation) {

@@ -49,11 +49,14 @@ export class LayoutSystemComponent implements OnInit {
   usuarioEmpresario: string = localStorage.getItem('name') || '';
   nuevoEmpresario: Empresario2 = new Empresario2();
   usuarioGuardado: string = localStorage.getItem('name') || '';
+  darkMode: boolean = localStorage.getItem('darkMode') === 'true';
+
   //modal
   constructor(private sanitizer: DomSanitizer,
     private assetService: AssetService,
     private el: ElementRef,
-    private renderer: Renderer2, private usuarioService: UserService,
+    private renderer: Renderer2,
+    private usuarioService: UserService,
     private modalService: BsModalService,
     public bsModalRef: BsModalRef,
     private empresaservice: EmpresarioService,
@@ -71,6 +74,21 @@ export class LayoutSystemComponent implements OnInit {
     this.cerrarSesion();
     this.checkUserRole();
     this.checkSession();
+    this.changeStyleMode();
+  }
+
+  toggleDarkMode(): void {
+    this.darkMode = !this.darkMode;
+    localStorage.setItem('darkMode', String(this.darkMode));
+    this.changeStyleMode();
+  }
+
+  changeStyleMode(): void {
+    if (this.darkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
   }
 
   checkSession(): void {
@@ -86,7 +104,6 @@ export class LayoutSystemComponent implements OnInit {
       });
     }
   }
-
 
   redirectToProfile(): void {
     //  localStorage.setItem('authorities', JSON.stringify(authorities));

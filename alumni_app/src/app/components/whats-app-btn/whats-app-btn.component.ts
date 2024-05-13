@@ -8,10 +8,14 @@ import { Component, HostListener } from '@angular/core';
 export class WhatsAppBtnComponent {
   scrollPosition = 0;
   whatsAppMessage = "";
+
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
     this.scrollPosition = window.scrollY;
-    this.updateButtonPosition();
+    const userRole = localStorage.getItem('authorities')?.match(/[a-zA-Z_]+/)?.[0];
+    if (userRole == null){
+      this.updateButtonPosition();
+    }
   }
 
   updateButtonPosition(): void {

@@ -19,7 +19,6 @@ import { lastValueFrom } from 'rxjs';
 })
 export class PerfilFormComponent implements AfterViewInit, OnInit {
   usuarioInfo: Usuario = new Usuario();
-  empresarioInfo: Empresario = new Empresario();
   updateEmpresarioForm: FormGroup;
   photoForm: FormGroup;
   idUser: any;
@@ -51,7 +50,6 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllCitiesAndGraduate()
     this.getAllInfoGraduate()
   }
 
@@ -174,17 +172,6 @@ export class PerfilFormComponent implements AfterViewInit, OnInit {
       await this.uploadAndSetRutaImagen(this.imageHandlerService.archivos[0]);
       this.userService.updateUserPhoto(this.idUser, this.rutaImagen).subscribe();
       this.router.navigate(['system/company/perfil']);
-    }
-  }
-
-  getAllCitiesAndGraduate(): void {
-    const userId = localStorage.getItem('user_id');
-
-    if (userId) {
-      this.empresarioService.getEmpresarioById(userId).subscribe(data => {
-        this.empresarioInfo = data
-      })
-
     }
   }
 }

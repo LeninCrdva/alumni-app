@@ -4,5 +4,5 @@ COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
-COPY --from=build home/app/target/springgc1-0.0.1-SNAPSHOT.jar alumni-app.jar
+COPY --from=build home/app/target/alumni-0.0.1-SNAPSHOT.jar alumni-app.jar
 ENTRYPOINT ["java", "-jar", "alumni-app.jar"]
